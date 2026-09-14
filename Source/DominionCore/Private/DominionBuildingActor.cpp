@@ -10,18 +10,15 @@ ADominionBuildingActor::ADominionBuildingActor()
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.TickInterval = 0.1f; // 10 Hz lightweight tick
 
-	// 1. Check for custom generative game-ready mesh / fallback
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> CitadelMeshFinder(TEXT("/Game/Environment/Generated/SM_Citadel.SM_Citadel"));
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> ZigguratMeshFinder(TEXT("/Game/Environment/Generated/SM_Ziggurat_Citadel.SM_Ziggurat_Citadel"));
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> CubeFinder(TEXT("/Engine/BasicShapes/Cube.Cube"));
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> CitadelMatFinder(TEXT("/Game/Environment/Generated/M_Citadel.M_Citadel"));
+	// 1. Check for authentic marketplace static meshes
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> CitadelMeshFinder(TEXT("/Game/Ancient_Ruins/Meshes/SM_ISOM.SM_ISOM"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> RuinMeshFinder(TEXT("/Game/Ancient_Ruins/Meshes/SM_ISOC.SM_ISOC"));
 	static ConstructorHelpers::FObjectFinder<UMaterialInterface> MudbrickMatFinder(TEXT("/Game/Materials/MI_Mesopotamian_Mudbrick.MI_Mesopotamian_Mudbrick"));
 	static ConstructorHelpers::FObjectFinder<UMaterialInterface> BronzeMatFinder(TEXT("/Game/Materials/MI_Patina_Bronze.MI_Patina_Bronze"));
 
 	UStaticMesh* ChosenMesh = CitadelMeshFinder.Succeeded() ? CitadelMeshFinder.Object :
-	                          (ZigguratMeshFinder.Succeeded() ? ZigguratMeshFinder.Object :
-	                          (CubeFinder.Succeeded() ? CubeFinder.Object : nullptr));
-	UStaticMesh* CubeMesh = CubeFinder.Succeeded() ? CubeFinder.Object : nullptr;
+	                          (RuinMeshFinder.Succeeded() ? RuinMeshFinder.Object : nullptr);
+	UStaticMesh* BaseMesh = RuinMeshFinder.Succeeded() ? RuinMeshFinder.Object : nullptr;
 
 	// 2. Colossal Base Foundation / Unified Static Mesh
 	BuildingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BuildingMesh"));
@@ -40,10 +37,6 @@ ADominionBuildingActor::ADominionBuildingActor()
 		{
 			BuildingMesh->SetMaterial(0, MudbrickMatFinder.Object);
 		}
-		else if (CitadelMatFinder.Succeeded())
-		{
-			BuildingMesh->SetMaterial(0, CitadelMatFinder.Object);
-		}
 
 		if (BronzeMatFinder.Succeeded() && BuildingMesh->GetNumMaterials() > 1)
 		{
@@ -59,9 +52,9 @@ ADominionBuildingActor::ADominionBuildingActor()
 	SelectionBoxMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	SelectionBoxMesh->SetMobility(EComponentMobility::Movable);
 	SelectionBoxMesh->SetVisibility(false);
-	if (CubeMesh)
+	if (BaseMesh)
 	{
-		SelectionBoxMesh->SetStaticMesh(CubeMesh);
+		SelectionBoxMesh->SetStaticMesh(BaseMesh);
 	}
 
 	// 4. Overhead Billboard Label (Disabled for clean AAA fidelity)

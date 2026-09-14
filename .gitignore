@@ -1,4 +1,4 @@
-﻿# Unreal Engine GitIgnore
+# Unreal Engine GitIgnore
 Binaries/
 DerivedDataCache/
 Intermediate/
@@ -21,6 +21,8 @@ Saved/
 Content/Characters/
 Content/Environment/
 Content/LevelPrototyping/
+Content/Ancient_Pillars/
+Content/Ancient_Ruins/
 
 # OS Files
 .DS_Store

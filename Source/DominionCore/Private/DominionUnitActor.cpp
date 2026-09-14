@@ -17,21 +17,15 @@ ADominionUnitActor::ADominionUnitActor()
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.TickInterval = 0.02f; // 50 Hz Logic Tick for high performance
 
-	// Find standard basic shape meshes
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> CylinderFinder(TEXT("/Engine/BasicShapes/Cylinder.Cylinder"));
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereFinder(TEXT("/Engine/BasicShapes/Sphere.Sphere"));
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> CubeFinder(TEXT("/Engine/BasicShapes/Cube.Cube"));
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> ConeFinder(TEXT("/Engine/BasicShapes/Cone.Cone"));
+	// Find authentic unit static and skeletal meshes
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SpearmanFinder(TEXT("/Game/Characters/Units/SM_Sumerian_Spearman.SM_Sumerian_Spearman"));
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SlingerFinder(TEXT("/Game/Characters/Units/SM_Sumerian_Slinger.SM_Sumerian_Slinger"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> RingFinder(TEXT("/Game/TopDown/Cursor/SM_CursorMesh.SM_CursorMesh"));
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MannyFinder(TEXT("/Game/Characters/Mannequins/Meshes/SKM_Manny.SKM_Manny"));
 
-	UStaticMesh* CylinderMesh = CylinderFinder.Succeeded() ? CylinderFinder.Object : nullptr;
-	UStaticMesh* SphereMesh = SphereFinder.Succeeded() ? SphereFinder.Object : nullptr;
-	UStaticMesh* CubeMesh = CubeFinder.Succeeded() ? CubeFinder.Object : nullptr;
-	UStaticMesh* ConeMesh = ConeFinder.Succeeded() ? ConeFinder.Object : nullptr;
 	UStaticMesh* SpearmanMesh = SpearmanFinder.Succeeded() ? SpearmanFinder.Object : nullptr;
 	UStaticMesh* SlingerMesh = SlingerFinder.Succeeded() ? SlingerFinder.Object : nullptr;
+	UStaticMesh* RingMesh = RingFinder.Succeeded() ? RingFinder.Object : nullptr;
 	USkeletalMesh* MannyMesh = MannyFinder.Succeeded() ? MannyFinder.Object : nullptr;
 
 	// 1. Root Capsule Collider (Eliminates FindTeleportSpot intersection warnings)
@@ -47,11 +41,11 @@ ADominionUnitActor::ADominionUnitActor()
 	UnitMesh->SetupAttachment(RootComponent);
 	UnitMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	UnitMesh->SetMobility(EComponentMobility::Movable);
-	if (CylinderMesh)
+	if (SpearmanMesh)
 	{
-		UnitMesh->SetStaticMesh(CylinderMesh);
+		UnitMesh->SetStaticMesh(SpearmanMesh);
 		UnitMesh->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
-		UnitMesh->SetRelativeScale3D(FVector(0.55f, 0.55f, 1.1f));
+		UnitMesh->SetRelativeScale3D(FVector(1.0f, 1.0f, 1.0f));
 	}
 
 	// 3. High-Fidelity 3D Skeletal Mesh Warrior (With Skeleton Asset Fallback Guard)
@@ -66,7 +60,7 @@ ADominionUnitActor::ADominionUnitActor()
 		SkeletalMesh->SetRelativeLocation(FVector(0.0f, 0.0f, -90.0f));
 		SkeletalMesh->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
 		SkeletalMesh->SetRelativeScale3D(FVector(0.95f, 0.95f, 0.95f));
-		UnitMesh->SetVisibility(false); // Hide the prototype geometric cylinder
+		UnitMesh->SetVisibility(false); // Prefer Skeletal Mesh warrior
 	}
 	else
 	{
@@ -84,9 +78,9 @@ ADominionUnitActor::ADominionUnitActor()
 	SelectionRingMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	SelectionRingMesh->SetMobility(EComponentMobility::Movable);
 	SelectionRingMesh->SetVisibility(false);
-	if (CylinderMesh)
+	if (RingMesh)
 	{
-		SelectionRingMesh->SetStaticMesh(CylinderMesh);
+		SelectionRingMesh->SetStaticMesh(RingMesh);
 	}
 
 	// 5. Overhead Billboard Display
