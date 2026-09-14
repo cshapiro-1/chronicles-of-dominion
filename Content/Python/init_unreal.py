@@ -59,20 +59,22 @@ def build_masterpiece_citadel():
         return act
 
     # -------------------------------------------------------------
-    # 2. ATMOSPHERIC LIGHTING & SKY (Golden Bronze Age Desert Sun)
+    # 2. PHYSICAL ATMOSPHERIC LIGHTING & SKY (Golden Bronze Age Desert Sun)
     # -------------------------------------------------------------
-    print("[*] Setting up Bronze-Age desert sun and atmosphere...")
+    print("[*] Setting up Bronze-Age physical desert sun and atmosphere...")
     
-    # Directional Sun Light
+    # Directional Sun Light (75,000 Lux Physical Sun)
     sun_rot = unreal.Rotator(-40.0, 45.0, 0.0)
     sun_actor = actor_subsystem.spawn_actor_from_class(unreal.DirectionalLight, unreal.Vector(0, 0, 2000), sun_rot)
     if sun_actor:
         sun_comp = sun_actor.light_component
-        sun_comp.set_intensity(6.0)
-        sun_comp.set_light_color(unreal.LinearColor(1.0, 0.92, 0.78, 1.0))
-        sun_comp.set_atmosphere_sun_light(True)
-        sun_comp.set_atmosphere_sun_light_index(0)
-        sun_comp.set_cast_shadows(True)
+        sun_comp.set_editor_property("Intensity", 75000.0)
+        sun_comp.set_editor_property("bUseTemperature", True)
+        sun_comp.set_editor_property("Temperature", 5500.0)
+        sun_comp.set_editor_property("bAtmosphereSunLight", True)
+        sun_comp.set_editor_property("AtmosphereSunLightIndex", 0)
+        sun_comp.set_editor_property("CastShadows", True)
+        sun_comp.set_editor_property("bAffectsWorld", True)
         sun_actor.set_actor_label("Sun_DirectionalLight")
 
     # Sky Atmosphere
@@ -80,28 +82,37 @@ def build_masterpiece_citadel():
     if sky_atmo:
         sky_atmo.set_actor_label("SkyAtmosphere")
 
-    # Sky Light
+    # Sky Light (Real-Time Ambient Capture)
     sky_light = actor_subsystem.spawn_actor_from_class(unreal.SkyLight, unreal.Vector(0, 0, 1000), unreal.Rotator(0, 0, 0))
     if sky_light:
         sl_comp = sky_light.light_component
-        sl_comp.set_intensity(1.2)
-        sl_comp.set_real_time_capture_enabled(True)
+        sl_comp.set_editor_property("Intensity", 1.0)
+        sl_comp.set_editor_property("bRealTimeCapture", True)
+        sl_comp.set_editor_property("bAffectsWorld", True)
         sky_light.set_actor_label("SkyLight_RealTime")
 
-    # Exponential Height Fog
+    # Exponential Height Fog (Volumetric Desert Haze)
     fog_actor = actor_subsystem.spawn_actor_from_class(unreal.ExponentialHeightFog, unreal.Vector(0, 0, -200), unreal.Rotator(0, 0, 0))
     if fog_actor:
         fog_comp = fog_actor.component
-        fog_comp.set_fog_density(0.004)
-        fog_comp.set_fog_inscattering_color(unreal.LinearColor(0.85, 0.75, 0.6, 1.0))
+        fog_comp.set_editor_property("FogDensity", 0.002)
+        fog_comp.set_editor_property("FogInscatteringColor", unreal.LinearColor(0.85, 0.75, 0.6, 1.0))
+        fog_comp.set_editor_property("bEnableVolumetricFog", True)
+        fog_comp.set_editor_property("VolumetricFogDistance", 8000.0)
         fog_actor.set_actor_label("Desert_Atmospheric_Fog")
 
-    # Post Process Volume
+    # Post Process Volume (Lumen & Calibrated Physical Auto-Exposure)
     pp_actor = actor_subsystem.spawn_actor_from_class(unreal.PostProcessVolume, unreal.Vector(0, 0, 0), unreal.Rotator(0, 0, 0))
     if pp_actor:
         pp_actor.unbound = True
-        pp_actor.settings.auto_exposure_min_brightness = 1.0
-        pp_actor.settings.auto_exposure_max_brightness = 1.0
+        pp_actor.settings.set_editor_property("bOverride_AutoExposureMethod", True)
+        pp_actor.settings.set_editor_property("AutoExposureMethod", unreal.AutoExposureMethod.AEM_HISTOGRAM)
+        pp_actor.settings.set_editor_property("bOverride_AutoExposureMinEV100", True)
+        pp_actor.settings.set_editor_property("AutoExposureMinEV100", 7.0)
+        pp_actor.settings.set_editor_property("bOverride_AutoExposureMaxEV100", True)
+        pp_actor.settings.set_editor_property("AutoExposureMaxEV100", 16.0)
+        pp_actor.settings.set_editor_property("bOverride_AutoExposureBias", True)
+        pp_actor.settings.set_editor_property("AutoExposureBias", 0.0)
         pp_actor.set_actor_label("PostProcessVolume_Global")
 
     # -------------------------------------------------------------
