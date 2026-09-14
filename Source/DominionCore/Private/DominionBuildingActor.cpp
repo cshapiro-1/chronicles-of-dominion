@@ -10,9 +10,9 @@ ADominionBuildingActor::ADominionBuildingActor()
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.TickInterval = 0.1f; // 10 Hz lightweight tick
 
-	// 1. Check for authentic marketplace static meshes
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> CitadelMeshFinder(TEXT("/Game/Ancient_Ruins/Meshes/SM_ISOM.SM_ISOM"));
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> RuinMeshFinder(TEXT("/Game/Ancient_Ruins/Meshes/SM_ISOC.SM_ISOC"));
+	// 1. Check for authentic in-house DAE static meshes
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> CitadelMeshFinder(TEXT("/Game/DominionAssets/Citadel/SM_DAE_Monumental_Ziggurat.SM_DAE_Monumental_Ziggurat"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> RuinMeshFinder(TEXT("/Game/DominionAssets/Citadel/SM_DAE_Rampart_Wall.SM_DAE_Rampart_Wall"));
 	static ConstructorHelpers::FObjectFinder<UMaterialInterface> MudbrickMatFinder(TEXT("/Game/Materials/MI_Mesopotamian_Mudbrick.MI_Mesopotamian_Mudbrick"));
 	static ConstructorHelpers::FObjectFinder<UMaterialInterface> BronzeMatFinder(TEXT("/Game/Materials/MI_Patina_Bronze.MI_Patina_Bronze"));
 
@@ -88,9 +88,9 @@ void ADominionBuildingActor::ApplyCurrentStyleVisuals()
 		if (Comp && Comp->GetStaticMesh() && Comp->GetNumMaterials() > 0)
 		{
 			UMaterialInterface* ExistingMat = Comp->GetMaterial(0);
-			if (ExistingMat && ExistingMat->GetName().Contains(TEXT("M_Citadel")))
+			if (ExistingMat && (ExistingMat->GetName().Contains(TEXT("M_Citadel")) || ExistingMat->GetName().Contains(TEXT("MI_Mesopotamian_Mudbrick"))))
 			{
-				return; // Preserve custom textured PBR Citadel material
+				return; // Preserve custom textured PBR Citadel/Mudbrick material
 			}
 			UMaterialInstanceDynamic* DynMat = UDominionTextureFactory::CreateDominionMaterial(this, BaseColor, Metallic, Roughness, EmissiveColor);
 			if (DynMat)
