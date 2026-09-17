@@ -1,95 +1,28 @@
-[gd_scene load_steps=12 format=3 uid="uid://hud_masterpiece_01"]
+[gd_scene load_steps=18 format=3 uid="uid://hud_diegetic_01"]
 
 [ext_resource type="Script" path="res://scenes/ui/HUD.gd" id="1_hud"]
-[ext_resource type="Script" path="res://scripts/ui/EstateDial.gd" id="2_dial"]
-[ext_resource type="Script" path="res://scripts/ui/Minimap.gd" id="3_map"]
+[ext_resource type="Texture2D" path="res://assets/ui/frame_top_bar.png" id="2_topbar"]
+[ext_resource type="Texture2D" path="res://assets/ui/frame_estate_dials.png" id="3_dials"]
+[ext_resource type="Texture2D" path="res://assets/ui/frame_province_card.png" id="4_card"]
+[ext_resource type="Texture2D" path="res://assets/ui/frame_action_ribbon.png" id="5_ribbon"]
+[ext_resource type="Texture2D" path="res://assets/ui/frame_minimap.png" id="6_minimap_frame"]
+[ext_resource type="Texture2D" path="res://assets/ui/btn_spearmen.png" id="7_btn_spear"]
+[ext_resource type="Texture2D" path="res://assets/ui/btn_banner.png" id="8_btn_banner"]
+[ext_resource type="Texture2D" path="res://assets/ui/btn_crown.png" id="9_btn_crown"]
+[ext_resource type="Texture2D" path="res://assets/ui/btn_swords.png" id="10_btn_swords"]
+[ext_resource type="Texture2D" path="res://assets/ui/btn_rune.png" id="11_btn_rune"]
+[ext_resource type="FontFile" path="res://assets/fonts/constanb.ttf" id="12_font_serif"]
+[ext_resource type="Script" path="res://scripts/ui/EstateDial.gd" id="13_dial_script"]
+[ext_resource type="Script" path="res://scripts/ui/Minimap.gd" id="14_map_script"]
 
-[sub_resource type="StyleBoxFlat" id="SB_TopBar"]
-bg_color = Color(0.09, 0.08, 0.07, 0.96)
-border_width_bottom = 2
-border_color = Color(0.75, 0.6, 0.28, 1)
-shadow_color = Color(0, 0, 0, 0.7)
-shadow_size = 8
+[sub_resource type="StyleBoxTexture" id="SB_TopBarTex"]
+texture = ExtResource("2_topbar")
 
-[sub_resource type="StyleBoxFlat" id="SB_ResPill"]
-content_margin_left = 10.0
-content_margin_top = 4.0
-content_margin_right = 10.0
-content_margin_bottom = 4.0
-bg_color = Color(0.14, 0.12, 0.1, 0.85)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.4, 0.32, 0.18, 0.8)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+[sub_resource type="StyleBoxTexture" id="SB_CardTex"]
+texture = ExtResource("4_card")
 
-[sub_resource type="StyleBoxFlat" id="SB_Card"]
-bg_color = Color(0.09, 0.08, 0.07, 0.95)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.75, 0.6, 0.28, 1)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-shadow_color = Color(0, 0, 0, 0.7)
-shadow_size = 10
-
-[sub_resource type="StyleBoxFlat" id="SB_Button_Normal"]
-bg_color = Color(0.15, 0.13, 0.11, 0.95)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(0.65, 0.52, 0.25, 0.9)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id="SB_Button_Hover"]
-bg_color = Color(0.25, 0.21, 0.16, 0.95)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(1.0, 0.85, 0.4, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id="SB_Button_Pressed"]
-bg_color = Color(0.1, 0.08, 0.06, 0.95)
-border_width_left = 1
-border_width_top = 2
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.45, 0.35, 0.15, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id="SB_HopeBar_Fill"]
-bg_color = Color(0.2, 0.75, 0.4, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-
-[sub_resource type="StyleBoxFlat" id="SB_Discontent_Fill"]
-bg_color = Color(0.9, 0.25, 0.25, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
+[sub_resource type="StyleBoxTexture" id="SB_RibbonTex"]
+texture = ExtResource("5_ribbon")
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -105,329 +38,251 @@ script = ExtResource("1_hud")
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 68.0
+offset_bottom = 48.0
 grow_horizontal = 2
-theme_override_styles/panel = SubResource("SB_TopBar")
+theme_override_styles/panel = SubResource("SB_TopBarTex")
 
-[node name="HBoxLeft" type="HBoxContainer" parent="TopBar"]
+[node name="HBoxResources" type="HBoxContainer" parent="TopBar"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 15.0
-offset_top = -24.0
-offset_right = 680.0
-offset_bottom = 24.0
-grow_vertical = 2
-theme_override_constants/separation = 8
-
-[node name="ResGrain" type="PanelContainer" parent="TopBar/HBoxLeft"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("SB_ResPill")
-
-[node name="HBox" type="HBoxContainer" parent="TopBar/HBoxLeft/ResGrain"]
-layout_mode = 2
-theme_override_constants/separation = 6
-
-[node name="Icon" type="Label" parent="TopBar/HBoxLeft/ResGrain/HBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.98, 0.85, 0.35, 1)
-theme_override_font_sizes/font_size = 15
-text = "🌾"
-
-[node name="VBox" type="VBoxContainer" parent="TopBar/HBoxLeft/ResGrain/HBox"]
-layout_mode = 2
-alignment = 1
-
-[node name="Val" type="Label" parent="TopBar/HBoxLeft/ResGrain/HBox/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.98, 0.9, 1)
-theme_override_font_sizes/font_size = 14
-text = "1420"
-
-[node name="Delta" type="Label" parent="TopBar/HBoxLeft/ResGrain/HBox/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.4, 0.9, 0.4, 1)
-theme_override_font_sizes/font_size = 10
-text = "+45/m"
-
-[node name="ResTimber" type="PanelContainer" parent="TopBar/HBoxLeft"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("SB_ResPill")
-
-[node name="HBox" type="HBoxContainer" parent="TopBar/HBoxLeft/ResTimber"]
-layout_mode = 2
-theme_override_constants/separation = 6
-
-[node name="Icon" type="Label" parent="TopBar/HBoxLeft/ResTimber/HBox"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "🪵"
-
-[node name="VBox" type="VBoxContainer" parent="TopBar/HBoxLeft/ResTimber/HBox"]
-layout_mode = 2
-alignment = 1
-
-[node name="Val" type="Label" parent="TopBar/HBoxLeft/ResTimber/HBox/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.98, 0.9, 1)
-theme_override_font_sizes/font_size = 14
-text = "850"
-
-[node name="Delta" type="Label" parent="TopBar/HBoxLeft/ResTimber/HBox/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.4, 0.9, 0.4, 1)
-theme_override_font_sizes/font_size = 10
-text = "+18/m"
-
-[node name="ResStone" type="PanelContainer" parent="TopBar/HBoxLeft"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("SB_ResPill")
-
-[node name="HBox" type="HBoxContainer" parent="TopBar/HBoxLeft/ResStone"]
-layout_mode = 2
-theme_override_constants/separation = 6
-
-[node name="Icon" type="Label" parent="TopBar/HBoxLeft/ResStone/HBox"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "⛰"
-
-[node name="VBox" type="VBoxContainer" parent="TopBar/HBoxLeft/ResStone/HBox"]
-layout_mode = 2
-alignment = 1
-
-[node name="Val" type="Label" parent="TopBar/HBoxLeft/ResStone/HBox/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.98, 0.9, 1)
-theme_override_font_sizes/font_size = 14
-text = "1200"
-
-[node name="Delta" type="Label" parent="TopBar/HBoxLeft/ResStone/HBox/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.4, 0.9, 0.4, 1)
-theme_override_font_sizes/font_size = 10
-text = "+25/m"
-
-[node name="ResBronze" type="PanelContainer" parent="TopBar/HBoxLeft"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("SB_ResPill")
-
-[node name="HBox" type="HBoxContainer" parent="TopBar/HBoxLeft/ResBronze"]
-layout_mode = 2
-theme_override_constants/separation = 6
-
-[node name="Icon" type="Label" parent="TopBar/HBoxLeft/ResBronze/HBox"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "⚔"
-
-[node name="VBox" type="VBoxContainer" parent="TopBar/HBoxLeft/ResBronze/HBox"]
-layout_mode = 2
-alignment = 1
-
-[node name="Val" type="Label" parent="TopBar/HBoxLeft/ResBronze/HBox/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.98, 0.9, 1)
-theme_override_font_sizes/font_size = 14
-text = "650"
-
-[node name="Delta" type="Label" parent="TopBar/HBoxLeft/ResBronze/HBox/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.4, 0.9, 0.4, 1)
-theme_override_font_sizes/font_size = 10
-text = "+12/m"
-
-[node name="ResGold" type="PanelContainer" parent="TopBar/HBoxLeft"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("SB_ResPill")
-
-[node name="HBox" type="HBoxContainer" parent="TopBar/HBoxLeft/ResGold"]
-layout_mode = 2
-theme_override_constants/separation = 6
-
-[node name="Icon" type="Label" parent="TopBar/HBoxLeft/ResGold/HBox"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "👑"
-
-[node name="VBox" type="VBoxContainer" parent="TopBar/HBoxLeft/ResGold/HBox"]
-layout_mode = 2
-alignment = 1
-
-[node name="Val" type="Label" parent="TopBar/HBoxLeft/ResGold/HBox/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
-theme_override_font_sizes/font_size = 14
-text = "5200"
-
-[node name="Delta" type="Label" parent="TopBar/HBoxLeft/ResGold/HBox/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.4, 0.9, 0.4, 1)
-theme_override_font_sizes/font_size = 10
-text = "+80/m"
-
-[node name="ResPop" type="PanelContainer" parent="TopBar/HBoxLeft"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("SB_ResPill")
-
-[node name="HBox" type="HBoxContainer" parent="TopBar/HBoxLeft/ResPop"]
-layout_mode = 2
-theme_override_constants/separation = 6
-
-[node name="Icon" type="Label" parent="TopBar/HBoxLeft/ResPop/HBox"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "👥"
-
-[node name="VBox" type="VBoxContainer" parent="TopBar/HBoxLeft/ResPop/HBox"]
-layout_mode = 2
-alignment = 1
-
-[node name="Val" type="Label" parent="TopBar/HBoxLeft/ResPop/HBox/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.4, 0.9, 0.5, 1)
-theme_override_font_sizes/font_size = 14
-text = "139 / 6.5k"
-
-[node name="Delta" type="Label" parent="TopBar/HBoxLeft/ResPop/HBox/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.75, 0.65, 1)
-theme_override_font_sizes/font_size = 10
-text = "Capacity"
-
-[node name="HBoxCenter" type="HBoxContainer" parent="TopBar"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -140.0
-offset_top = 4.0
-offset_right = 140.0
-offset_bottom = 64.0
-grow_horizontal = 2
-theme_override_constants/separation = 16
-alignment = 1
-
-[node name="DialAltar" type="Control" parent="TopBar/HBoxCenter"]
-custom_minimum_size = Vector2(56, 56)
-layout_mode = 2
-script = ExtResource("2_dial")
-title = "ALTAR"
-icon_symbol = "🕊"
-fill_percent = 65.0
-
-[node name="Title" type="Label" parent="TopBar/HBoxCenter/DialAltar"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -25.0
-offset_top = 6.0
-offset_right = 25.0
+offset_left = 18.0
+offset_top = -20.0
+offset_right = 440.0
 offset_bottom = 20.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0.9, 0.78, 0.4, 1)
-theme_override_font_sizes/font_size = 9
-text = "ALTAR"
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="Grain" type="VBoxContainer" parent="TopBar/HBoxResources"]
+layout_mode = 2
+theme_override_constants/separation = -2
+alignment = 1
+
+[node name="Val" type="Label" parent="TopBar/HBoxResources/Grain"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.88, 0.72, 1)
+theme_override_fonts/font = ExtResource("12_font_serif")
+theme_override_font_sizes/font_size = 14
+text = "🌾 1420"
+
+[node name="Delta" type="Label" parent="TopBar/HBoxResources/Grain"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.85, 0.5, 1)
+theme_override_font_sizes/font_size = 10
+text = "(+45/m)"
 horizontal_alignment = 1
 
-[node name="Pct" type="Label" parent="TopBar/HBoxCenter/DialAltar"]
+[node name="Timber" type="VBoxContainer" parent="TopBar/HBoxResources"]
+layout_mode = 2
+theme_override_constants/separation = -2
+alignment = 1
+
+[node name="Val" type="Label" parent="TopBar/HBoxResources/Timber"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.88, 0.72, 1)
+theme_override_fonts/font = ExtResource("12_font_serif")
+theme_override_font_sizes/font_size = 14
+text = "🪵 850"
+
+[node name="Delta" type="Label" parent="TopBar/HBoxResources/Timber"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.85, 0.5, 1)
+theme_override_font_sizes/font_size = 10
+text = "(+18/m)"
+horizontal_alignment = 1
+
+[node name="Stone" type="VBoxContainer" parent="TopBar/HBoxResources"]
+layout_mode = 2
+theme_override_constants/separation = -2
+alignment = 1
+
+[node name="Val" type="Label" parent="TopBar/HBoxResources/Stone"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.88, 0.72, 1)
+theme_override_fonts/font = ExtResource("12_font_serif")
+theme_override_font_sizes/font_size = 14
+text = "⛰ 1200"
+
+[node name="Delta" type="Label" parent="TopBar/HBoxResources/Stone"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.85, 0.5, 1)
+theme_override_font_sizes/font_size = 10
+text = "(+25/m)"
+horizontal_alignment = 1
+
+[node name="Bronze" type="VBoxContainer" parent="TopBar/HBoxResources"]
+layout_mode = 2
+theme_override_constants/separation = -2
+alignment = 1
+
+[node name="Val" type="Label" parent="TopBar/HBoxResources/Bronze"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.88, 0.72, 1)
+theme_override_fonts/font = ExtResource("12_font_serif")
+theme_override_font_sizes/font_size = 14
+text = "⚔ 650"
+
+[node name="Delta" type="Label" parent="TopBar/HBoxResources/Bronze"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.85, 0.5, 1)
+theme_override_font_sizes/font_size = 10
+text = "(+12/m)"
+horizontal_alignment = 1
+
+[node name="Gold" type="VBoxContainer" parent="TopBar/HBoxResources"]
+layout_mode = 2
+theme_override_constants/separation = -2
+alignment = 1
+
+[node name="Val" type="Label" parent="TopBar/HBoxResources/Gold"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
+theme_override_fonts/font = ExtResource("12_font_serif")
+theme_override_font_sizes/font_size = 14
+text = "👑 5200"
+
+[node name="Delta" type="Label" parent="TopBar/HBoxResources/Gold"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.85, 0.5, 1)
+theme_override_font_sizes/font_size = 10
+text = "(+80/m)"
+horizontal_alignment = 1
+
+[node name="Pop" type="VBoxContainer" parent="TopBar/HBoxResources"]
+layout_mode = 2
+theme_override_constants/separation = -2
+alignment = 1
+
+[node name="Val" type="Label" parent="TopBar/HBoxResources/Pop"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.9, 0.6, 1)
+theme_override_fonts/font = ExtResource("12_font_serif")
+theme_override_font_sizes/font_size = 14
+text = "👥 139 / 6.5k"
+
+[node name="Delta" type="Label" parent="TopBar/HBoxResources/Pop"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.65, 0.55, 1)
+theme_override_font_sizes/font_size = 10
+text = "100% Capacity"
+horizontal_alignment = 1
+
+[node name="DialsCenter" type="TextureRect" parent="TopBar"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -170.0
+offset_top = 0.0
+offset_right = 170.0
+offset_bottom = 120.0
+grow_horizontal = 2
+texture = ExtResource("3_dials")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DialAltar" type="Control" parent="TopBar/DialsCenter"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -105.0
+offset_top = -45.0
+offset_right = -35.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("13_dial_script")
+fill_percent = 65.0
+
+[node name="Pct" type="Label" parent="TopBar/DialsCenter/DialAltar"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -22.0
-offset_right = 20.0
-offset_bottom = -6.0
+offset_left = -25.0
+offset_top = 16.0
+offset_right = 25.0
+offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.95, 0.88, 0.75, 1)
+theme_override_fonts/font = ExtResource("12_font_serif")
 theme_override_font_sizes/font_size = 11
 text = "65%"
 horizontal_alignment = 1
 
-[node name="DialThrone" type="Control" parent="TopBar/HBoxCenter"]
-custom_minimum_size = Vector2(56, 56)
-layout_mode = 2
-script = ExtResource("2_dial")
-title = "THRONE"
-icon_symbol = "👑"
+[node name="DialThrone" type="Control" parent="TopBar/DialsCenter"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = -45.0
+offset_right = 35.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("13_dial_script")
 fill_percent = 60.0
 
-[node name="Title" type="Label" parent="TopBar/HBoxCenter/DialThrone"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -25.0
-offset_top = 6.0
-offset_right = 25.0
-offset_bottom = 20.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0.9, 0.78, 0.4, 1)
-theme_override_font_sizes/font_size = 9
-text = "THRONE"
-horizontal_alignment = 1
-
-[node name="Pct" type="Label" parent="TopBar/HBoxCenter/DialThrone"]
+[node name="Pct" type="Label" parent="TopBar/DialsCenter/DialThrone"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -22.0
-offset_right = 20.0
-offset_bottom = -6.0
+offset_left = -25.0
+offset_top = 16.0
+offset_right = 25.0
+offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.95, 0.88, 0.75, 1)
+theme_override_fonts/font = ExtResource("12_font_serif")
 theme_override_font_sizes/font_size = 11
 text = "60%"
 horizontal_alignment = 1
 
-[node name="DialMasses" type="Control" parent="TopBar/HBoxCenter"]
-custom_minimum_size = Vector2(56, 56)
-layout_mode = 2
-script = ExtResource("2_dial")
-title = "MASSES"
-icon_symbol = "⚒"
+[node name="DialMasses" type="Control" parent="TopBar/DialsCenter"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 35.0
+offset_top = -45.0
+offset_right = 105.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("13_dial_script")
 fill_percent = 58.0
 
-[node name="Title" type="Label" parent="TopBar/HBoxCenter/DialMasses"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -25.0
-offset_top = 6.0
-offset_right = 25.0
-offset_bottom = 20.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0.9, 0.78, 0.4, 1)
-theme_override_font_sizes/font_size = 9
-text = "MASSES"
-horizontal_alignment = 1
-
-[node name="Pct" type="Label" parent="TopBar/HBoxCenter/DialMasses"]
+[node name="Pct" type="Label" parent="TopBar/DialsCenter/DialMasses"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -22.0
-offset_right = 20.0
-offset_bottom = -6.0
+offset_left = -25.0
+offset_top = 16.0
+offset_right = 25.0
+offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0.95, 0.88, 0.75, 1)
+theme_override_fonts/font = ExtResource("12_font_serif")
 theme_override_font_sizes/font_size = 11
 text = "58%"
 horizontal_alignment = 1
@@ -439,251 +294,232 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -340.0
-offset_top = -26.0
-offset_right = -15.0
-offset_bottom = 26.0
+offset_left = -300.0
+offset_top = -20.0
+offset_right = -18.0
+offset_bottom = 20.0
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_constants/separation = 16
 alignment = 2
 
-[node name="Morale" type="VBoxContainer" parent="TopBar/HBoxRight"]
-custom_minimum_size = Vector2(160, 0)
-layout_mode = 2
-alignment = 1
-
-[node name="HBoxH" type="HBoxContainer" parent="TopBar/HBoxRight/Morale"]
-layout_mode = 2
-
-[node name="Lbl" type="Label" parent="TopBar/HBoxRight/Morale/HBoxH"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.4, 0.9, 0.45, 1)
-theme_override_font_sizes/font_size = 10
-text = "HOPE"
-
-[node name="HopeBar" type="ProgressBar" parent="TopBar/HBoxRight/Morale/HBoxH"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/fill = SubResource("SB_HopeBar_Fill")
-value = 78.0
-show_percentage = false
-
-[node name="HBoxD" type="HBoxContainer" parent="TopBar/HBoxRight/Morale"]
-layout_mode = 2
-
-[node name="Lbl" type="Label" parent="TopBar/HBoxRight/Morale/HBoxD"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.35, 0.35, 1)
-theme_override_font_sizes/font_size = 10
-text = "UNREST"
-
-[node name="DiscontentBar" type="ProgressBar" parent="TopBar/HBoxRight/Morale/HBoxD"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/fill = SubResource("SB_Discontent_Fill")
-value = 14.0
-show_percentage = false
-
-[node name="EraInfo" type="VBoxContainer" parent="TopBar/HBoxRight"]
-layout_mode = 2
-alignment = 1
-
-[node name="Era" type="Label" parent="TopBar/HBoxRight/EraInfo"]
+[node name="EraTitle" type="Label" parent="TopBar/HBoxRight"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.82, 0.35, 1)
-theme_override_font_sizes/font_size = 12
+theme_override_fonts/font = ExtResource("12_font_serif")
+theme_override_font_sizes/font_size = 16
 text = "BRONZE AGE"
 horizontal_alignment = 2
 
-[node name="Year" type="Label" parent="TopBar/HBoxRight/EraInfo"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.65, 0.55, 1)
-theme_override_font_sizes/font_size = 10
-text = "YEAR 2340 BC"
-horizontal_alignment = 2
-
-[node name="BottomLeftCard" type="PanelContainer" parent="."]
+[node name="BottomLeftCard" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 18.0
+offset_left = 16.0
 offset_top = -180.0
-offset_right = 380.0
-offset_bottom = -18.0
+offset_right = 370.0
+offset_bottom = -16.0
 grow_vertical = 0
-theme_override_styles/panel = SubResource("SB_Card")
+theme_override_styles/panel = SubResource("SB_CardTex")
 
-[node name="Margin" type="MarginContainer" parent="BottomLeftCard"]
-layout_mode = 2
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 10
-
-[node name="HBox" type="HBoxContainer" parent="BottomLeftCard/Margin"]
-layout_mode = 2
-theme_override_constants/separation = 12
-
-[node name="IconBox" type="Panel" parent="BottomLeftCard/Margin/HBox"]
-custom_minimum_size = Vector2(54, 0)
-layout_mode = 2
-theme_override_styles/panel = SubResource("SB_ResPill")
-
-[node name="IconLabel" type="Label" parent="BottomLeftCard/Margin/HBox/IconBox"]
+[node name="VBoxInfo" type="VBoxContainer" parent="BottomLeftCard"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 105.0
+offset_top = 14.0
+offset_right = -16.0
+offset_bottom = -14.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 28
-text = "🏛"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="VBoxInfo" type="VBoxContainer" parent="BottomLeftCard/Margin/HBox"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 4
+theme_override_constants/separation = 2
 alignment = 1
 
-[node name="Title" type="Label" parent="BottomLeftCard/Margin/HBox/VBoxInfo"]
+[node name="Title" type="Label" parent="BottomLeftCard/VBoxInfo"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.85, 0.4, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.95, 0.85, 0.5, 1)
+theme_override_fonts/font = ExtResource("12_font_serif")
+theme_override_font_sizes/font_size = 13
 text = "CITADEL OF UR-KISH"
 
-[node name="Subtitle" type="Label" parent="BottomLeftCard/Margin/HBox/VBoxInfo"]
+[node name="Subtitle" type="Label" parent="BottomLeftCard/VBoxInfo"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.75, 0.7, 0.6, 1)
 theme_override_font_sizes/font_size = 11
-text = "Royal Capital (Tier 1 Megalith)"
+text = "(unselected)"
 
-[node name="Stat1" type="Label" parent="BottomLeftCard/Margin/HBox/VBoxInfo"]
+[node name="Stat1" type="Label" parent="BottomLeftCard/VBoxInfo"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85, 0.82, 0.75, 1)
-theme_override_font_sizes/font_size = 10
-text = "🌾 Food Buffer: 90 Days   👥 Manpower: 100%"
+theme_override_font_sizes/font_size = 11
+text = "PROVINCE POPULATION: 139"
 
-[node name="Stat2" type="Label" parent="BottomLeftCard/Margin/HBox/VBoxInfo"]
+[node name="Stat2" type="Label" parent="BottomLeftCard/VBoxInfo"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.4, 0.85, 0.5, 1)
-theme_override_font_sizes/font_size = 10
-text = "🛡 Citadel Defense: 1,500 / 1,500   👑 Stability: 85%"
+theme_override_colors/font_color = Color(0.85, 0.82, 0.75, 1)
+theme_override_font_sizes/font_size = 11
+text = "FORTIFICATION: 1200 / 1200"
 
-[node name="HpBar" type="ProgressBar" parent="BottomLeftCard/Margin/HBox/VBoxInfo"]
-custom_minimum_size = Vector2(0, 6)
+[node name="Stability" type="Label" parent="BottomLeftCard/VBoxInfo"]
 layout_mode = 2
-theme_override_styles/fill = SubResource("SB_HopeBar_Fill")
-value = 100.0
-show_percentage = false
+theme_override_colors/font_color = Color(0.9, 0.8, 0.4, 1)
+theme_override_font_sizes/font_size = 10
+text = "REALM STABILITY: High"
 
-[node name="ActionRibbon" type="PanelContainer" parent="."]
+[node name="ActionRibbon" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -330.0
-offset_top = -90.0
-offset_right = 330.0
-offset_bottom = -18.0
+offset_left = -160.0
+offset_top = -80.0
+offset_right = 160.0
+offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_styles/panel = SubResource("SB_Card")
+theme_override_styles/panel = SubResource("SB_RibbonTex")
 
 [node name="HBoxButtons" type="HBoxContainer" parent="ActionRibbon"]
-layout_mode = 2
-theme_override_constants/separation = 8
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 6.0
+offset_right = -12.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
 
-[node name="Btn1" type="Button" parent="ActionRibbon/HBoxButtons"]
+[node name="Btn1" type="TextureButton" parent="ActionRibbon/HBoxButtons"]
+custom_minimum_size = Vector2(48, 56)
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("SB_Button_Normal")
-theme_override_styles/hover = SubResource("SB_Button_Hover")
-theme_override_styles/pressed = SubResource("SB_Button_Pressed")
-text = "[1] Spearmen"
+texture_normal = ExtResource("7_btn_spear")
+ignore_texture_size = true
+stretch_mode = 5
 
-[node name="Btn2" type="Button" parent="ActionRibbon/HBoxButtons"]
+[node name="Label" type="Label" parent="ActionRibbon/HBoxButtons/Btn1"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -14.0
+offset_right = 20.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 9
+text = "[1]"
+
+[node name="Btn2" type="TextureButton" parent="ActionRibbon/HBoxButtons"]
+custom_minimum_size = Vector2(48, 56)
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("SB_Button_Normal")
-theme_override_styles/hover = SubResource("SB_Button_Hover")
-theme_override_styles/pressed = SubResource("SB_Button_Pressed")
-text = "[2] Slingers"
+texture_normal = ExtResource("8_btn_banner")
+ignore_texture_size = true
+stretch_mode = 5
 
-[node name="Btn3" type="Button" parent="ActionRibbon/HBoxButtons"]
+[node name="Label" type="Label" parent="ActionRibbon/HBoxButtons/Btn2"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -14.0
+offset_right = 20.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 9
+text = "[2]"
+
+[node name="Btn3" type="TextureButton" parent="ActionRibbon/HBoxButtons"]
+custom_minimum_size = Vector2(48, 56)
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("SB_Button_Normal")
-theme_override_styles/hover = SubResource("SB_Button_Hover")
-theme_override_styles/pressed = SubResource("SB_Button_Pressed")
-text = "[3] Chariot"
+texture_normal = ExtResource("9_btn_crown")
+ignore_texture_size = true
+stretch_mode = 5
 
-[node name="BtnFormation" type="Button" parent="ActionRibbon/HBoxButtons"]
+[node name="Label" type="Label" parent="ActionRibbon/HBoxButtons/Btn3"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -14.0
+offset_right = 20.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 9
+text = "[3]"
+
+[node name="Btn4" type="TextureButton" parent="ActionRibbon/HBoxButtons"]
+custom_minimum_size = Vector2(48, 56)
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("SB_Button_Normal")
-theme_override_styles/hover = SubResource("SB_Button_Hover")
-theme_override_styles/pressed = SubResource("SB_Button_Pressed")
-text = "[4] Drill
-(Phalanx)"
+texture_normal = ExtResource("10_btn_swords")
+ignore_texture_size = true
+stretch_mode = 5
 
-[node name="Btn5" type="Button" parent="ActionRibbon/HBoxButtons"]
+[node name="Label" type="Label" parent="ActionRibbon/HBoxButtons/Btn4"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -14.0
+offset_right = 20.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 9
+text = "[4]"
+
+[node name="Btn5" type="TextureButton" parent="ActionRibbon/HBoxButtons"]
+custom_minimum_size = Vector2(48, 56)
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("SB_Button_Normal")
-theme_override_styles/hover = SubResource("SB_Button_Hover")
-theme_override_styles/pressed = SubResource("SB_Button_Pressed")
-text = "[5] Raiders"
+texture_normal = ExtResource("11_btn_rune")
+ignore_texture_size = true
+stretch_mode = 5
 
-[node name="Btn6" type="Button" parent="ActionRibbon/HBoxButtons"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("SB_Button_Normal")
-theme_override_styles/hover = SubResource("SB_Button_Hover")
-theme_override_styles/pressed = SubResource("SB_Button_Pressed")
-text = "[6] Crisis"
+[node name="Label" type="Label" parent="ActionRibbon/HBoxButtons/Btn5"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -14.0
+offset_right = 20.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 9
+text = "[5]"
 
-[node name="MinimapContainer" type="PanelContainer" parent="."]
+[node name="MinimapFrame" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -210.0
-offset_top = -210.0
-offset_right = -18.0
-offset_bottom = -18.0
+offset_left = -300.0
+offset_top = -240.0
+offset_right = -16.0
+offset_bottom = -16.0
 grow_horizontal = 0
 grow_vertical = 0
-theme_override_styles/panel = SubResource("SB_Card")
+texture = ExtResource("6_minimap_frame")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="VBox" type="VBoxContainer" parent="MinimapContainer"]
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="Header" type="Label" parent="MinimapContainer/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.82, 0.35, 1)
-theme_override_font_sizes/font_size = 11
-text = "MESOPOTAMIA CARTOGRAPHY"
-horizontal_alignment = 1
-
-[node name="Minimap" type="Control" parent="MinimapContainer/VBox"]
-layout_mode = 2
-size_flags_vertical = 3
-script = ExtResource("3_map")
+[node name="Minimap" type="Control" parent="MinimapFrame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 14.0
+offset_right = -14.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_map_script")
 
 [node name="NotificationBanner" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -695,7 +531,6 @@ offset_top = 78.0
 offset_right = 320.0
 offset_bottom = 112.0
 grow_horizontal = 2
-theme_override_styles/panel = SubResource("SB_Card")
 
 [node name="Margin" type="MarginContainer" parent="NotificationBanner"]
 layout_mode = 2
@@ -707,6 +542,7 @@ theme_override_constants/margin_bottom = 4
 [node name="NotifText" type="Label" parent="NotificationBanner/Margin"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
+theme_override_fonts/font = ExtResource("12_font_serif")
 theme_override_font_sizes/font_size = 13
 text = "DOMINION NOTIFICATION"
 horizontal_alignment = 1
@@ -725,7 +561,6 @@ offset_right = 340.0
 offset_bottom = 170.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("SB_Card")
 
 [node name="Margin" type="MarginContainer" parent="CrisisModal"]
 layout_mode = 2
@@ -741,6 +576,7 @@ theme_override_constants/separation = 16
 [node name="Title" type="Label" parent="CrisisModal/Margin/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_fonts/font = ExtResource("12_font_serif")
 theme_override_font_sizes/font_size = 20
 text = "CRISIS DECREE TITLE"
 horizontal_alignment = 1
@@ -761,25 +597,18 @@ theme_override_constants/separation = 16
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("SB_Button_Normal")
-theme_override_styles/hover = SubResource("SB_Button_Hover")
-theme_override_styles/pressed = SubResource("SB_Button_Pressed")
 text = "DECREE OPTION 1"
 
 [node name="Option2" type="Button" parent="CrisisModal/Margin/VBox/HBoxOptions"]
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("SB_Button_Normal")
-theme_override_styles/hover = SubResource("SB_Button_Hover")
-theme_override_styles/pressed = SubResource("SB_Button_Pressed")
 text = "DECREE OPTION 2"
 
 [connection signal="pressed" from="ActionRibbon/HBoxButtons/Btn1" to="." method="_on_action_spearmen_pressed"]
 [connection signal="pressed" from="ActionRibbon/HBoxButtons/Btn2" to="." method="_on_action_slingers_pressed"]
 [connection signal="pressed" from="ActionRibbon/HBoxButtons/Btn3" to="." method="_on_action_chariots_pressed"]
-[connection signal="pressed" from="ActionRibbon/HBoxButtons/BtnFormation" to="." method="_on_action_formation_pressed"]
+[connection signal="pressed" from="ActionRibbon/HBoxButtons/Btn4" to="." method="_on_action_formation_pressed"]
 [connection signal="pressed" from="ActionRibbon/HBoxButtons/Btn5" to="." method="_on_action_raider_wave_pressed"]
-[connection signal="pressed" from="ActionRibbon/HBoxButtons/Btn6" to="." method="_on_action_crisis_trigger_pressed"]
 [connection signal="pressed" from="CrisisModal/Margin/VBox/HBoxOptions/Option1" to="." method="_on_crisis_option_pressed" binds= [0]]
 [connection signal="pressed" from="CrisisModal/Margin/VBox/HBoxOptions/Option2" to="." method="_on_crisis_option_pressed" binds= [1]]
