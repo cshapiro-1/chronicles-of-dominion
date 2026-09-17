@@ -1,0 +1,224 @@
+[gd_scene load_steps=22 format=3 uid="uid://world_gloomy_01"]
+
+[ext_resource type="Shader" path="res://assets/materials/GroundShader.gdshader" id="1_ground_sh"]
+[ext_resource type="Shader" path="res://assets/materials/WaterShader.gdshader" id="2_water_sh"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/Ziggurat.tscn" id="3_zig"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/FarmPlot.tscn" id="4_farm"]
+[ext_resource type="PackedScene" path="res://scenes/units/Unit.tscn" id="5_unit"]
+[ext_resource type="PackedScene" path="res://scenes/world/Brazier.tscn" id="6_brazier"]
+[ext_resource type="Resource" path="res://data/units/Spearman.tres" id="7_spear"]
+[ext_resource type="Resource" path="res://data/units/Slinger.tres" id="8_slinger"]
+[ext_resource type="Resource" path="res://data/units/Chariot.tres" id="9_chariot"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_Gloomy"]
+sky_top_color = Color(0.07, 0.09, 0.13, 1)
+sky_horizon_color = Color(0.35, 0.22, 0.14, 1)
+sky_curve = 0.12
+ground_bottom_color = Color(0.08, 0.07, 0.05, 1)
+ground_horizon_color = Color(0.25, 0.18, 0.12, 1)
+sun_angle_max = 25.0
+
+[sub_resource type="Sky" id="Sky_Gloomy"]
+sky_material = SubResource("ProceduralSkyMaterial_Gloomy")
+
+[sub_resource type="Environment" id="Environment_Grimdark"]
+background_mode = 2
+sky = SubResource("Sky_Gloomy")
+ambient_light_source = 2
+ambient_light_color = Color(0.24, 0.21, 0.18, 1)
+ambient_light_energy = 0.8
+tonemap_mode = 3
+tonemap_exposure = 1.05
+tonemap_white = 1.2
+ssao_enabled = true
+ssao_radius = 2.2
+ssao_intensity = 3.5
+ssao_power = 1.4
+ssil_enabled = true
+ssil_radius = 4.0
+ssil_intensity = 1.2
+glow_enabled = true
+glow_intensity = 0.35
+glow_bloom = 0.25
+glow_blend_mode = 0
+fog_enabled = true
+fog_light_color = Color(0.35, 0.28, 0.22, 1)
+fog_density = 0.008
+fog_sky_affect = 0.4
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.02
+volumetric_fog_albedo = Color(0.28, 0.24, 0.2, 1)
+volumetric_fog_emission = Color(0.05, 0.04, 0.03, 1)
+volumetric_fog_emission_energy = 0.5
+
+[sub_resource type="ShaderMaterial" id="Mat_Ground"]
+render_priority = 0
+shader = ExtResource("1_ground_sh")
+shader_parameter/sand_color = Color(0.45, 0.38, 0.26, 1)
+shader_parameter/rock_color = Color(0.28, 0.23, 0.16, 1)
+shader_parameter/mud_color = Color(0.2, 0.16, 0.11, 1)
+shader_parameter/roughness = 0.94
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_Ground"]
+size = Vector2(160, 160)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_Ground"]
+size = Vector3(160, 1, 160)
+
+[sub_resource type="ShaderMaterial" id="Mat_Water"]
+render_priority = 0
+shader = ExtResource("2_water_sh")
+shader_parameter/deep_color = Color(0.06, 0.14, 0.18, 1)
+shader_parameter/shallow_color = Color(0.22, 0.32, 0.28, 0.92)
+shader_parameter/metallic = 0.1
+shader_parameter/roughness = 0.12
+shader_parameter/wave_speed = 0.5
+shader_parameter/wave_scale = 1.8
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_Water"]
+size = Vector2(16, 160)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Wall"]
+albedo_color = Color(0.42, 0.35, 0.24, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_Wall"]
+size = Vector3(1.4, 3.2, 18)
+
+[sub_resource type="BoxMesh" id="BoxMesh_Tower"]
+size = Vector3(2.6, 4.8, 2.6)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Road"]
+albedo_color = Color(0.26, 0.22, 0.16, 1)
+roughness = 0.95
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_Road"]
+size = Vector2(4, 35)
+
+[node name="World" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_Grimdark")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.353553, 0.612372, 0, 0.866025, 0.5, -0.707107, -0.353553, 0.612372, 0, 25, 0)
+light_color = Color(0.96, 0.82, 0.62, 1)
+light_energy = 1.35
+shadow_enabled = true
+shadow_bias = 0.04
+shadow_blur = 1.2
+directional_shadow_mode = 2
+directional_shadow_split_1 = 0.15
+directional_shadow_split_2 = 0.3
+directional_shadow_split_3 = 0.6
+directional_shadow_blend_splits = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_Ground")
+surface_material_override/0 = SubResource("Mat_Ground")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_Ground")
+
+[node name="River" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -15, 0.05, 0)
+mesh = SubResource("PlaneMesh_Water")
+surface_material_override/0 = SubResource("Mat_Water")
+
+[node name="CitadelRoad" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 6, 0.02, 6)
+mesh = SubResource("PlaneMesh_Road")
+surface_material_override/0 = SubResource("Mat_Road")
+
+[node name="CityWalls" type="Node3D" parent="."]
+
+[node name="WallEast" type="MeshInstance3D" parent="CityWalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 1.6, 0)
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("Mat_Wall")
+
+[node name="WallWest" type="MeshInstance3D" parent="CityWalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 1.6, 0)
+mesh = SubResource("BoxMesh_Wall")
+surface_material_override/0 = SubResource("Mat_Wall")
+
+[node name="TowerNE" type="MeshInstance3D" parent="CityWalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 2.4, 9)
+mesh = SubResource("BoxMesh_Tower")
+surface_material_override/0 = SubResource("Mat_Wall")
+
+[node name="TowerSE" type="MeshInstance3D" parent="CityWalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 2.4, -9)
+mesh = SubResource("BoxMesh_Tower")
+surface_material_override/0 = SubResource("Mat_Wall")
+
+[node name="TowerNW" type="MeshInstance3D" parent="CityWalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 2.4, 9)
+mesh = SubResource("BoxMesh_Tower")
+surface_material_override/0 = SubResource("Mat_Wall")
+
+[node name="TowerSW" type="MeshInstance3D" parent="CityWalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 2.4, -9)
+mesh = SubResource("BoxMesh_Tower")
+surface_material_override/0 = SubResource("Mat_Wall")
+
+[node name="Braziers" type="Node3D" parent="."]
+
+[node name="Brazier1" parent="Braziers" instance=ExtResource("6_brazier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 7)
+
+[node name="Brazier2" parent="Braziers" instance=ExtResource("6_brazier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -7)
+
+[node name="Brazier3" parent="Braziers" instance=ExtResource("6_brazier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 7)
+
+[node name="Brazier4" parent="Braziers" instance=ExtResource("6_brazier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -7)
+
+[node name="BrazierSummit" parent="Braziers" instance=ExtResource("6_brazier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.2, 0)
+
+[node name="Ziggurat" parent="." instance=ExtResource("3_zig")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Farms" type="Node3D" parent="."]
+
+[node name="FarmPlot1" parent="Farms" instance=ExtResource("4_farm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, 16)
+
+[node name="FarmPlot2" parent="Farms" instance=ExtResource("4_farm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 16)
+
+[node name="FarmPlot3" parent="Farms" instance=ExtResource("4_farm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 16)
+
+[node name="Units" type="Node3D" parent="."]
+
+[node name="Spearman1" parent="Units" instance=ExtResource("5_unit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 3)
+unit_data = ExtResource("7_spear")
+
+[node name="Spearman2" parent="Units" instance=ExtResource("5_unit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
+unit_data = ExtResource("7_spear")
+
+[node name="Spearman3" parent="Units" instance=ExtResource("5_unit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -3)
+unit_data = ExtResource("7_spear")
+
+[node name="Slinger1" parent="Units" instance=ExtResource("5_unit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 1.5)
+unit_data = ExtResource("8_slinger")
+
+[node name="Slinger2" parent="Units" instance=ExtResource("5_unit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -1.5)
+unit_data = ExtResource("8_slinger")
+
+[node name="Chariot1" parent="Units" instance=ExtResource("5_unit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 0)
+unit_data = ExtResource("9_chariot")

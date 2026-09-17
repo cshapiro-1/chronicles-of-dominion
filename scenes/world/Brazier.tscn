@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://brazier_01"]
+
+[ext_resource type="Script" path="res://scenes/world/Brazier.gd" id="1_brazier"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_Base"]
+top_radius = 0.4
+bottom_radius = 0.25
+height = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_BronzeMetal"]
+albedo_color = Color(0.22, 0.18, 0.14, 1)
+metallic = 0.8
+roughness = 0.4
+
+[sub_resource type="SphereMesh" id="SphereMesh_Fire"]
+radius = 0.25
+height = 0.5
+
+[sub_resource type="StandardMaterial3D" id="Mat_FireGlow"]
+shading_mode = 0
+albedo_color = Color(1.2, 0.55, 0.1, 1)
+
+[node name="Brazier" type="Node3D"]
+script = ExtResource("1_brazier")
+
+[node name="BaseMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+mesh = SubResource("CylinderMesh_Base")
+surface_material_override/0 = SubResource("Mat_BronzeMetal")
+
+[node name="FireMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+mesh = SubResource("SphereMesh_Fire")
+surface_material_override/0 = SubResource("Mat_FireGlow")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+light_color = Color(1, 0.65, 0.25, 1)
+light_energy = 2.4
+omni_range = 8.0
+omni_attenuation = 1.4

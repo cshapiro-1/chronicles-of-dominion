@@ -1,0 +1,62 @@
+[gd_scene load_steps=10 format=3 uid="uid://ziggurat_pbr_01"]
+
+[ext_resource type="Script" path="res://scenes/buildings/Ziggurat.gd" id="1_zig"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_Mudbrick"]
+albedo_color = Color(0.48, 0.40, 0.28, 1)
+roughness = 0.92
+
+[sub_resource type="BoxMesh" id="BoxMesh_Tier1"]
+size = Vector3(14, 1.8, 14)
+
+[sub_resource type="BoxMesh" id="BoxMesh_Tier2"]
+size = Vector3(10.5, 1.6, 10.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_Tier3"]
+size = Vector3(7, 1.4, 7)
+
+[sub_resource type="StandardMaterial3D" id="Mat_LapisLazuli"]
+albedo_color = Color(0.12, 0.22, 0.52, 1)
+metallic = 0.3
+roughness = 0.3
+
+[sub_resource type="BoxMesh" id="BoxMesh_Shrine"]
+size = Vector3(3.8, 1.2, 3.8)
+
+[sub_resource type="PrismMesh" id="PrismMesh_Stairs"]
+size = Vector3(2.5, 4.8, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_Zig"]
+size = Vector3(14, 6, 14)
+
+[node name="Ziggurat" type="StaticBody3D" groups=["Ziggurat"]]
+script = ExtResource("1_zig")
+
+[node name="Tier1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+mesh = SubResource("BoxMesh_Tier1")
+surface_material_override/0 = SubResource("Mat_Mudbrick")
+
+[node name="Tier2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
+mesh = SubResource("BoxMesh_Tier2")
+surface_material_override/0 = SubResource("Mat_Mudbrick")
+
+[node name="Tier3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1, 0)
+mesh = SubResource("BoxMesh_Tier3")
+surface_material_override/0 = SubResource("Mat_Mudbrick")
+
+[node name="ShrineSummit" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.4, 0)
+mesh = SubResource("BoxMesh_Shrine")
+surface_material_override/0 = SubResource("Mat_LapisLazuli")
+
+[node name="CentralStaircase" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 2.4, 7.5)
+mesh = SubResource("PrismMesh_Stairs")
+surface_material_override/0 = SubResource("Mat_Mudbrick")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+shape = SubResource("BoxShape3D_Zig")

@@ -1,0 +1,83 @@
+[gd_scene load_steps=11 format=3 uid="uid://unit_detailed_01"]
+
+[ext_resource type="Script" path="res://scenes/units/Unit.gd" id="1_unit"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_Unit"]
+radius = 0.4
+height = 1.6
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_Body"]
+radius = 0.35
+height = 1.4
+
+[sub_resource type="StandardMaterial3D" id="Mat_UnitSkin"]
+albedo_color = Color(0.65, 0.48, 0.32, 1)
+roughness = 0.7
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_Helmet"]
+top_radius = 0.18
+bottom_radius = 0.36
+height = 0.3
+
+[sub_resource type="StandardMaterial3D" id="Mat_Bronze"]
+albedo_color = Color(0.75, 0.55, 0.25, 1)
+metallic = 0.85
+roughness = 0.35
+
+[sub_resource type="BoxMesh" id="BoxMesh_Shield"]
+size = Vector3(0.12, 0.95, 0.55)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_Spear"]
+top_radius = 0.03
+bottom_radius = 0.03
+height = 2.2
+
+[sub_resource type="TorusMesh" id="TorusMesh_Ring"]
+inner_radius = 0.65
+outer_radius = 0.75
+
+[sub_resource type="StandardMaterial3D" id="Mat_Ring"]
+shading_mode = 0
+albedo_color = Color(0.3, 0.85, 1, 1)
+
+[node name="Unit" type="CharacterBody3D" groups=["Units"]]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_unit")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("CapsuleShape3D_Unit")
+
+[node name="BodyMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("CapsuleMesh_Body")
+surface_material_override/0 = SubResource("Mat_UnitSkin")
+
+[node name="Helmet" type="MeshInstance3D" parent="BodyMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
+mesh = SubResource("CylinderMesh_Helmet")
+surface_material_override/0 = SubResource("Mat_Bronze")
+
+[node name="Shield" type="MeshInstance3D" parent="BodyMesh"]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, 0.38, 0.05, 0.15)
+mesh = SubResource("BoxMesh_Shield")
+surface_material_override/0 = SubResource("Mat_Bronze")
+
+[node name="Spear" type="MeshInstance3D" parent="BodyMesh"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, -0.38, 0.45, 0.3)
+mesh = SubResource("CylinderMesh_Spear")
+surface_material_override/0 = SubResource("Mat_Bronze")
+
+[node name="SelectionRing" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+mesh = SubResource("TorusMesh_Ring")
+surface_material_override/0 = SubResource("Mat_Ring")
+
+[node name="HPBar" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+billboard = 1
+double_sided = false
+text = "100 / 100"
+font_size = 20
+outline_size = 4

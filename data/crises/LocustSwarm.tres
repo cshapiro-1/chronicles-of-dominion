@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CrisisData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/CrisisData.gd" id="1_5"]
+
+[resource]
+script = ExtResource("1_5")
+title = "Locust Swarm on the Euphrates"
+description = "A colossal swarm of desert locusts has descended upon the irrigated barley basins of Ur-Kish. The elders demand emergency canal flooding to burn the fields, while the temple priests warn of divine retribution."
+options = ["Flood Canal Sluices (-200 Grain, Discontent -8%)", "Preserve Harvest & Pray (-12% Hope, +15% Discontent)"]
+option_consequences = ["Burns the locust clutches before spreading to the city core.", "Refuses to burn sacred grain, risking devastating regional famine."]

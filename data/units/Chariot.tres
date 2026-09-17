@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="UnitData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/UnitData.gd" id="1_3"]
+
+[resource]
+script = ExtResource("1_3")
+unit_name = "Royal Heavy Chariot"
+max_health = 320.0
+damage = 48.0
+attack_range = 3.2
+attack_speed = 0.9
+move_speed = 8.5
+armor = 10.0
+cost = {
+"Bronze": 50.0,
+"Grain": 90.0,
+"Timber": 40.0
+}
+mesh_color = Color(0.95, 0.45, 0.2, 1)
+is_ranged = false
+projectile_speed = 0.0

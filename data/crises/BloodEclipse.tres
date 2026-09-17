@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CrisisData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/CrisisData.gd" id="1_7"]
+
+[resource]
+script = ExtResource("1_7")
+title = "Temple Blood Eclipse"
+description = "A crimson lunar eclipse shrouds the ziggurat at midnight. The High Priesthood demands a royal treasury offering to perform purification rites."
+options = ["Offer Gold Bullion (-150 Gold, +15% Altar Loyalty, +8% Hope)", "Denounce the Omens (-15% Altar Loyalty, +10% Discontent)"]
+option_consequences = ["Funds monumental incense and prayer rites.", "Rebuffs the temple elders, stoking superstitious panic."]

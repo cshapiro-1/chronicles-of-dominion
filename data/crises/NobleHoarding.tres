@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CrisisData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/CrisisData.gd" id="1_6"]
+
+[resource]
+script = ExtResource("1_6")
+title = "Noble Grain Hoarding"
+description = "High aristocratic families have locked their private storehouses outside the South Gate, refusing to supply the municipal rationing granaries as market prices spike."
+options = ["Confiscate Stores (+350 Grain, -15% Nobility Loyalty)", "Permit Private Surplus (+12% Nobility Loyalty, +12% Discontent)"]
+option_consequences = ["Enforces imperial emergency law. Nobility threatens palace revolt.", "Maintains patrician allegiance at the cost of civil unrest."]
