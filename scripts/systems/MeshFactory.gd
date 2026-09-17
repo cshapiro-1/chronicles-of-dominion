@@ -1,25 +1,40 @@
-class_name MeshFactory
-extends RefCounted
+extends Node
 
-static var mat_mudbrick: StandardMaterial3D
-static var mat_lapis: StandardMaterial3D
-static var mat_bronze: StandardMaterial3D
-static var mat_wood: StandardMaterial3D
-static var mat_frond: StandardMaterial3D
-static var mat_soil: StandardMaterial3D
-static var mat_crops: StandardMaterial3D
-static var mat_skin: StandardMaterial3D
-static var mat_linen: StandardMaterial3D
+var mat_mudbrick: StandardMaterial3D
+var mat_lapis: StandardMaterial3D
+var mat_bronze: StandardMaterial3D
+var mat_wood: StandardMaterial3D
+var mat_frond: StandardMaterial3D
+var mat_soil: StandardMaterial3D
+var mat_crops: StandardMaterial3D
+var mat_skin: StandardMaterial3D
+var mat_linen: StandardMaterial3D
 
-static func _init_materials() -> void:
+func _ready() -> void:
+	_init_materials()
+
+func _load_tex(path: String) -> Texture2D:
+	if ResourceLoader.exists(path):
+		var res = load(path)
+		if res is Texture2D:
+			return res
+	# Direct fallback via Image
+	var global_p = ProjectSettings.globalize_path(path)
+	if FileAccess.file_exists(global_p):
+		var img = Image.load_from_file(global_p)
+		if img:
+			return ImageTexture.create_from_image(img)
+	return null
+
+func _init_materials() -> void:
 	if mat_mudbrick != null:
 		return
 		
-	var tex_mud = load("res://assets/textures/T_Mudbrick_PBR.png")
-	var tex_lapis = load("res://assets/textures/T_LapisLazuli_PBR.png")
-	var tex_bronze = load("res://assets/textures/T_Bronze_PBR.png")
-	var tex_wood = load("res://assets/textures/T_Wood_PBR.png")
-	var tex_frond = load("res://assets/textures/T_Palm_Frond.png")
+	var tex_mud = _load_tex("res://assets/textures/T_Mudbrick_PBR.png")
+	var tex_lapis = _load_tex("res://assets/textures/T_LapisLazuli_PBR.png")
+	var tex_bronze = _load_tex("res://assets/textures/T_Bronze_PBR.png")
+	var tex_wood = _load_tex("res://assets/textures/T_Wood_PBR.png")
+	var tex_frond = _load_tex("res://assets/textures/T_Palm_Frond.png")
 
 	mat_mudbrick = StandardMaterial3D.new()
 	mat_mudbrick.albedo_color = Color(0.85, 0.72, 0.55)
@@ -68,7 +83,7 @@ static func _init_materials() -> void:
 	mat_linen.albedo_color = Color(0.9, 0.85, 0.75)
 	mat_linen.roughness = 0.9
 
-static func _add_box(st: SurfaceTool, center: Vector3, size: Vector3, uv_rep: Vector2 = Vector2.ONE) -> void:
+func _add_box(st: SurfaceTool, center: Vector3, size: Vector3, uv_rep: Vector2 = Vector2.ONE) -> void:
 	var h = size * 0.5
 	var c = center
 	var v0 = c + Vector3(-h.x, -h.y,  h.z)
@@ -86,7 +101,7 @@ static func _add_box(st: SurfaceTool, center: Vector3, size: Vector3, uv_rep: Ve
 	_add_quad(st, v3, v2, v6, v7, Vector3.UP, uv_rep)
 	_add_quad(st, v4, v5, v1, v0, Vector3.DOWN, uv_rep)
 
-static func _add_frustum(st: SurfaceTool, cx: float, y_bot: float, y_top: float, cz: float, sx_bot: float, sz_bot: float, sx_top: float, sz_top: float, uv_rep: Vector2 = Vector2.ONE) -> void:
+func _add_frustum(st: SurfaceTool, cx: float, y_bot: float, y_top: float, cz: float, sx_bot: float, sz_bot: float, sx_top: float, sz_top: float, uv_rep: Vector2 = Vector2.ONE) -> void:
 	var hxb = sx_bot * 0.5
 	var hzb = sz_bot * 0.5
 	var hxt = sx_top * 0.5
@@ -106,7 +121,7 @@ static func _add_frustum(st: SurfaceTool, cx: float, y_bot: float, y_top: float,
 	_add_quad(st, v3, v2, v6, v7, Vector3.UP, uv_rep)
 	_add_quad(st, v4, v5, v1, v0, Vector3.DOWN, uv_rep)
 
-static func _add_quad(st: SurfaceTool, v0: Vector3, v1: Vector3, v2: Vector3, v3: Vector3, norm: Vector3, uv_rep: Vector2) -> void:
+func _add_quad(st: SurfaceTool, v0: Vector3, v1: Vector3, v2: Vector3, v3: Vector3, norm: Vector3, uv_rep: Vector2) -> void:
 	st.set_normal(norm)
 	st.set_uv(Vector2(0, 0)); st.add_vertex(v0)
 	st.set_uv(Vector2(uv_rep.x, 0)); st.add_vertex(v1)
@@ -115,7 +130,7 @@ static func _add_quad(st: SurfaceTool, v0: Vector3, v1: Vector3, v2: Vector3, v3
 	st.set_uv(Vector2(uv_rep.x, uv_rep.y)); st.add_vertex(v2)
 	st.set_uv(Vector2(0, uv_rep.y)); st.add_vertex(v3)
 
-static func create_ziggurat_mesh() -> ArrayMesh:
+func create_ziggurat_mesh() -> ArrayMesh:
 	_init_materials()
 	var mesh = ArrayMesh.new()
 
@@ -123,7 +138,7 @@ static func create_ziggurat_mesh() -> ArrayMesh:
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	st.set_material(mat_mudbrick)
 
-	# Broad Raised Foundation Plaza: 32m x 32m x 1m
+	# Broad Foundation Plaza: 32m x 32m x 1m
 	_add_box(st, Vector3(0, 0.5, 0), Vector3(32, 1.0, 32), Vector2(8, 8))
 
 	# Tier 1 with sloped batter: Base 26m, Top 22m, Height 1m to 5m
@@ -200,7 +215,7 @@ static func create_ziggurat_mesh() -> ArrayMesh:
 
 	return mesh
 
-static func create_city_gate_mesh() -> ArrayMesh:
+func create_city_gate_mesh() -> ArrayMesh:
 	_init_materials()
 	var mesh = ArrayMesh.new()
 
@@ -237,7 +252,7 @@ static func create_city_gate_mesh() -> ArrayMesh:
 
 	return mesh
 
-static func create_house_mesh() -> ArrayMesh:
+func create_house_mesh() -> ArrayMesh:
 	_init_materials()
 	var mesh = ArrayMesh.new()
 
@@ -262,7 +277,7 @@ static func create_house_mesh() -> ArrayMesh:
 
 	return mesh
 
-static func create_granary_mesh() -> ArrayMesh:
+func create_granary_mesh() -> ArrayMesh:
 	_init_materials()
 	var mesh = ArrayMesh.new()
 
@@ -279,7 +294,7 @@ static func create_granary_mesh() -> ArrayMesh:
 
 	return mesh
 
-static func create_palm_mesh() -> ArrayMesh:
+func create_palm_mesh() -> ArrayMesh:
 	_init_materials()
 	var mesh = ArrayMesh.new()
 
@@ -322,7 +337,7 @@ static func create_palm_mesh() -> ArrayMesh:
 
 	return mesh
 
-static func create_spearman_mesh() -> ArrayMesh:
+func create_spearman_mesh() -> ArrayMesh:
 	_init_materials()
 	var mesh = ArrayMesh.new()
 
@@ -367,7 +382,7 @@ static func create_spearman_mesh() -> ArrayMesh:
 
 	return mesh
 
-static func create_slinger_mesh() -> ArrayMesh:
+func create_slinger_mesh() -> ArrayMesh:
 	_init_materials()
 	var mesh = ArrayMesh.new()
 
@@ -389,7 +404,7 @@ static func create_slinger_mesh() -> ArrayMesh:
 
 	return mesh
 
-static func create_chariot_mesh() -> ArrayMesh:
+func create_chariot_mesh() -> ArrayMesh:
 	_init_materials()
 	var mesh = ArrayMesh.new()
 
@@ -417,7 +432,7 @@ static func create_chariot_mesh() -> ArrayMesh:
 
 	return mesh
 
-static func create_farm_mesh() -> ArrayMesh:
+func create_farm_mesh() -> ArrayMesh:
 	_init_materials()
 	var mesh = ArrayMesh.new()
 

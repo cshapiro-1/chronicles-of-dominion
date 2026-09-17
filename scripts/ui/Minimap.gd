@@ -57,7 +57,8 @@ func _draw() -> void:
 	for u in units:
 		if is_instance_valid(u):
 			var upos = _world_to_map(u.global_position)
-			var ucol = Color(0.3, 0.75, 1.0) if u.team_id == 0 else Color(0.95, 0.2, 0.2)
+			var team = u.get("team_id") if "team_id" in u else 0
+			var ucol = Color(0.3, 0.75, 1.0) if team == 0 else Color(0.95, 0.2, 0.2)
 			if u.is_selected:
 				draw_circle(upos, 5.0, Color(1.0, 0.9, 0.2))
 				draw_circle(upos, 3.5, ucol)

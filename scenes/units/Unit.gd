@@ -6,6 +6,7 @@ extends CharacterBody3D
 @onready var hp_bar: Label3D = $HPBar
 @onready var squad_root: Node3D = $SquadRoot
 
+var team_id: int = 0
 var is_selected: bool = false
 var target_destination: Vector3
 var has_target: bool = false
@@ -20,7 +21,7 @@ func _ready() -> void:
 	selection_ring.visible = false
 	
 	if unit_data:
-		current_hp = unit_data.max_hp
+		current_hp = int(unit_data.max_health)
 	update_hp_display()
 	_build_squad()
 
@@ -67,7 +68,7 @@ func _physics_process(delta: float) -> void:
 		
 		if dist > 0.8:
 			is_moving = true
-			var speed = unit_data.movement_speed if unit_data else 4.5
+			var speed = unit_data.move_speed if unit_data else 5.2
 			velocity = dir.normalized() * speed
 			
 			var target_rot_y = atan2(dir.x, dir.z)
@@ -120,9 +121,10 @@ func take_damage(amount: int) -> void:
 		queue_free()
 
 func update_hp_display() -> void:
-	var max_val = unit_data.max_hp if unit_data else 100
+	var max_val = int(unit_data.max_health) if unit_data else 100
 	hp_bar.text = str(current_hp) + " / " + str(max_val)
 	if current_hp < max_val * 0.4:
 		hp_bar.modulate = Color(1.0, 0.3, 0.3)
 	else:
 		hp_bar.modulate = Color(1.0, 1.0, 1.0)
+

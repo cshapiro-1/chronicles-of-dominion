@@ -10,6 +10,7 @@ config/features=PackedStringArray("4.3", "Forward Plus")
 [autoload]
 
 EventBus="*res://scripts/systems/EventBus.gd"
+MeshFactory="*res://scripts/systems/MeshFactory.gd"
 GameManager="*res://scripts/systems/GameManager.gd"
 EconomyManager="*res://scripts/systems/EconomyManager.gd"
 PopulationManager="*res://scripts/systems/PopulationManager.gd"

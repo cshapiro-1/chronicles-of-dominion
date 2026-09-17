@@ -1,24 +1,22 @@
-[gd_scene load_steps=18 format=3 uid="uid://world_epic_citadel_01"]
+[gd_scene load_steps=17 format=3 uid="uid://world_epic_citadel_02"]
 
-[ext_resource type="Shader" path="res://assets/materials/GroundShader.gdshader" id="1_ground_sh"]
-[ext_resource type="Texture2D" path="res://assets/textures/T_Terrain_Alluvium.png" id="2_terrain_tex"]
-[ext_resource type="PackedScene" path="res://scenes/buildings/Ziggurat.tscn" id="3_zig"]
-[ext_resource type="PackedScene" path="res://scenes/buildings/CityGate.tscn" id="4_gate"]
-[ext_resource type="PackedScene" path="res://scenes/buildings/House.tscn" id="5_house"]
-[ext_resource type="PackedScene" path="res://scenes/buildings/Granary.tscn" id="6_granary"]
-[ext_resource type="PackedScene" path="res://scenes/world/PalmTree.tscn" id="7_palm"]
-[ext_resource type="PackedScene" path="res://scenes/buildings/FarmPlot.tscn" id="8_farm"]
-[ext_resource type="PackedScene" path="res://scenes/units/Unit.tscn" id="9_unit"]
-[ext_resource type="Resource" path="res://data/units/Spearman.tres" id="10_spear"]
-[ext_resource type="Resource" path="res://data/units/Slinger.tres" id="11_slinger"]
-[ext_resource type="Resource" path="res://data/units/Chariot.tres" id="12_chariot"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/Ziggurat.tscn" id="1_zig"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/CityGate.tscn" id="2_gate"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/House.tscn" id="3_house"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/Granary.tscn" id="4_granary"]
+[ext_resource type="PackedScene" path="res://scenes/world/PalmTree.tscn" id="5_palm"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/FarmPlot.tscn" id="6_farm"]
+[ext_resource type="PackedScene" path="res://scenes/units/Unit.tscn" id="7_unit"]
+[ext_resource type="Resource" path="res://data/units/Spearman.tres" id="8_spear"]
+[ext_resource type="Resource" path="res://data/units/Slinger.tres" id="9_slinger"]
+[ext_resource type="Resource" path="res://data/units/Chariot.tres" id="10_chariot"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_Gloomy"]
-sky_top_color = Color(0.18, 0.22, 0.32, 1)
-sky_horizon_color = Color(0.65, 0.52, 0.38, 1)
+sky_top_color = Color(0.2, 0.25, 0.35, 1)
+sky_horizon_color = Color(0.68, 0.55, 0.4, 1)
 sky_curve = 0.15
-ground_bottom_color = Color(0.15, 0.12, 0.09, 1)
-ground_horizon_color = Color(0.45, 0.35, 0.25, 1)
+ground_bottom_color = Color(0.18, 0.14, 0.1, 1)
+ground_horizon_color = Color(0.48, 0.38, 0.28, 1)
 
 [sub_resource type="Sky" id="Sky_Gloomy"]
 sky_material = SubResource("ProceduralSkyMaterial_Gloomy")
@@ -27,8 +25,8 @@ sky_material = SubResource("ProceduralSkyMaterial_Gloomy")
 background_mode = 2
 sky = SubResource("Sky_Gloomy")
 ambient_light_source = 2
-ambient_light_color = Color(0.5, 0.44, 0.36, 1)
-ambient_light_energy = 1.25
+ambient_light_color = Color(0.55, 0.48, 0.4, 1)
+ambient_light_energy = 1.35
 tonemap_mode = 3
 tonemap_exposure = 1.15
 tonemap_white = 1.15
@@ -41,21 +39,18 @@ glow_enabled = true
 glow_intensity = 0.3
 glow_bloom = 0.15
 fog_enabled = true
-fog_light_color = Color(0.55, 0.46, 0.36, 1)
-fog_density = 0.0025
+fog_light_color = Color(0.58, 0.48, 0.38, 1)
+fog_density = 0.002
 
-[sub_resource type="ShaderMaterial" id="Mat_Ground"]
-render_priority = 0
-shader = ExtResource("1_ground_sh")
-shader_parameter/texture_scale = 0.08
-shader_parameter/roughness = 0.9
-shader_parameter/terrain_texture = ExtResource("2_terrain_tex")
+[sub_resource type="StandardMaterial3D" id="Mat_Ground"]
+albedo_color = Color(0.62, 0.50, 0.35, 1)
+roughness = 0.92
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_Ground"]
-size = Vector2(240, 240)
+size = Vector2(260, 260)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_Ground"]
-size = Vector3(240, 1, 240)
+size = Vector3(260, 1, 260)
 
 [node name="World" type="Node3D"]
 
@@ -81,79 +76,79 @@ surface_material_override/0 = SubResource("Mat_Ground")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_Ground")
 
-[node name="Ziggurat" parent="." instance=ExtResource("3_zig")]
+[node name="Ziggurat" parent="." instance=ExtResource("1_zig")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Defenses" type="Node3D" parent="."]
 
-[node name="NorthGate" parent="Defenses" instance=ExtResource("4_gate")]
+[node name="NorthGate" parent="Defenses" instance=ExtResource("2_gate")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -32)
 
-[node name="SouthGate" parent="Defenses" instance=ExtResource("4_gate")]
+[node name="SouthGate" parent="Defenses" instance=ExtResource("2_gate")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 32)
 
 [node name="CityDistrict" type="Node3D" parent="."]
 
-[node name="House1" parent="CityDistrict" instance=ExtResource("5_house")]
+[node name="House1" parent="CityDistrict" instance=ExtResource("3_house")]
 transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -28, 0, -10)
 
-[node name="House2" parent="CityDistrict" instance=ExtResource("5_house")]
+[node name="House2" parent="CityDistrict" instance=ExtResource("3_house")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 0, 4)
 
-[node name="House3" parent="CityDistrict" instance=ExtResource("5_house")]
+[node name="House3" parent="CityDistrict" instance=ExtResource("3_house")]
 transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -26, 0, 18)
 
-[node name="Granary1" parent="CityDistrict" instance=ExtResource("6_granary")]
+[node name="Granary1" parent="CityDistrict" instance=ExtResource("4_granary")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -22)
 
-[node name="Granary2" parent="CityDistrict" instance=ExtResource("6_granary")]
+[node name="Granary2" parent="CityDistrict" instance=ExtResource("4_granary")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -22)
 
 [node name="PalmGroves" type="Node3D" parent="."]
 
-[node name="Palm1" parent="PalmGroves" instance=ExtResource("7_palm")]
+[node name="Palm1" parent="PalmGroves" instance=ExtResource("5_palm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, -18)
 
-[node name="Palm2" parent="PalmGroves" instance=ExtResource("7_palm")]
+[node name="Palm2" parent="PalmGroves" instance=ExtResource("5_palm")]
 transform = Transform3D(0.9, 0, 0.43, 0, 1, 0, -0.43, 0, 0.9, 24, 0, -14)
 
-[node name="Palm3" parent="PalmGroves" instance=ExtResource("7_palm")]
+[node name="Palm3" parent="PalmGroves" instance=ExtResource("5_palm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -24)
 
-[node name="Palm4" parent="PalmGroves" instance=ExtResource("7_palm")]
+[node name="Palm4" parent="PalmGroves" instance=ExtResource("5_palm")]
 transform = Transform3D(0.8, 0, -0.6, 0, 1, 0, 0.6, 0, 0.8, 26, 0, 14)
 
-[node name="Palm5" parent="PalmGroves" instance=ExtResource("7_palm")]
+[node name="Palm5" parent="PalmGroves" instance=ExtResource("5_palm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 22)
 
 [node name="Farms" type="Node3D" parent="."]
 
-[node name="FarmPlot1" parent="Farms" instance=ExtResource("8_farm")]
+[node name="FarmPlot1" parent="Farms" instance=ExtResource("6_farm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -4)
 
-[node name="FarmPlot2" parent="Farms" instance=ExtResource("8_farm")]
+[node name="FarmPlot2" parent="Farms" instance=ExtResource("6_farm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, -4)
 
-[node name="FarmPlot3" parent="Farms" instance=ExtResource("8_farm")]
+[node name="FarmPlot3" parent="Farms" instance=ExtResource("6_farm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 6)
 
-[node name="FarmPlot4" parent="Farms" instance=ExtResource("8_farm")]
+[node name="FarmPlot4" parent="Farms" instance=ExtResource("6_farm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 6)
 
 [node name="Units" type="Node3D" parent="."]
 
-[node name="SpearmanCohort1" parent="Units" instance=ExtResource("9_unit")]
+[node name="SpearmanCohort1" parent="Units" instance=ExtResource("7_unit")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 22)
-unit_data = ExtResource("10_spear")
+unit_data = ExtResource("8_spear")
 
-[node name="SpearmanCohort2" parent="Units" instance=ExtResource("9_unit")]
+[node name="SpearmanCohort2" parent="Units" instance=ExtResource("7_unit")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0, 0, 22)
-unit_data = ExtResource("10_spear")
+unit_data = ExtResource("8_spear")
 
-[node name="SlingerCohort1" parent="Units" instance=ExtResource("9_unit")]
+[node name="SlingerCohort1" parent="Units" instance=ExtResource("7_unit")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0, 0, 24)
-unit_data = ExtResource("11_slinger")
+unit_data = ExtResource("9_slinger")
 
-[node name="ChariotCohort1" parent="Units" instance=ExtResource("9_unit")]
+[node name="ChariotCohort1" parent="Units" instance=ExtResource("7_unit")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0, 0, 24)
-unit_data = ExtResource("12_chariot")
+unit_data = ExtResource("10_chariot")

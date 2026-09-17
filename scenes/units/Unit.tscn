@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://unit_squad_3d_01"]
+[gd_scene load_steps=5 format=3 uid="uid://unit_squad_3d_02"]
 
 [ext_resource type="Script" path="res://scenes/units/Unit.gd" id="1_unit"]
-[ext_resource type="ArrayMesh" path="res://assets/models/soldier_spearman.obj" id="2_spear_mesh"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_Unit"]
 radius = 1.8
