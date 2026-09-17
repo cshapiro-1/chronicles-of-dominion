@@ -1,7 +1,7 @@
 [gd_scene load_steps=22 format=3 uid="uid://world_gloomy_01"]
 
 [ext_resource type="Shader" path="res://assets/materials/GroundShader.gdshader" id="1_ground_sh"]
-[ext_resource type="Shader" path="res://assets/materials/WaterShader.gdshader" id="2_water_sh"]
+[ext_resource type="Texture2D" path="res://assets/textures/T_Mesopotamia_Terrain.png" id="2_terrain_tex"]
 [ext_resource type="PackedScene" path="res://scenes/buildings/Ziggurat.tscn" id="3_zig"]
 [ext_resource type="PackedScene" path="res://scenes/buildings/FarmPlot.tscn" id="4_farm"]
 [ext_resource type="PackedScene" path="res://scenes/units/Unit.tscn" id="5_unit"]
@@ -54,29 +54,15 @@ volumetric_fog_emission_energy = 0.5
 [sub_resource type="ShaderMaterial" id="Mat_Ground"]
 render_priority = 0
 shader = ExtResource("1_ground_sh")
-shader_parameter/sand_color = Color(0.45, 0.38, 0.26, 1)
-shader_parameter/rock_color = Color(0.28, 0.23, 0.16, 1)
-shader_parameter/mud_color = Color(0.2, 0.16, 0.11, 1)
-shader_parameter/roughness = 0.94
+shader_parameter/texture_scale = 0.0075
+shader_parameter/roughness = 0.88
+shader_parameter/terrain_texture = ExtResource("2_terrain_tex")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_Ground"]
-size = Vector2(160, 160)
+size = Vector2(180, 180)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_Ground"]
-size = Vector3(160, 1, 160)
-
-[sub_resource type="ShaderMaterial" id="Mat_Water"]
-render_priority = 0
-shader = ExtResource("2_water_sh")
-shader_parameter/deep_color = Color(0.06, 0.14, 0.18, 1)
-shader_parameter/shallow_color = Color(0.22, 0.32, 0.28, 0.92)
-shader_parameter/metallic = 0.1
-shader_parameter/roughness = 0.12
-shader_parameter/wave_speed = 0.5
-shader_parameter/wave_scale = 1.8
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_Water"]
-size = Vector2(16, 160)
+size = Vector3(180, 1, 180)
 
 [sub_resource type="StandardMaterial3D" id="Mat_Wall"]
 albedo_color = Color(0.42, 0.35, 0.24, 1)
@@ -87,13 +73,6 @@ size = Vector3(1.4, 3.2, 18)
 
 [sub_resource type="BoxMesh" id="BoxMesh_Tower"]
 size = Vector3(2.6, 4.8, 2.6)
-
-[sub_resource type="StandardMaterial3D" id="Mat_Road"]
-albedo_color = Color(0.26, 0.22, 0.16, 1)
-roughness = 0.95
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_Road"]
-size = Vector2(4, 35)
 
 [node name="World" type="Node3D"]
 
@@ -123,16 +102,6 @@ surface_material_override/0 = SubResource("Mat_Ground")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_Ground")
-
-[node name="River" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -15, 0.05, 0)
-mesh = SubResource("PlaneMesh_Water")
-surface_material_override/0 = SubResource("Mat_Water")
-
-[node name="CitadelRoad" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 6, 0.02, 6)
-mesh = SubResource("PlaneMesh_Road")
-surface_material_override/0 = SubResource("Mat_Road")
 
 [node name="CityWalls" type="Node3D" parent="."]
 

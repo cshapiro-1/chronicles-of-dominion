@@ -13,22 +13,36 @@ var attack_cooldown: float = 0.0
 var is_selected: bool = false
 
 @onready var selection_ring: MeshInstance3D = $SelectionRing
-@onready var mesh_instance: MeshInstance3D = $BodyMesh
+@onready var sprite_token: Sprite3D = $SpriteToken
 @onready var hp_bar: Label3D = $HPBar
 
 func _ready() -> void:
 	if unit_data:
 		current_health = unit_data.max_health
-		var mat = StandardMaterial3D.new()
-		mat.albedo_color = unit_data.mesh_color
-		mat.roughness = 0.6
-		mesh_instance.material_override = mat
+		_setup_sprite_texture()
 	
 	target_destination = global_position
 	set_selected(false)
 	if is_instance_valid(MilitaryManager):
 		MilitaryManager.register_unit(self)
 	_update_hp_display()
+
+func _setup_sprite_texture() -> void:
+	if not sprite_token or not unit_data:
+		return
+	var uname = unit_data.unit_name
+	var tex_path = "res://assets/textures/T_Spearman_Cohort.png"
+	if "Slinger" in uname:
+		tex_path = "res://assets/textures/T_Slinger_Cohort.png"
+	elif "Chariot" in uname:
+		tex_path = "res://assets/textures/T_Chariot_Cohort.png"
+	elif "Raider" in uname:
+		tex_path = "res://assets/textures/T_Slinger_Cohort.png"
+		sprite_token.modulate = Color(1.2, 0.6, 0.6)
+		
+	var tex = load(tex_path)
+	if tex:
+		sprite_token.texture = tex
 
 func _exit_tree() -> void:
 	if is_instance_valid(MilitaryManager):
@@ -86,7 +100,6 @@ func _navigate_to(dest: Vector3, _delta: float) -> void:
 		dir = dir.normalized()
 		var spd = unit_data.move_speed if unit_data else 5.0
 		velocity = dir * spd
-		look_at(global_position + dir, Vector3.UP)
 	else:
 		velocity = Vector3.ZERO
 

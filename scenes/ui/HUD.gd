@@ -60,25 +60,23 @@ func _ready() -> void:
 	_on_population_updated(PopulationManager.total_population, PopulationManager.hope, PopulationManager.discontent)
 	_on_estates_updated(PoliticsManager.priesthood_loyalty, PoliticsManager.nobility_loyalty, PoliticsManager.commoners_loyalty)
 	
-	# Post initial welcome notification
-	EventBus.post_notification("DOMINION ACTIVE", "Command your bronze age legions with Right-Click. Recruit reinforcements at the Ziggurat.", Color(0.95, 0.82, 0.35))
+	EventBus.post_notification("DOMINION ACTIVE", "Use WASD to pan camera. Hotkeys [1]-[6] command legions.", Color(0.95, 0.82, 0.35))
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		match event.keycode:
-			KEY_Q:
+			KEY_1:
 				_on_action_spearmen_pressed()
-			KEY_W:
+			KEY_2:
 				_on_action_slingers_pressed()
-			KEY_E:
+			KEY_3:
 				_on_action_chariots_pressed()
-			KEY_F:
+			KEY_4, KEY_F:
 				_on_action_formation_pressed()
-			KEY_R:
+			KEY_5:
 				_on_action_raider_wave_pressed()
-			KEY_T:
+			KEY_6, KEY_T:
 				_on_action_crisis_trigger_pressed()
-
 
 func _on_economy_updated(res: Dictionary, deltas: Dictionary) -> void:
 	lbl_grain.text = "%d" % int(res.get("Grain", 0.0))
@@ -181,7 +179,7 @@ func _on_action_formation_pressed() -> void:
 		current_formation = "Phalanx"
 		FormationManager.current_formation_type = FormationManager.FormationType.PHALANX
 		
-	btn_formation.text = "[F] Drill\n(%s)" % current_formation
+	btn_formation.text = "[4] Drill\n(%s)" % current_formation
 	EventBus.post_notification("FORMATION DRILL", "Regiments adopted %s tactical drill." % current_formation, Color(0.4, 0.8, 1.0))
 
 func _on_action_raider_wave_pressed() -> void:

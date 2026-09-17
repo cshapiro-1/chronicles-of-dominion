@@ -605,32 +605,29 @@ theme_override_styles/panel = SubResource("SB_Card")
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="BtnQ" type="Button" parent="ActionRibbon/HBoxButtons"]
+[node name="Btn1" type="Button" parent="ActionRibbon/HBoxButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("SB_Button_Normal")
 theme_override_styles/hover = SubResource("SB_Button_Hover")
 theme_override_styles/pressed = SubResource("SB_Button_Pressed")
-text = "[Q] Recruit
-Spearmen"
+text = "[1] Spearmen"
 
-[node name="BtnW" type="Button" parent="ActionRibbon/HBoxButtons"]
+[node name="Btn2" type="Button" parent="ActionRibbon/HBoxButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("SB_Button_Normal")
 theme_override_styles/hover = SubResource("SB_Button_Hover")
 theme_override_styles/pressed = SubResource("SB_Button_Pressed")
-text = "[W] Recruit
-Slingers"
+text = "[2] Slingers"
 
-[node name="BtnE" type="Button" parent="ActionRibbon/HBoxButtons"]
+[node name="Btn3" type="Button" parent="ActionRibbon/HBoxButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("SB_Button_Normal")
 theme_override_styles/hover = SubResource("SB_Button_Hover")
 theme_override_styles/pressed = SubResource("SB_Button_Pressed")
-text = "[E] Recruit
-Chariot"
+text = "[3] Chariot"
 
 [node name="BtnFormation" type="Button" parent="ActionRibbon/HBoxButtons"]
 layout_mode = 2
@@ -638,26 +635,24 @@ size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("SB_Button_Normal")
 theme_override_styles/hover = SubResource("SB_Button_Hover")
 theme_override_styles/pressed = SubResource("SB_Button_Pressed")
-text = "[F] Drill
+text = "[4] Drill
 (Phalanx)"
 
-[node name="BtnR" type="Button" parent="ActionRibbon/HBoxButtons"]
+[node name="Btn5" type="Button" parent="ActionRibbon/HBoxButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("SB_Button_Normal")
 theme_override_styles/hover = SubResource("SB_Button_Hover")
 theme_override_styles/pressed = SubResource("SB_Button_Pressed")
-text = "[R] Incursion
-(Raiders)"
+text = "[5] Raiders"
 
-[node name="BtnT" type="Button" parent="ActionRibbon/HBoxButtons"]
+[node name="Btn6" type="Button" parent="ActionRibbon/HBoxButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("SB_Button_Normal")
 theme_override_styles/hover = SubResource("SB_Button_Hover")
 theme_override_styles/pressed = SubResource("SB_Button_Pressed")
-text = "[T] Oracle
-(Crisis)"
+text = "[6] Crisis"
 
 [node name="MinimapContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -780,11 +775,11 @@ theme_override_styles/hover = SubResource("SB_Button_Hover")
 theme_override_styles/pressed = SubResource("SB_Button_Pressed")
 text = "DECREE OPTION 2"
 
-[connection signal="pressed" from="ActionRibbon/HBoxButtons/BtnQ" to="." method="_on_action_spearmen_pressed"]
-[connection signal="pressed" from="ActionRibbon/HBoxButtons/BtnW" to="." method="_on_action_slingers_pressed"]
-[connection signal="pressed" from="ActionRibbon/HBoxButtons/BtnE" to="." method="_on_action_chariots_pressed"]
+[connection signal="pressed" from="ActionRibbon/HBoxButtons/Btn1" to="." method="_on_action_spearmen_pressed"]
+[connection signal="pressed" from="ActionRibbon/HBoxButtons/Btn2" to="." method="_on_action_slingers_pressed"]
+[connection signal="pressed" from="ActionRibbon/HBoxButtons/Btn3" to="." method="_on_action_chariots_pressed"]
 [connection signal="pressed" from="ActionRibbon/HBoxButtons/BtnFormation" to="." method="_on_action_formation_pressed"]
-[connection signal="pressed" from="ActionRibbon/HBoxButtons/BtnR" to="." method="_on_action_raider_wave_pressed"]
-[connection signal="pressed" from="ActionRibbon/HBoxButtons/BtnT" to="." method="_on_action_crisis_trigger_pressed"]
+[connection signal="pressed" from="ActionRibbon/HBoxButtons/Btn5" to="." method="_on_action_raider_wave_pressed"]
+[connection signal="pressed" from="ActionRibbon/HBoxButtons/Btn6" to="." method="_on_action_crisis_trigger_pressed"]
 [connection signal="pressed" from="CrisisModal/Margin/VBox/HBoxOptions/Option1" to="." method="_on_crisis_option_pressed" binds= [0]]
 [connection signal="pressed" from="CrisisModal/Margin/VBox/HBoxOptions/Option2" to="." method="_on_crisis_option_pressed" binds= [1]]
