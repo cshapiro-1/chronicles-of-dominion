@@ -1,29 +1,24 @@
 extends Control
 
-# Top bar resource labels
-@onready var lbl_grain: Label = $TopBar/HBoxResources/Grain/Val
-@onready var lbl_grain_delta: Label = $TopBar/HBoxResources/Grain/Delta
-@onready var lbl_timber: Label = $TopBar/HBoxResources/Timber/Val
-@onready var lbl_stone: Label = $TopBar/HBoxResources/Stone/Val
-@onready var lbl_bronze: Label = $TopBar/HBoxResources/Bronze/Val
-@onready var lbl_gold: Label = $TopBar/HBoxResources/Gold/Val
-@onready var lbl_pop: Label = $TopBar/HBoxResources/Pop/Val
+# Modular Resource Badges
+@onready var badge_grain: PanelContainer = $TopCluster/ResourceTray/BadgeGrain
+@onready var badge_timber: PanelContainer = $TopCluster/ResourceTray/BadgeTimber
+@onready var badge_stone: PanelContainer = $TopCluster/ResourceTray/BadgeStone
+@onready var badge_bronze: PanelContainer = $TopCluster/ResourceTray/BadgeBronze
+@onready var badge_gold: PanelContainer = $TopCluster/ResourceTray/BadgeGold
+@onready var badge_pop: PanelContainer = $TopCluster/ResourceTray/BadgePop
 
-# Estate dials
-@onready var dial_altar: Control = $TopBar/DialsPlinth/DialsCenter/DialAltar
-@onready var dial_throne: Control = $TopBar/DialsPlinth/DialsCenter/DialThrone
-@onready var dial_masses: Control = $TopBar/DialsPlinth/DialsCenter/DialMasses
+# Modular Estate Dials
+@onready var dial_altar: VBoxContainer = $TopCluster/EstateCluster/DialAltar
+@onready var dial_throne: VBoxContainer = $TopCluster/EstateCluster/DialThrone
+@onready var dial_masses: VBoxContainer = $TopCluster/EstateCluster/DialMasses
 
-@onready var lbl_altar_pct: Label = $TopBar/DialsPlinth/DialsCenter/DialAltar/Pct
-@onready var lbl_throne_pct: Label = $TopBar/DialsPlinth/DialsCenter/DialThrone/Pct
-@onready var lbl_masses_pct: Label = $TopBar/DialsPlinth/DialsCenter/DialMasses/Pct
-
-# Inspector card
-@onready var card_title: Label = $BottomLeftCard/VBoxInfo/Title
-@onready var card_subtitle: Label = $BottomLeftCard/VBoxInfo/Subtitle
-@onready var card_stat1: Label = $BottomLeftCard/VBoxInfo/Stat1
-@onready var card_stat2: Label = $BottomLeftCard/VBoxInfo/Stat2
-@onready var card_stability: Label = $BottomLeftCard/VBoxInfo/Stability
+# Inspector console
+@onready var card_title: Label = $InspectorConsole/VBoxInfo/Title
+@onready var card_subtitle: Label = $InspectorConsole/VBoxInfo/Subtitle
+@onready var card_stat1: Label = $InspectorConsole/VBoxInfo/Stat1
+@onready var card_stat2: Label = $InspectorConsole/VBoxInfo/Stat2
+@onready var card_stability: Label = $InspectorConsole/VBoxInfo/Stability
 
 # Crisis Modal
 @onready var crisis_modal: PanelContainer = $CrisisModal
@@ -53,7 +48,7 @@ func _ready() -> void:
 	_on_population_updated(PopulationManager.total_population, PopulationManager.hope, PopulationManager.discontent)
 	_on_estates_updated(PoliticsManager.priesthood_loyalty, PoliticsManager.nobility_loyalty, PoliticsManager.commoners_loyalty)
 	
-	EventBus.post_notification("DOMINION ACTIVE", "Use WASD to pan camera. Hotkeys [1]-[5] command legions.", Color(0.95, 0.82, 0.35))
+	EventBus.post_notification("DOMINION ACTIVE", "Use WASD to pan camera. Hotkeys [1]-[5] muster legions.", Color(0.95, 0.82, 0.35))
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
@@ -72,30 +67,20 @@ func _unhandled_input(event: InputEvent) -> void:
 				_on_action_crisis_trigger_pressed()
 
 func _on_economy_updated(res: Dictionary, deltas: Dictionary) -> void:
-	lbl_grain.text = "🌾 %d" % int(res.get("Grain", 0.0))
-	var gd = deltas.get("Grain", 0.0)
-	lbl_grain_delta.text = ("(+%d/m)" % int(gd)) if gd >= 0 else ("(%d/m)" % int(gd))
-	
-	lbl_timber.text = "🪵 %d" % int(res.get("Timber", 0.0))
-	lbl_stone.text = "⛰ %d" % int(res.get("Stone", 0.0))
-	lbl_bronze.text = "⚔ %d" % int(res.get("Bronze", 0.0))
-	lbl_gold.text = "👑 %d" % int(res.get("Gold", 0.0))
-	lbl_pop.text = "👥 %d / %d" % [int(PopulationManager.total_population), int(res.get("Capacity", 6500.0))]
+	if badge_grain: badge_grain.set_amount(int(res.get("Grain", 0.0)), int(deltas.get("Grain", 0.0)))
+	if badge_timber: badge_timber.set_amount(int(res.get("Timber", 0.0)), int(deltas.get("Timber", 0.0)))
+	if badge_stone: badge_stone.set_amount(int(res.get("Stone", 0.0)), int(deltas.get("Stone", 0.0)))
+	if badge_bronze: badge_bronze.set_amount(int(res.get("Bronze", 0.0)), int(deltas.get("Bronze", 0.0)))
+	if badge_gold: badge_gold.set_amount(int(res.get("Gold", 0.0)), int(deltas.get("Gold", 0.0)))
+	if badge_pop: badge_pop.set_amount(int(PopulationManager.total_population), 0)
 
 func _on_population_updated(_pop: int, _hope: float, _discontent: float) -> void:
 	pass
 
 func _on_estates_updated(p: float, n: float, c: float) -> void:
-	lbl_altar_pct.text = "%d%%" % int(p)
-	lbl_throne_pct.text = "%d%%" % int(n)
-	lbl_masses_pct.text = "%d%%" % int(c)
-	
-	if dial_altar.has_method("set_percentage"):
-		dial_altar.set_percentage(p)
-	if dial_throne.has_method("set_percentage"):
-		dial_throne.set_percentage(n)
-	if dial_masses.has_method("set_percentage"):
-		dial_masses.set_percentage(c)
+	if dial_altar: dial_altar.set_percentage(p)
+	if dial_throne: dial_throne.set_percentage(n)
+	if dial_masses: dial_masses.set_percentage(c)
 
 func _on_units_selected(units: Array) -> void:
 	if units.is_empty():

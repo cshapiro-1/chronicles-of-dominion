@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=3 uid="uid://res_badge_obj_01"]
+
+[ext_resource type="Script" path="res://scenes/ui/components/ResourceBadge.gd" id="1_badge"]
+[ext_resource type="FontFile" path="res://assets/fonts/constanb.ttf" id="2_font"]
+
+[sub_resource type="StyleBoxFlat" id="SB_Pill"]
+bg_color = Color(0.12, 0.1, 0.08, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.65, 0.52, 0.28, 0.95)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 4
+
+[node name="ResourceBadge" type="PanelContainer"]
+custom_minimum_size = Vector2(92, 44)
+offset_right = 92.0
+offset_bottom = 44.0
+theme_override_styles/panel = SubResource("SB_Pill")
+script = ExtResource("1_badge")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="HBox" type="HBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="Icon" type="Label" parent="Margin/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "🌾"
+
+[node name="VBox" type="VBoxContainer" parent="Margin/HBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="Value" type="Label" parent="Margin/HBox/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.92, 0.7, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 14
+text = "1,420"
+
+[node name="Delta" type="Label" parent="Margin/HBox/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.92, 0.5, 1)
+theme_override_font_sizes/font_size = 10
+text = "+45/m"

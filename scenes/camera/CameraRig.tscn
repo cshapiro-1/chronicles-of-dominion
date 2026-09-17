@@ -1,14 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://camera_rig_01"]
+[gd_scene load_steps=2 format=3 uid="uid://camera_rig_clean_01"]
 
 [ext_resource type="Script" path="res://scenes/camera/CameraRig.gd" id="1_cam"]
 
 [node name="CameraRig" type="Node3D"]
 script = ExtResource("1_cam")
 
-[node name="SpringArm3D" type="SpringArm3D" parent="."]
-transform = Transform3D(0.707107, -0.40558, 0.579228, 0, 0.819152, 0.573576, -0.707107, -0.40558, 0.579228, 0, 0, 0)
-spring_length = 30.0
+[node name="Gimbal" type="Node3D" parent="."]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)
 
-[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+[node name="PitchArm" type="Node3D" parent="Gimbal"]
+transform = Transform3D(1, 0, 0, 0, 0.788011, 0.615661, 0, -0.615661, 0.788011, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Gimbal/PitchArm"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 32)
 current = true
-fov = 45.0
+fov = 42.0

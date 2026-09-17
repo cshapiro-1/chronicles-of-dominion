@@ -1,60 +1,57 @@
-[gd_scene load_steps=20 format=3 uid="uid://hud_diegetic_master_01"]
+[gd_scene load_steps=18 format=3 uid="uid://hud_modular_master_02"]
 
 [ext_resource type="Script" path="res://scenes/ui/HUD.gd" id="1_hud"]
-[ext_resource type="Texture2D" path="res://assets/ui/gen_topbar_banner.png" id="2_topbar"]
-[ext_resource type="Texture2D" path="res://assets/ui/gen_estate_dial.png" id="3_dial_tex"]
-[ext_resource type="Texture2D" path="res://assets/ui/gen_province_card.png" id="4_card"]
-[ext_resource type="Texture2D" path="res://assets/ui/gen_minimap_frame.png" id="5_minimap_frame"]
-[ext_resource type="Texture2D" path="res://assets/ui/gen_btn_spear.png" id="6_btn_spear"]
-[ext_resource type="Texture2D" path="res://assets/ui/gen_btn_slinger.png" id="7_btn_slinger"]
-[ext_resource type="Texture2D" path="res://assets/ui/gen_btn_chariot.png" id="8_btn_chariot"]
-[ext_resource type="Texture2D" path="res://assets/ui/gen_btn_formation.png" id="9_btn_formation"]
-[ext_resource type="Texture2D" path="res://assets/ui/gen_btn_raiders.png" id="10_btn_raiders"]
-[ext_resource type="FontFile" path="res://assets/fonts/constanb.ttf" id="11_font_serif"]
-[ext_resource type="Script" path="res://scripts/ui/EstateDial.gd" id="12_dial_script"]
-[ext_resource type="Script" path="res://scripts/ui/Minimap.gd" id="13_map_script"]
+[ext_resource type="PackedScene" path="res://scenes/ui/components/ResourceBadge.tscn" id="2_res_badge"]
+[ext_resource type="PackedScene" path="res://scenes/ui/components/EstateDialObject.tscn" id="3_dial_obj"]
+[ext_resource type="PackedScene" path="res://scenes/ui/components/CommandTablet.tscn" id="4_tablet_obj"]
+[ext_resource type="Texture2D" path="res://assets/ui/gen_province_card.png" id="5_card_tex"]
+[ext_resource type="Texture2D" path="res://assets/ui/gen_minimap_frame.png" id="6_map_frame"]
+[ext_resource type="Texture2D" path="res://assets/ui/gen_btn_spear.png" id="7_icon_spear"]
+[ext_resource type="Texture2D" path="res://assets/ui/gen_btn_slinger.png" id="8_icon_slinger"]
+[ext_resource type="Texture2D" path="res://assets/ui/gen_btn_chariot.png" id="9_icon_chariot"]
+[ext_resource type="Texture2D" path="res://assets/ui/gen_btn_formation.png" id="10_icon_form"]
+[ext_resource type="Texture2D" path="res://assets/ui/gen_btn_raiders.png" id="11_icon_raid"]
+[ext_resource type="FontFile" path="res://assets/fonts/constanb.ttf" id="12_font"]
+[ext_resource type="Script" path="res://scripts/ui/Minimap.gd" id="13_minimap_script"]
 
-[sub_resource type="StyleBoxTexture" id="SB_TopBarTex"]
-texture = ExtResource("2_topbar")
-
-[sub_resource type="StyleBoxFlat" id="SB_DialPlinth"]
-bg_color = Color(0.08, 0.07, 0.06, 0.85)
+[sub_resource type="StyleBoxFlat" id="SB_EpochPlate"]
+bg_color = Color(0.12, 0.1, 0.08, 0.95)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.55, 0.42, 0.22, 0.9)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-
-[sub_resource type="StyleBoxTexture" id="SB_CardTex"]
-texture = ExtResource("4_card")
-
-[sub_resource type="StyleBoxFlat" id="SB_ActionDock"]
-bg_color = Color(0.08, 0.07, 0.06, 0.92)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.65, 0.5, 0.25, 0.95)
+border_color = Color(0.8, 0.65, 0.3, 1)
 corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
-shadow_color = Color(0, 0, 0, 0.6)
-shadow_size = 8
+
+[sub_resource type="StyleBoxTexture" id="SB_InspectorCard"]
+texture = ExtResource("5_card_tex")
+
+[sub_resource type="StyleBoxFlat" id="SB_Dock"]
+bg_color = Color(0.08, 0.07, 0.05, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.7, 0.55, 0.28, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.65)
+shadow_size = 10
 
 [sub_resource type="StyleBoxFlat" id="SB_Hope"]
-bg_color = Color(0.18, 0.75, 0.42, 1)
+bg_color = Color(0.2, 0.8, 0.45, 1)
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
 [sub_resource type="StyleBoxFlat" id="SB_Unrest"]
-bg_color = Color(0.88, 0.25, 0.25, 1)
+bg_color = Color(0.9, 0.25, 0.25, 1)
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
@@ -70,595 +67,309 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_hud")
 
-[node name="TopBar" type="Panel" parent="."]
+[node name="TopCluster" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 76.0
+offset_left = 16.0
+offset_top = 12.0
+offset_right = -16.0
+offset_bottom = 116.0
 grow_horizontal = 2
-theme_override_styles/panel = SubResource("SB_TopBarTex")
-
-[node name="HBoxResources" type="HBoxContainer" parent="TopBar"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 24.0
-offset_top = -26.0
-offset_right = 580.0
-offset_bottom = 26.0
-grow_vertical = 2
-theme_override_constants/separation = 20
-
-[node name="Grain" type="VBoxContainer" parent="TopBar/HBoxResources"]
-layout_mode = 2
-alignment = 1
-
-[node name="Val" type="Label" parent="TopBar/HBoxResources/Grain"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.94, 0.7, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 16
-text = "🌾 1,420"
-
-[node name="Delta" type="Label" parent="TopBar/HBoxResources/Grain"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.5, 0.9, 0.45, 1)
-theme_override_font_sizes/font_size = 11
-text = "(+45/m)"
-horizontal_alignment = 1
-
-[node name="Timber" type="VBoxContainer" parent="TopBar/HBoxResources"]
-layout_mode = 2
-alignment = 1
-
-[node name="Val" type="Label" parent="TopBar/HBoxResources/Timber"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.88, 0.7, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 16
-text = "🪵 850"
-
-[node name="Delta" type="Label" parent="TopBar/HBoxResources/Timber"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.5, 0.9, 0.45, 1)
-theme_override_font_sizes/font_size = 11
-text = "(+18/m)"
-horizontal_alignment = 1
-
-[node name="Stone" type="VBoxContainer" parent="TopBar/HBoxResources"]
-layout_mode = 2
-alignment = 1
-
-[node name="Val" type="Label" parent="TopBar/HBoxResources/Stone"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.92, 0.85, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 16
-text = "⛰ 1,200"
-
-[node name="Delta" type="Label" parent="TopBar/HBoxResources/Stone"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.5, 0.9, 0.45, 1)
-theme_override_font_sizes/font_size = 11
-text = "(+25/m)"
-horizontal_alignment = 1
-
-[node name="Bronze" type="VBoxContainer" parent="TopBar/HBoxResources"]
-layout_mode = 2
-alignment = 1
-
-[node name="Val" type="Label" parent="TopBar/HBoxResources/Bronze"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.98, 0.8, 0.45, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 16
-text = "⚔ 650"
-
-[node name="Delta" type="Label" parent="TopBar/HBoxResources/Bronze"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.5, 0.9, 0.45, 1)
-theme_override_font_sizes/font_size = 11
-text = "(+12/m)"
-horizontal_alignment = 1
-
-[node name="Gold" type="VBoxContainer" parent="TopBar/HBoxResources"]
-layout_mode = 2
-alignment = 1
-
-[node name="Val" type="Label" parent="TopBar/HBoxResources/Gold"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 16
-text = "👑 5,200"
-
-[node name="Delta" type="Label" parent="TopBar/HBoxResources/Gold"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.5, 0.9, 0.45, 1)
-theme_override_font_sizes/font_size = 11
-text = "(+80/m)"
-horizontal_alignment = 1
-
-[node name="Pop" type="VBoxContainer" parent="TopBar/HBoxResources"]
-layout_mode = 2
-alignment = 1
-
-[node name="Val" type="Label" parent="TopBar/HBoxResources/Pop"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.45, 0.95, 0.65, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 16
-text = "👥 139 / 6.5k"
-
-[node name="Delta" type="Label" parent="TopBar/HBoxResources/Pop"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.75, 0.7, 0.6, 1)
-theme_override_font_sizes/font_size = 11
-text = "100% Manpower"
-horizontal_alignment = 1
-
-[node name="DialsPlinth" type="Panel" parent="TopBar"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -160.0
-offset_top = 4.0
-offset_right = 160.0
-offset_bottom = 86.0
-grow_horizontal = 2
-theme_override_styles/panel = SubResource("SB_DialPlinth")
-
-[node name="DialsCenter" type="HBoxContainer" parent="TopBar/DialsPlinth"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 12.0
-offset_top = 4.0
-offset_right = -12.0
-offset_bottom = -4.0
-grow_horizontal = 2
-grow_vertical = 2
 theme_override_constants/separation = 16
+
+[node name="ResourceTray" type="HBoxContainer" parent="TopCluster"]
+layout_mode = 2
+theme_override_constants/separation = 8
 alignment = 1
 
-[node name="DialAltar" type="TextureRect" parent="TopBar/DialsPlinth/DialsCenter"]
-custom_minimum_size = Vector2(74, 74)
+[node name="BadgeGrain" parent="TopCluster/ResourceTray" instance=ExtResource("2_res_badge")]
 layout_mode = 2
-texture = ExtResource("3_dial_tex")
-expand_mode = 1
-stretch_mode = 5
-script = ExtResource("12_dial_script")
+icon_text = "🌾"
+
+[node name="BadgeTimber" parent="TopCluster/ResourceTray" instance=ExtResource("2_res_badge")]
+layout_mode = 2
+icon_text = "🪵"
+default_value = 850
+default_delta = 18
+
+[node name="BadgeStone" parent="TopCluster/ResourceTray" instance=ExtResource("2_res_badge")]
+layout_mode = 2
+icon_text = "⛰"
+default_value = 1200
+default_delta = 25
+
+[node name="BadgeBronze" parent="TopCluster/ResourceTray" instance=ExtResource("2_res_badge")]
+layout_mode = 2
+icon_text = "⚔"
+default_value = 650
+default_delta = 12
+
+[node name="BadgeGold" parent="TopCluster/ResourceTray" instance=ExtResource("2_res_badge")]
+layout_mode = 2
+icon_text = "👑"
+default_value = 5200
+default_delta = 80
+
+[node name="BadgePop" parent="TopCluster/ResourceTray" instance=ExtResource("2_res_badge")]
+layout_mode = 2
+icon_text = "👥"
+default_value = 139
+default_delta = 0
+
+[node name="SpacerLeft" type="Control" parent="TopCluster"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="EstateCluster" type="HBoxContainer" parent="TopCluster"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="DialAltar" parent="TopCluster/EstateCluster" instance=ExtResource("3_dial_obj")]
+layout_mode = 2
+title = "ALTAR"
 fill_percent = 65.0
 
-[node name="Title" type="Label" parent="TopBar/DialsPlinth/DialsCenter/DialAltar"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -30.0
-offset_top = 54.0
-offset_right = 30.0
-offset_bottom = 70.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0.95, 0.85, 0.65, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 10
-text = "ALTAR"
-horizontal_alignment = 1
-
-[node name="Pct" type="Label" parent="TopBar/DialsPlinth/DialsCenter/DialAltar"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -22.0
-offset_top = -8.0
-offset_right = 22.0
-offset_bottom = 8.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 12
-text = "65%"
-horizontal_alignment = 1
-
-[node name="DialThrone" type="TextureRect" parent="TopBar/DialsPlinth/DialsCenter"]
-custom_minimum_size = Vector2(74, 74)
+[node name="DialThrone" parent="TopCluster/EstateCluster" instance=ExtResource("3_dial_obj")]
 layout_mode = 2
-texture = ExtResource("3_dial_tex")
-expand_mode = 1
-stretch_mode = 5
-script = ExtResource("12_dial_script")
+title = "THRONE"
 fill_percent = 60.0
 
-[node name="Title" type="Label" parent="TopBar/DialsPlinth/DialsCenter/DialThrone"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -30.0
-offset_top = 54.0
-offset_right = 30.0
-offset_bottom = 70.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0.95, 0.85, 0.65, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 10
-text = "THRONE"
-horizontal_alignment = 1
-
-[node name="Pct" type="Label" parent="TopBar/DialsPlinth/DialsCenter/DialThrone"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -22.0
-offset_top = -8.0
-offset_right = 22.0
-offset_bottom = 8.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 12
-text = "60%"
-horizontal_alignment = 1
-
-[node name="DialMasses" type="TextureRect" parent="TopBar/DialsPlinth/DialsCenter"]
-custom_minimum_size = Vector2(74, 74)
+[node name="DialMasses" parent="TopCluster/EstateCluster" instance=ExtResource("3_dial_obj")]
 layout_mode = 2
-texture = ExtResource("3_dial_tex")
-expand_mode = 1
-stretch_mode = 5
-script = ExtResource("12_dial_script")
+title = "MASSES"
 fill_percent = 58.0
 
-[node name="Title" type="Label" parent="TopBar/DialsPlinth/DialsCenter/DialMasses"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -30.0
-offset_top = 54.0
-offset_right = 30.0
-offset_bottom = 70.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0.95, 0.85, 0.65, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 10
-text = "MASSES"
-horizontal_alignment = 1
-
-[node name="Pct" type="Label" parent="TopBar/DialsPlinth/DialsCenter/DialMasses"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -22.0
-offset_top = -8.0
-offset_right = 22.0
-offset_bottom = 8.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 12
-text = "58%"
-horizontal_alignment = 1
-
-[node name="HBoxRight" type="HBoxContainer" parent="TopBar"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -380.0
-offset_top = -26.0
-offset_right = -24.0
-offset_bottom = 26.0
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_constants/separation = 18
-alignment = 2
-
-[node name="Morale" type="VBoxContainer" parent="TopBar/HBoxRight"]
-custom_minimum_size = Vector2(150, 0)
+[node name="SpacerRight" type="Control" parent="TopCluster"]
 layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="EpochModule" type="VBoxContainer" parent="TopCluster"]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+theme_override_constants/separation = 6
 alignment = 1
 
-[node name="HBoxH" type="HBoxContainer" parent="TopBar/HBoxRight/Morale"]
+[node name="EpochPlate" type="PanelContainer" parent="TopCluster/EpochModule"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("SB_EpochPlate")
+
+[node name="Margin" type="MarginContainer" parent="TopCluster/EpochModule/EpochPlate"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 4
+
+[node name="VBox" type="VBoxContainer" parent="TopCluster/EpochModule/EpochPlate/Margin"]
 layout_mode = 2
 
-[node name="Lbl" type="Label" parent="TopBar/HBoxRight/Morale/HBoxH"]
+[node name="EraTitle" type="Label" parent="TopCluster/EpochModule/EpochPlate/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.4, 1)
+theme_override_fonts/font = ExtResource("12_font")
+theme_override_font_sizes/font_size = 14
+text = "BRONZE AGE"
+horizontal_alignment = 1
+
+[node name="YearTitle" type="Label" parent="TopCluster/EpochModule/EpochPlate/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.75, 0.65, 1)
+theme_override_font_sizes/font_size = 11
+text = "YEAR 2340 BC"
+horizontal_alignment = 1
+
+[node name="MoraleBarometer" type="VBoxContainer" parent="TopCluster/EpochModule"]
+layout_mode = 2
+
+[node name="HBoxH" type="HBoxContainer" parent="TopCluster/EpochModule/MoraleBarometer"]
+layout_mode = 2
+
+[node name="Lbl" type="Label" parent="TopCluster/EpochModule/MoraleBarometer/HBoxH"]
+custom_minimum_size = Vector2(46, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.4, 0.9, 0.5, 1)
 theme_override_font_sizes/font_size = 10
 text = "HOPE"
 
-[node name="HopeBar" type="ProgressBar" parent="TopBar/HBoxRight/Morale/HBoxH"]
+[node name="HopeBar" type="ProgressBar" parent="TopCluster/EpochModule/MoraleBarometer/HBoxH"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/fill = SubResource("SB_Hope")
 value = 78.0
 show_percentage = false
 
-[node name="HBoxU" type="HBoxContainer" parent="TopBar/HBoxRight/Morale"]
+[node name="HBoxU" type="HBoxContainer" parent="TopCluster/EpochModule/MoraleBarometer"]
 layout_mode = 2
 
-[node name="Lbl" type="Label" parent="TopBar/HBoxRight/Morale/HBoxU"]
+[node name="Lbl" type="Label" parent="TopCluster/EpochModule/MoraleBarometer/HBoxU"]
+custom_minimum_size = Vector2(46, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.35, 0.35, 1)
 theme_override_font_sizes/font_size = 10
 text = "UNREST"
 
-[node name="DiscontentBar" type="ProgressBar" parent="TopBar/HBoxRight/Morale/HBoxU"]
+[node name="DiscontentBar" type="ProgressBar" parent="TopCluster/EpochModule/MoraleBarometer/HBoxU"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/fill = SubResource("SB_Unrest")
 value = 14.0
 show_percentage = false
 
-[node name="EraInfo" type="VBoxContainer" parent="TopBar/HBoxRight"]
-layout_mode = 2
-alignment = 1
-
-[node name="EraTitle" type="Label" parent="TopBar/HBoxRight/EraInfo"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.98, 0.84, 0.35, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 16
-text = "BRONZE AGE"
-horizontal_alignment = 2
-
-[node name="YearTitle" type="Label" parent="TopBar/HBoxRight/EraInfo"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.75, 0.7, 0.6, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 11
-text = "YEAR 2340 BC"
-horizontal_alignment = 2
-
-[node name="BottomLeftCard" type="Panel" parent="."]
+[node name="InspectorConsole" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
+offset_left = 18.0
 offset_top = -215.0
-offset_right = 440.0
-offset_bottom = -20.0
+offset_right = 420.0
+offset_bottom = -18.0
 grow_vertical = 0
-theme_override_styles/panel = SubResource("SB_CardTex")
+theme_override_styles/panel = SubResource("SB_InspectorCard")
 
-[node name="VBoxInfo" type="VBoxContainer" parent="BottomLeftCard"]
+[node name="VBoxInfo" type="VBoxContainer" parent="InspectorConsole"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 165.0
-offset_top = 22.0
-offset_right = -24.0
-offset_bottom = -22.0
+offset_left = 160.0
+offset_top = 24.0
+offset_right = -20.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 4
 alignment = 1
 
-[node name="Title" type="Label" parent="BottomLeftCard/VBoxInfo"]
+[node name="Title" type="Label" parent="InspectorConsole/VBoxInfo"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.98, 0.88, 0.6, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(1, 0.9, 0.6, 1)
+theme_override_fonts/font = ExtResource("12_font")
+theme_override_font_sizes/font_size = 15
 text = "CITADEL OF UR-KISH"
 
-[node name="Subtitle" type="Label" parent="BottomLeftCard/VBoxInfo"]
+[node name="Subtitle" type="Label" parent="InspectorConsole/VBoxInfo"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.75, 0.65, 1)
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 11
 text = "(unselected)"
 
-[node name="Stat1" type="Label" parent="BottomLeftCard/VBoxInfo"]
+[node name="Stat1" type="Label" parent="InspectorConsole/VBoxInfo"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.86, 0.78, 1)
+theme_override_colors/font_color = Color(0.92, 0.88, 0.8, 1)
 theme_override_font_sizes/font_size = 12
 text = "PROVINCE POPULATION: 139"
 
-[node name="Stat2" type="Label" parent="BottomLeftCard/VBoxInfo"]
+[node name="Stat2" type="Label" parent="InspectorConsole/VBoxInfo"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.86, 0.78, 1)
+theme_override_colors/font_color = Color(0.92, 0.88, 0.8, 1)
 theme_override_font_sizes/font_size = 12
 text = "FORTIFICATION: 1200 / 1200"
 
-[node name="Stability" type="Label" parent="BottomLeftCard/VBoxInfo"]
+[node name="Stability" type="Label" parent="InspectorConsole/VBoxInfo"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.82, 0.35, 1)
 theme_override_font_sizes/font_size = 11
 text = "REALM STABILITY: High"
 
-[node name="ActionDock" type="Panel" parent="."]
+[node name="CommandDock" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -225.0
-offset_top = -102.0
-offset_right = 225.0
+offset_left = -220.0
+offset_top = -106.0
+offset_right = 220.0
 offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_styles/panel = SubResource("SB_ActionDock")
+theme_override_styles/panel = SubResource("SB_Dock")
 
-[node name="ActionRibbon" type="HBoxContainer" parent="ActionDock"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 12.0
-offset_top = 8.0
-offset_right = -12.0
-offset_bottom = -8.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 12
+[node name="Margin" type="MarginContainer" parent="CommandDock"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 6
+
+[node name="HBoxTablets" type="HBoxContainer" parent="CommandDock/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
 alignment = 1
 
-[node name="Btn1" type="TextureButton" parent="ActionDock/ActionRibbon"]
-custom_minimum_size = Vector2(70, 70)
+[node name="TabletSpear" parent="CommandDock/Margin/HBoxTablets" instance=ExtResource("4_tablet_obj")]
 layout_mode = 2
-texture_normal = ExtResource("6_btn_spear")
-ignore_texture_size = true
-stretch_mode = 5
+hotkey = "[1]"
+cost_text = "🌾50 ⚔20"
+tablet_icon = ExtResource("7_icon_spear")
 
-[node name="Label" type="Label" parent="ActionDock/ActionRibbon/Btn1"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 4.0
-offset_top = -18.0
-offset_right = 24.0
-grow_vertical = 0
-theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 12
-text = "[1]"
-
-[node name="Btn2" type="TextureButton" parent="ActionDock/ActionRibbon"]
-custom_minimum_size = Vector2(70, 70)
+[node name="TabletSlinger" parent="CommandDock/Margin/HBoxTablets" instance=ExtResource("4_tablet_obj")]
 layout_mode = 2
-texture_normal = ExtResource("7_btn_slinger")
-ignore_texture_size = true
-stretch_mode = 5
+hotkey = "[2]"
+cost_text = "🌾35 🪵15"
+tablet_icon = ExtResource("8_icon_slinger")
 
-[node name="Label" type="Label" parent="ActionDock/ActionRibbon/Btn2"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 4.0
-offset_top = -18.0
-offset_right = 24.0
-grow_vertical = 0
-theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 12
-text = "[2]"
-
-[node name="Btn3" type="TextureButton" parent="ActionDock/ActionRibbon"]
-custom_minimum_size = Vector2(70, 70)
+[node name="TabletChariot" parent="CommandDock/Margin/HBoxTablets" instance=ExtResource("4_tablet_obj")]
 layout_mode = 2
-texture_normal = ExtResource("8_btn_chariot")
-ignore_texture_size = true
-stretch_mode = 5
+hotkey = "[3]"
+cost_text = "🌾120 ⚔60"
+tablet_icon = ExtResource("9_icon_chariot")
 
-[node name="Label" type="Label" parent="ActionDock/ActionRibbon/Btn3"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 4.0
-offset_top = -18.0
-offset_right = 24.0
-grow_vertical = 0
-theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 12
-text = "[3]"
-
-[node name="Btn4" type="TextureButton" parent="ActionDock/ActionRibbon"]
-custom_minimum_size = Vector2(70, 70)
+[node name="TabletFormation" parent="CommandDock/Margin/HBoxTablets" instance=ExtResource("4_tablet_obj")]
 layout_mode = 2
-texture_normal = ExtResource("9_btn_formation")
-ignore_texture_size = true
-stretch_mode = 5
+hotkey = "[4]"
+cost_text = "DRILL"
+tablet_icon = ExtResource("10_icon_form")
 
-[node name="Label" type="Label" parent="ActionDock/ActionRibbon/Btn4"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 4.0
-offset_top = -18.0
-offset_right = 24.0
-grow_vertical = 0
-theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 12
-text = "[4]"
-
-[node name="Btn5" type="TextureButton" parent="ActionDock/ActionRibbon"]
-custom_minimum_size = Vector2(70, 70)
+[node name="TabletRaiders" parent="CommandDock/Margin/HBoxTablets" instance=ExtResource("4_tablet_obj")]
 layout_mode = 2
-texture_normal = ExtResource("10_btn_raiders")
-ignore_texture_size = true
-stretch_mode = 5
+hotkey = "[5]"
+cost_text = "CRISIS"
+tablet_icon = ExtResource("11_icon_raid")
 
-[node name="Label" type="Label" parent="ActionDock/ActionRibbon/Btn5"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 4.0
-offset_top = -18.0
-offset_right = 24.0
-grow_vertical = 0
-theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 12
-text = "[5]"
-
-[node name="MinimapFrame" type="TextureRect" parent="."]
+[node name="MinimapConsole" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -340.0
-offset_top = -230.0
-offset_right = -20.0
-offset_bottom = -20.0
+offset_left = -320.0
+offset_top = -220.0
+offset_right = -16.0
+offset_bottom = -16.0
 grow_horizontal = 0
 grow_vertical = 0
-texture = ExtResource("5_minimap_frame")
+texture = ExtResource("6_map_frame")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Minimap" type="Control" parent="MinimapFrame"]
+[node name="Minimap" type="Control" parent="MinimapConsole"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 36.0
-offset_top = 24.0
-offset_right = -36.0
-offset_bottom = -24.0
+offset_left = 32.0
+offset_top = 22.0
+offset_right = -32.0
+offset_bottom = -22.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("13_map_script")
+script = ExtResource("13_minimap_script")
 
 [node name="NotificationBanner" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -320.0
-offset_top = 92.0
-offset_right = 320.0
-offset_bottom = 126.0
+offset_left = -300.0
+offset_top = 126.0
+offset_right = 300.0
+offset_bottom = 160.0
 grow_horizontal = 2
 
 [node name="Margin" type="MarginContainer" parent="NotificationBanner"]
@@ -671,7 +382,7 @@ theme_override_constants/margin_bottom = 4
 [node name="NotifText" type="Label" parent="NotificationBanner/Margin"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
+theme_override_fonts/font = ExtResource("12_font")
 theme_override_font_sizes/font_size = 13
 text = "DOMINION NOTIFICATION"
 horizontal_alignment = 1
@@ -705,7 +416,7 @@ theme_override_constants/separation = 16
 [node name="Title" type="Label" parent="CrisisModal/Margin/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
-theme_override_fonts/font = ExtResource("11_font_serif")
+theme_override_fonts/font = ExtResource("12_font")
 theme_override_font_sizes/font_size = 20
 text = "CRISIS DECREE TITLE"
 horizontal_alignment = 1
@@ -734,10 +445,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "DECREE OPTION 2"
 
-[connection signal="pressed" from="ActionDock/ActionRibbon/Btn1" to="." method="_on_action_spearmen_pressed"]
-[connection signal="pressed" from="ActionDock/ActionRibbon/Btn2" to="." method="_on_action_slingers_pressed"]
-[connection signal="pressed" from="ActionDock/ActionRibbon/Btn3" to="." method="_on_action_chariots_pressed"]
-[connection signal="pressed" from="ActionDock/ActionRibbon/Btn4" to="." method="_on_action_formation_pressed"]
-[connection signal="pressed" from="ActionDock/ActionRibbon/Btn5" to="." method="_on_action_raider_wave_pressed"]
+[connection signal="pressed" from="CommandDock/Margin/HBoxTablets/TabletSpear" to="." method="_on_action_spearmen_pressed"]
+[connection signal="pressed" from="CommandDock/Margin/HBoxTablets/TabletSlinger" to="." method="_on_action_slingers_pressed"]
+[connection signal="pressed" from="CommandDock/Margin/HBoxTablets/TabletChariot" to="." method="_on_action_chariots_pressed"]
+[connection signal="pressed" from="CommandDock/Margin/HBoxTablets/TabletFormation" to="." method="_on_action_formation_pressed"]
+[connection signal="pressed" from="CommandDock/Margin/HBoxTablets/TabletRaiders" to="." method="_on_action_raider_wave_pressed"]
 [connection signal="pressed" from="CrisisModal/Margin/VBox/HBoxOptions/Option1" to="." method="_on_crisis_option_pressed" binds= [0]]
 [connection signal="pressed" from="CrisisModal/Margin/VBox/HBoxOptions/Option2" to="." method="_on_crisis_option_pressed" binds= [1]]

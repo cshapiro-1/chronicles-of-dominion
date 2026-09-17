@@ -1,24 +1,24 @@
 extends Node3D
 
-@export var pan_speed: float = 35.0
+@export var pan_speed: float = 40.0
 @export var zoom_speed: float = 4.0
-@export var min_zoom: float = 14.0
-@export var max_zoom: float = 75.0
-@export var min_pitch: float = -35.0
-@export var max_pitch: float = -58.0
+@export var min_zoom: float = 12.0
+@export var max_zoom: float = 65.0
+@export var min_pitch: float = -32.0
+@export var max_pitch: float = -55.0
 @export var damping: float = 12.0
 
-@onready var spring_arm: SpringArm3D = $SpringArm3D
-@onready var camera: Camera3D = $SpringArm3D/Camera3D
+@onready var gimbal: Node3D = $Gimbal
+@onready var pitch_arm: Node3D = $Gimbal/PitchArm
+@onready var camera: Camera3D = $Gimbal/PitchArm/Camera3D
 
-var target_position: Vector3
-var target_zoom: float = 38.0
+var target_position: Vector3 = Vector3(0.0, 0.0, 14.0)
+var target_zoom: float = 32.0
 var target_yaw: float = 45.0
 
 func _ready() -> void:
-	target_position = Vector3(0.0, 0.0, 10.0)
 	global_position = target_position
-	spring_arm.spring_length = target_zoom
+	camera.position.z = target_zoom
 	EventBus.minimap_pan_requested.connect(_on_minimap_pan)
 
 func _process(delta: float) -> void:
@@ -30,25 +30,25 @@ func _process(delta: float) -> void:
 	
 	input_dir = input_dir.normalized()
 	
-	var forward = -transform.basis.z
+	var forward = -gimbal.global_transform.basis.z
 	forward.y = 0.0
 	forward = forward.normalized()
-	var right = transform.basis.x
+	var right = gimbal.global_transform.basis.x
 	right.y = 0.0
 	right = right.normalized()
 	
-	var move_vector = (forward * -input_dir.y + right * input_dir.x) * pan_speed * delta * (target_zoom / 28.0)
+	var move_vector = (forward * -input_dir.y + right * input_dir.x) * pan_speed * delta * (target_zoom / 26.0)
 	target_position += move_vector
-	target_position.x = clamp(target_position.x, -100.0, 100.0)
-	target_position.z = clamp(target_position.z, -100.0, 100.0)
+	target_position.x = clamp(target_position.x, -90.0, 90.0)
+	target_position.z = clamp(target_position.z, -90.0, 90.0)
 	
 	global_position = global_position.lerp(target_position, damping * delta)
 	
-	spring_arm.spring_length = lerp(spring_arm.spring_length, target_zoom, damping * delta)
-	var zoom_factor = (spring_arm.spring_length - min_zoom) / (max_zoom - min_zoom)
+	camera.position.z = lerp(camera.position.z, target_zoom, damping * delta)
+	var zoom_factor = (camera.position.z - min_zoom) / (max_zoom - min_zoom)
 	var target_pitch = lerp(min_pitch, max_pitch, zoom_factor)
-	spring_arm.rotation_degrees.x = lerp(spring_arm.rotation_degrees.x, target_pitch, damping * delta)
-	rotation_degrees.y = lerp(rotation_degrees.y, target_yaw, damping * delta)
+	pitch_arm.rotation_degrees.x = lerp(pitch_arm.rotation_degrees.x, target_pitch, damping * delta)
+	gimbal.rotation_degrees.y = lerp(gimbal.rotation_degrees.y, target_yaw, damping * delta)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
