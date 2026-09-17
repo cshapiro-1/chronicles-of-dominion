@@ -15,11 +15,6 @@ var march_time: float = 0.0
 
 var soldier_nodes: Array[Node3D] = []
 
-# Preloaded 3D meshes for squad types
-var mesh_spearman = preload("res://assets/models/soldier_spearman.obj")
-var mesh_slinger = preload("res://assets/models/soldier_slinger.obj")
-var mesh_chariot = preload("res://assets/models/chariot_rig.obj")
-
 func _ready() -> void:
 	target_destination = global_position
 	selection_ring.visible = false
@@ -38,27 +33,28 @@ func _build_squad() -> void:
 	
 	if "Chariot" in unit_type:
 		var chariot_inst = MeshInstance3D.new()
-		chariot_inst.mesh = mesh_chariot
+		chariot_inst.mesh = MeshFactory.create_chariot_mesh()
 		squad_root.add_child(chariot_inst)
 		soldier_nodes.append(chariot_inst)
 	elif "Slinger" in unit_type:
-		# 6 skirmishers dispersed
+		var slinger_mesh = MeshFactory.create_slinger_mesh()
 		var offsets = [
 			Vector3(-1.2, 0, -0.6), Vector3(0.0, 0, -0.8), Vector3(1.2, 0, -0.6),
 			Vector3(-0.9, 0, 0.8), Vector3(0.9, 0, 0.8), Vector3(0.0, 0, 1.4)
 		]
 		for offset in offsets:
 			var s_inst = MeshInstance3D.new()
-			s_inst.mesh = mesh_slinger
+			s_inst.mesh = slinger_mesh
 			s_inst.position = offset
 			squad_root.add_child(s_inst)
 			soldier_nodes.append(s_inst)
 	else:
 		# 3x3 Phalanx rank of 9 spearmen
+		var spear_mesh = MeshFactory.create_spearman_mesh()
 		for r in range(3):
 			for c in range(3):
 				var s_inst = MeshInstance3D.new()
-				s_inst.mesh = mesh_spearman
+				s_inst.mesh = spear_mesh
 				s_inst.position = Vector3((c - 1) * 1.1, 0, (r - 1) * 1.1)
 				squad_root.add_child(s_inst)
 				soldier_nodes.append(s_inst)
@@ -74,11 +70,9 @@ func _physics_process(delta: float) -> void:
 			var speed = unit_data.movement_speed if unit_data else 4.5
 			velocity = dir.normalized() * speed
 			
-			# Smooth facing rotation towards movement heading
 			var target_rot_y = atan2(dir.x, dir.z)
 			squad_root.rotation.y = lerp_angle(squad_root.rotation.y, target_rot_y, 10.0 * delta)
 			
-			# Procedural march cadence
 			march_time += delta * speed * 2.8
 			_animate_marching()
 			
@@ -97,7 +91,6 @@ func _animate_marching() -> void:
 	for i in range(soldier_nodes.size()):
 		var s = soldier_nodes[i]
 		var phase = march_time + i * 0.45
-		# Subtle vertical ground stride & forward spear tilt
 		s.position.y = abs(sin(phase)) * 0.08
 		s.rotation.x = sin(phase) * 0.08
 		s.rotation.z = cos(phase) * 0.04

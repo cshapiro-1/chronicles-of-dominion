@@ -1,48 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://farm_pbr_01"]
+[gd_scene load_steps=3 format=3 uid="uid://farm_pbr_02"]
 
-[ext_resource type="Script" path="res://scenes/buildings/FarmPlot.gd" id="1_farm"]
-[ext_resource type="Texture2D" path="res://assets/textures/T_FertileSoil_PBR.png" id="2_soil"]
-
-[sub_resource type="StandardMaterial3D" id="Mat_RichSoil"]
-albedo_texture = ExtResource("2_soil")
-uv1_scale = Vector3(4, 4, 4)
-roughness = 0.95
-
-[sub_resource type="BoxMesh" id="BoxMesh_Field"]
-size = Vector3(6.5, 0.2, 6.5)
-
-[sub_resource type="StandardMaterial3D" id="Mat_BarleyCrops"]
-albedo_color = Color(0.65, 0.58, 0.22, 1)
-roughness = 0.8
-
-[sub_resource type="BoxMesh" id="BoxMesh_Furrow"]
-size = Vector3(5.8, 0.45, 0.8)
+[ext_resource type="Script" path="res://scenes/buildings/FarmPlot.gd" id="1_farm_script"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_Farm"]
-size = Vector3(6.5, 1, 6.5)
+size = Vector3(8, 1, 8)
 
 [node name="FarmPlot" type="StaticBody3D" groups=["FarmPlots"]]
-script = ExtResource("1_farm")
+script = ExtResource("1_farm_script")
 
 [node name="SoilBed" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
-mesh = SubResource("BoxMesh_Field")
-surface_material_override/0 = SubResource("Mat_RichSoil")
-
-[node name="CropRow1" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, -2)
-mesh = SubResource("BoxMesh_Furrow")
-surface_material_override/0 = SubResource("Mat_BarleyCrops")
-
-[node name="CropRow2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
-mesh = SubResource("BoxMesh_Furrow")
-surface_material_override/0 = SubResource("Mat_BarleyCrops")
-
-[node name="CropRow3" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 2)
-mesh = SubResource("BoxMesh_Furrow")
-surface_material_override/0 = SubResource("Mat_BarleyCrops")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

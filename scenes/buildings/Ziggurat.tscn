@@ -1,35 +1,33 @@
-[gd_scene load_steps=5 format=3 uid="uid://ziggurat_monument_3d_01"]
+[gd_scene load_steps=4 format=3 uid="uid://ziggurat_monument_3d_02"]
 
 [ext_resource type="Script" path="res://scenes/buildings/Ziggurat.gd" id="1_zig"]
-[ext_resource type="ArrayMesh" path="res://assets/models/ziggurat_monument.obj" id="2_zig_mesh"]
-[ext_resource type="PackedScene" path="res://scenes/world/Brazier.tscn" id="3_brazier"]
+[ext_resource type="PackedScene" path="res://scenes/world/Brazier.tscn" id="2_brazier"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_Zig"]
-size = Vector3(28, 12, 28)
+size = Vector3(32, 16, 32)
 
 [node name="Ziggurat" type="StaticBody3D" groups=["Ziggurat"]]
 script = ExtResource("1_zig")
 
 [node name="MonumentMesh" type="MeshInstance3D" parent="."]
-mesh = ExtResource("2_zig_mesh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
 shape = SubResource("BoxShape3D_Zig")
 
 [node name="Braziers" type="Node3D" parent="."]
 
-[node name="Brazier1" parent="Braziers" instance=ExtResource("3_brazier")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 5.2, 9)
+[node name="Brazier1" parent="Braziers" instance=ExtResource("2_brazier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 6.2, 9.5)
 
-[node name="Brazier2" parent="Braziers" instance=ExtResource("3_brazier")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 5.2, 9)
+[node name="Brazier2" parent="Braziers" instance=ExtResource("2_brazier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 6.2, 9.5)
 
-[node name="Brazier3" parent="Braziers" instance=ExtResource("3_brazier")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 5.2, -9)
+[node name="Brazier3" parent="Braziers" instance=ExtResource("2_brazier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 6.2, -9.5)
 
-[node name="Brazier4" parent="Braziers" instance=ExtResource("3_brazier")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 5.2, -9)
+[node name="Brazier4" parent="Braziers" instance=ExtResource("2_brazier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 6.2, -9.5)
 
-[node name="BrazierSummit" parent="Braziers" instance=ExtResource("3_brazier")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.0, 0)
+[node name="BrazierSummit" parent="Braziers" instance=ExtResource("2_brazier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.5, 0)

@@ -2,23 +2,23 @@ extends Node3D
 
 @export var pan_speed: float = 35.0
 @export var zoom_speed: float = 4.0
-@export var min_zoom: float = 12.0
+@export var min_zoom: float = 14.0
 @export var max_zoom: float = 75.0
-@export var min_pitch: float = -32.0
-@export var max_pitch: float = -55.0
-@export var damping: float = 10.0
+@export var min_pitch: float = -35.0
+@export var max_pitch: float = -58.0
+@export var damping: float = 12.0
 
 @onready var spring_arm: SpringArm3D = $SpringArm3D
 @onready var camera: Camera3D = $SpringArm3D/Camera3D
 
 var target_position: Vector3
-var target_zoom: float = 35.0
+var target_zoom: float = 38.0
 var target_yaw: float = 45.0
 
 func _ready() -> void:
-	target_position = Vector3(0.0, 0.0, 8.0)
+	target_position = Vector3(0.0, 0.0, 10.0)
 	global_position = target_position
-	target_zoom = spring_arm.spring_length
+	spring_arm.spring_length = target_zoom
 	EventBus.minimap_pan_requested.connect(_on_minimap_pan)
 
 func _process(delta: float) -> void:
@@ -37,10 +37,10 @@ func _process(delta: float) -> void:
 	right.y = 0.0
 	right = right.normalized()
 	
-	var move_vector = (forward * -input_dir.y + right * input_dir.x) * pan_speed * delta * (target_zoom / 25.0)
+	var move_vector = (forward * -input_dir.y + right * input_dir.x) * pan_speed * delta * (target_zoom / 28.0)
 	target_position += move_vector
-	target_position.x = clamp(target_position.x, -120.0, 120.0)
-	target_position.z = clamp(target_position.z, -120.0, 120.0)
+	target_position.x = clamp(target_position.x, -100.0, 100.0)
+	target_position.z = clamp(target_position.z, -100.0, 100.0)
 	
 	global_position = global_position.lerp(target_position, damping * delta)
 	

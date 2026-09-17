@@ -1,18 +1,18 @@
 shader_type spatial;
-render_mode cull_back, diffuse_burley, specular_schlick_ggx;
 
-uniform sampler2D terrain_texture : source_color, filter_linear_mipmap, repeat_enable;
-uniform float texture_scale = 0.0075;
-uniform float roughness : hint_range(0.0, 1.0) = 0.88;
+uniform sampler2D terrain_texture : source_color, filter_linear_mipmap_anisotropic;
+uniform float texture_scale = 0.08;
+uniform float roughness : hint_range(0.0, 1.0) = 0.9;
 
 void fragment() {
-	vec2 uv_world = (INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xz;
-	vec2 uv_map = uv_world * texture_scale + vec2(0.5, 0.5);
+	vec2 uv = UV * texture_scale * 100.0;
+	vec4 base_color = texture(terrain_texture, uv);
 	
-	vec4 map_col = texture(terrain_texture, uv_map);
+	// Distance from center for subtle desert vignette
+	float dist = length(UV - vec2(0.5, 0.5)) * 2.0;
+	vec3 warm_tint = vec3(0.72, 0.58, 0.42);
 	
-	ALBEDO = map_col.rgb;
+	ALBEDO = mix(base_color.rgb, warm_tint, 0.35) * (1.0 - dist * 0.15);
 	ROUGHNESS = roughness;
-	METALLIC = 0.02;
 	SPECULAR = 0.15;
 }
