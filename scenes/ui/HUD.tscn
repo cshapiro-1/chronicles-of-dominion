@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://hud_gen_01"]
+[gd_scene load_steps=18 format=3 uid="uid://hud_clean_scaled_01"]
 
 [ext_resource type="Script" path="res://scenes/ui/HUD.gd" id="1_hud"]
 [ext_resource type="Texture2D" path="res://assets/ui/gen_topbar_banner.png" id="2_topbar"]
@@ -20,29 +20,19 @@ texture = ExtResource("2_topbar")
 [sub_resource type="StyleBoxTexture" id="SB_CardTex"]
 texture = ExtResource("4_card")
 
-[sub_resource type="StyleBoxFlat" id="SB_Button_Hover"]
-bg_color = Color(1, 0.85, 0.4, 0.15)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 0.85, 0.4, 0.8)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+[sub_resource type="StyleBoxFlat" id="SB_Hope"]
+bg_color = Color(0.2, 0.8, 0.45, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
-[sub_resource type="StyleBoxFlat" id="SB_Button_Pressed"]
-bg_color = Color(0, 0, 0, 0.3)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.6, 0.45, 0.2, 0.8)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+[sub_resource type="StyleBoxFlat" id="SB_Unrest"]
+bg_color = Color(0.92, 0.28, 0.28, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -58,7 +48,7 @@ script = ExtResource("1_hud")
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 60.0
+offset_bottom = 64.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("SB_TopBarTex")
 
@@ -67,125 +57,119 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 24.0
+offset_left = 28.0
 offset_top = -22.0
-offset_right = 480.0
+offset_right = 580.0
 offset_bottom = 22.0
 grow_vertical = 2
-theme_override_constants/separation = 18
+theme_override_constants/separation = 22
 
 [node name="Grain" type="VBoxContainer" parent="TopBar/HBoxResources"]
 layout_mode = 2
-theme_override_constants/separation = -2
 alignment = 1
 
 [node name="Val" type="Label" parent="TopBar/HBoxResources/Grain"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.96, 0.88, 0.72, 1)
+theme_override_colors/font_color = Color(1, 0.92, 0.65, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 14
-text = "🌾 1420"
+theme_override_font_sizes/font_size = 15
+text = "🌾 1,420"
 
 [node name="Delta" type="Label" parent="TopBar/HBoxResources/Grain"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.6, 0.85, 0.5, 1)
-theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.5, 0.9, 0.45, 1)
+theme_override_font_sizes/font_size = 11
 text = "(+45/m)"
 horizontal_alignment = 1
 
 [node name="Timber" type="VBoxContainer" parent="TopBar/HBoxResources"]
 layout_mode = 2
-theme_override_constants/separation = -2
 alignment = 1
 
 [node name="Val" type="Label" parent="TopBar/HBoxResources/Timber"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.96, 0.88, 0.72, 1)
+theme_override_colors/font_color = Color(0.95, 0.85, 0.65, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 15
 text = "🪵 850"
 
 [node name="Delta" type="Label" parent="TopBar/HBoxResources/Timber"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.6, 0.85, 0.5, 1)
-theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.5, 0.9, 0.45, 1)
+theme_override_font_sizes/font_size = 11
 text = "(+18/m)"
 horizontal_alignment = 1
 
 [node name="Stone" type="VBoxContainer" parent="TopBar/HBoxResources"]
 layout_mode = 2
-theme_override_constants/separation = -2
 alignment = 1
 
 [node name="Val" type="Label" parent="TopBar/HBoxResources/Stone"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.96, 0.88, 0.72, 1)
+theme_override_colors/font_color = Color(0.95, 0.92, 0.85, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 14
-text = "⛰ 1200"
+theme_override_font_sizes/font_size = 15
+text = "⛰ 1,200"
 
 [node name="Delta" type="Label" parent="TopBar/HBoxResources/Stone"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.6, 0.85, 0.5, 1)
-theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.5, 0.9, 0.45, 1)
+theme_override_font_sizes/font_size = 11
 text = "(+25/m)"
 horizontal_alignment = 1
 
 [node name="Bronze" type="VBoxContainer" parent="TopBar/HBoxResources"]
 layout_mode = 2
-theme_override_constants/separation = -2
 alignment = 1
 
 [node name="Val" type="Label" parent="TopBar/HBoxResources/Bronze"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.96, 0.88, 0.72, 1)
+theme_override_colors/font_color = Color(0.98, 0.78, 0.4, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 15
 text = "⚔ 650"
 
 [node name="Delta" type="Label" parent="TopBar/HBoxResources/Bronze"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.6, 0.85, 0.5, 1)
-theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.5, 0.9, 0.45, 1)
+theme_override_font_sizes/font_size = 11
 text = "(+12/m)"
 horizontal_alignment = 1
 
 [node name="Gold" type="VBoxContainer" parent="TopBar/HBoxResources"]
 layout_mode = 2
-theme_override_constants/separation = -2
 alignment = 1
 
 [node name="Val" type="Label" parent="TopBar/HBoxResources/Gold"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
+theme_override_colors/font_color = Color(1, 0.88, 0.3, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 14
-text = "👑 5200"
+theme_override_font_sizes/font_size = 15
+text = "👑 5,200"
 
 [node name="Delta" type="Label" parent="TopBar/HBoxResources/Gold"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.6, 0.85, 0.5, 1)
-theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.5, 0.9, 0.45, 1)
+theme_override_font_sizes/font_size = 11
 text = "(+80/m)"
 horizontal_alignment = 1
 
 [node name="Pop" type="VBoxContainer" parent="TopBar/HBoxResources"]
 layout_mode = 2
-theme_override_constants/separation = -2
 alignment = 1
 
 [node name="Val" type="Label" parent="TopBar/HBoxResources/Pop"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5, 0.9, 0.6, 1)
+theme_override_colors/font_color = Color(0.4, 0.92, 0.6, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 15
 text = "👥 139 / 6.5k"
 
 [node name="Delta" type="Label" parent="TopBar/HBoxResources/Pop"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.65, 0.55, 1)
-theme_override_font_sizes/font_size = 10
-text = "100% Capacity"
+theme_override_colors/font_color = Color(0.75, 0.7, 0.6, 1)
+theme_override_font_sizes/font_size = 11
+text = "100% Manpower"
 horizontal_alignment = 1
 
 [node name="DialsCenter" type="HBoxContainer" parent="TopBar"]
@@ -193,16 +177,16 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -160.0
+offset_left = -170.0
 offset_top = 2.0
-offset_right = 160.0
-offset_bottom = 98.0
+offset_right = 170.0
+offset_bottom = 100.0
 grow_horizontal = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 24
 alignment = 1
 
 [node name="DialAltar" type="TextureRect" parent="TopBar/DialsCenter"]
-custom_minimum_size = Vector2(80, 80)
+custom_minimum_size = Vector2(84, 84)
 layout_mode = 2
 texture = ExtResource("3_dial_tex")
 expand_mode = 1
@@ -215,14 +199,14 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -30.0
-offset_top = 80.0
-offset_right = 30.0
-offset_bottom = 96.0
+offset_left = -32.0
+offset_top = 84.0
+offset_right = 32.0
+offset_bottom = 100.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(0.9, 0.82, 0.65, 1)
+theme_override_colors/font_color = Color(0.95, 0.85, 0.65, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 11
 text = "ALTAR"
 horizontal_alignment = 1
 
@@ -234,19 +218,19 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -25.0
-offset_top = 14.0
+offset_top = 16.0
 offset_right = 25.0
-offset_bottom = 30.0
+offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
+theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 12
 text = "65%"
 horizontal_alignment = 1
 
 [node name="DialThrone" type="TextureRect" parent="TopBar/DialsCenter"]
-custom_minimum_size = Vector2(80, 80)
+custom_minimum_size = Vector2(84, 84)
 layout_mode = 2
 texture = ExtResource("3_dial_tex")
 expand_mode = 1
@@ -259,14 +243,14 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -30.0
-offset_top = 80.0
-offset_right = 30.0
-offset_bottom = 96.0
+offset_left = -32.0
+offset_top = 84.0
+offset_right = 32.0
+offset_bottom = 100.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(0.9, 0.82, 0.65, 1)
+theme_override_colors/font_color = Color(0.95, 0.85, 0.65, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 11
 text = "THRONE"
 horizontal_alignment = 1
 
@@ -278,19 +262,19 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -25.0
-offset_top = 14.0
+offset_top = 16.0
 offset_right = 25.0
-offset_bottom = 30.0
+offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
+theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 12
 text = "60%"
 horizontal_alignment = 1
 
 [node name="DialMasses" type="TextureRect" parent="TopBar/DialsCenter"]
-custom_minimum_size = Vector2(80, 80)
+custom_minimum_size = Vector2(84, 84)
 layout_mode = 2
 texture = ExtResource("3_dial_tex")
 expand_mode = 1
@@ -303,14 +287,14 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -30.0
-offset_top = 80.0
-offset_right = 30.0
-offset_bottom = 96.0
+offset_left = -32.0
+offset_top = 84.0
+offset_right = 32.0
+offset_bottom = 100.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(0.9, 0.82, 0.65, 1)
+theme_override_colors/font_color = Color(0.95, 0.85, 0.65, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 11
 text = "MASSES"
 horizontal_alignment = 1
 
@@ -322,14 +306,14 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -25.0
-offset_top = 14.0
+offset_top = 16.0
 offset_right = 25.0
-offset_bottom = 30.0
+offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
+theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 12
 text = "58%"
 horizontal_alignment = 1
 
@@ -340,20 +324,70 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -300.0
-offset_top = -20.0
+offset_left = -380.0
+offset_top = -22.0
 offset_right = -24.0
-offset_bottom = 20.0
+offset_bottom = 22.0
 grow_horizontal = 0
 grow_vertical = 2
+theme_override_constants/separation = 18
 alignment = 2
 
-[node name="EraTitle" type="Label" parent="TopBar/HBoxRight"]
+[node name="Morale" type="VBoxContainer" parent="TopBar/HBoxRight"]
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.82, 0.35, 1)
+alignment = 1
+
+[node name="HBoxH" type="HBoxContainer" parent="TopBar/HBoxRight/Morale"]
+layout_mode = 2
+
+[node name="Lbl" type="Label" parent="TopBar/HBoxRight/Morale/HBoxH"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.9, 0.5, 1)
+theme_override_font_sizes/font_size = 10
+text = "HOPE"
+
+[node name="HopeBar" type="ProgressBar" parent="TopBar/HBoxRight/Morale/HBoxH"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/fill = SubResource("SB_Hope")
+value = 78.0
+show_percentage = false
+
+[node name="HBoxU" type="HBoxContainer" parent="TopBar/HBoxRight/Morale"]
+layout_mode = 2
+
+[node name="Lbl" type="Label" parent="TopBar/HBoxRight/Morale/HBoxU"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.35, 0.35, 1)
+theme_override_font_sizes/font_size = 10
+text = "UNREST"
+
+[node name="DiscontentBar" type="ProgressBar" parent="TopBar/HBoxRight/Morale/HBoxU"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/fill = SubResource("SB_Unrest")
+value = 14.0
+show_percentage = false
+
+[node name="EraInfo" type="VBoxContainer" parent="TopBar/HBoxRight"]
+layout_mode = 2
+alignment = 1
+
+[node name="EraTitle" type="Label" parent="TopBar/HBoxRight/EraInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.84, 0.35, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
 theme_override_font_sizes/font_size = 16
 text = "BRONZE AGE"
+horizontal_alignment = 2
+
+[node name="YearTitle" type="Label" parent="TopBar/HBoxRight/EraInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.7, 0.6, 1)
+theme_override_fonts/font = ExtResource("11_font_serif")
+theme_override_font_sizes/font_size = 11
+text = "YEAR 2340 BC"
 horizontal_alignment = 2
 
 [node name="BottomLeftCard" type="Panel" parent="."]
@@ -361,10 +395,10 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 18.0
-offset_top = -200.0
-offset_right = 410.0
-offset_bottom = -16.0
+offset_left = 20.0
+offset_top = -210.0
+offset_right = 440.0
+offset_bottom = -20.0
 grow_vertical = 0
 theme_override_styles/panel = SubResource("SB_CardTex")
 
@@ -373,9 +407,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 155.0
+offset_left = 165.0
 offset_top = 22.0
-offset_right = -20.0
+offset_right = -24.0
 offset_bottom = -22.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -384,33 +418,33 @@ alignment = 1
 
 [node name="Title" type="Label" parent="BottomLeftCard/VBoxInfo"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.96, 0.88, 0.65, 1)
+theme_override_colors/font_color = Color(0.98, 0.88, 0.6, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 13
+theme_override_font_sizes/font_size = 14
 text = "CITADEL OF UR-KISH"
 
 [node name="Subtitle" type="Label" parent="BottomLeftCard/VBoxInfo"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.75, 0.7, 0.6, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.8, 0.75, 0.65, 1)
+theme_override_font_sizes/font_size = 12
 text = "(unselected)"
 
 [node name="Stat1" type="Label" parent="BottomLeftCard/VBoxInfo"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.85, 0.82, 0.75, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.9, 0.86, 0.78, 1)
+theme_override_font_sizes/font_size = 12
 text = "PROVINCE POPULATION: 139"
 
 [node name="Stat2" type="Label" parent="BottomLeftCard/VBoxInfo"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.85, 0.82, 0.75, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.9, 0.86, 0.78, 1)
+theme_override_font_sizes/font_size = 12
 text = "FORTIFICATION: 1200 / 1200"
 
 [node name="Stability" type="Label" parent="BottomLeftCard/VBoxInfo"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.8, 0.4, 1)
-theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.95, 0.82, 0.35, 1)
+theme_override_font_sizes/font_size = 11
 text = "REALM STABILITY: High"
 
 [node name="ActionRibbon" type="HBoxContainer" parent="."]
@@ -420,17 +454,17 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -190.0
-offset_top = -88.0
-offset_right = 190.0
-offset_bottom = -16.0
+offset_left = -210.0
+offset_top = -94.0
+offset_right = 210.0
+offset_bottom = -18.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/separation = 12
+theme_override_constants/separation = 14
 alignment = 1
 
 [node name="Btn1" type="TextureButton" parent="ActionRibbon"]
-custom_minimum_size = Vector2(64, 64)
+custom_minimum_size = Vector2(68, 68)
 layout_mode = 2
 texture_normal = ExtResource("6_btn_spear")
 ignore_texture_size = true
@@ -442,16 +476,16 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
-offset_top = -16.0
+offset_top = -18.0
 offset_right = 24.0
 grow_vertical = 0
 theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 12
 text = "[1]"
 
 [node name="Btn2" type="TextureButton" parent="ActionRibbon"]
-custom_minimum_size = Vector2(64, 64)
+custom_minimum_size = Vector2(68, 68)
 layout_mode = 2
 texture_normal = ExtResource("7_btn_slinger")
 ignore_texture_size = true
@@ -463,16 +497,16 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
-offset_top = -16.0
+offset_top = -18.0
 offset_right = 24.0
 grow_vertical = 0
 theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 12
 text = "[2]"
 
 [node name="Btn3" type="TextureButton" parent="ActionRibbon"]
-custom_minimum_size = Vector2(64, 64)
+custom_minimum_size = Vector2(68, 68)
 layout_mode = 2
 texture_normal = ExtResource("8_btn_chariot")
 ignore_texture_size = true
@@ -484,16 +518,16 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
-offset_top = -16.0
+offset_top = -18.0
 offset_right = 24.0
 grow_vertical = 0
 theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 12
 text = "[3]"
 
 [node name="Btn4" type="TextureButton" parent="ActionRibbon"]
-custom_minimum_size = Vector2(64, 64)
+custom_minimum_size = Vector2(68, 68)
 layout_mode = 2
 texture_normal = ExtResource("9_btn_formation")
 ignore_texture_size = true
@@ -505,16 +539,16 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
-offset_top = -16.0
+offset_top = -18.0
 offset_right = 24.0
 grow_vertical = 0
 theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 12
 text = "[4]"
 
 [node name="Btn5" type="TextureButton" parent="ActionRibbon"]
-custom_minimum_size = Vector2(64, 64)
+custom_minimum_size = Vector2(68, 68)
 layout_mode = 2
 texture_normal = ExtResource("10_btn_raiders")
 ignore_texture_size = true
@@ -526,12 +560,12 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
-offset_top = -16.0
+offset_top = -18.0
 offset_right = 24.0
 grow_vertical = 0
 theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 12
 text = "[5]"
 
 [node name="MinimapFrame" type="TextureRect" parent="."]
@@ -541,10 +575,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -320.0
-offset_top = -220.0
-offset_right = -18.0
-offset_bottom = -16.0
+offset_left = -340.0
+offset_top = -230.0
+offset_right = -20.0
+offset_bottom = -20.0
 grow_horizontal = 0
 grow_vertical = 0
 texture = ExtResource("5_minimap_frame")
@@ -556,10 +590,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 32.0
-offset_top = 22.0
-offset_right = -32.0
-offset_bottom = -22.0
+offset_left = 36.0
+offset_top = 24.0
+offset_right = -36.0
+offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("13_map_script")
