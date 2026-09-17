@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://meso_house_3d_01"]
+
+[ext_resource type="ArrayMesh" path="res://assets/models/meso_house.obj" id="1_house_mesh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_House"]
+size = Vector3(8, 6, 6)
+
+[node name="House" type="StaticBody3D"]
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_house_mesh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+shape = SubResource("BoxShape3D_House")

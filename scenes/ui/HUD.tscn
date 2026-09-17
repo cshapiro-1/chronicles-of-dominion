@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://hud_clean_scaled_01"]
+[gd_scene load_steps=20 format=3 uid="uid://hud_diegetic_master_01"]
 
 [ext_resource type="Script" path="res://scenes/ui/HUD.gd" id="1_hud"]
 [ext_resource type="Texture2D" path="res://assets/ui/gen_topbar_banner.png" id="2_topbar"]
@@ -17,18 +17,44 @@
 [sub_resource type="StyleBoxTexture" id="SB_TopBarTex"]
 texture = ExtResource("2_topbar")
 
+[sub_resource type="StyleBoxFlat" id="SB_DialPlinth"]
+bg_color = Color(0.08, 0.07, 0.06, 0.85)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.55, 0.42, 0.22, 0.9)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
 [sub_resource type="StyleBoxTexture" id="SB_CardTex"]
 texture = ExtResource("4_card")
 
+[sub_resource type="StyleBoxFlat" id="SB_ActionDock"]
+bg_color = Color(0.08, 0.07, 0.06, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.65, 0.5, 0.25, 0.95)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_size = 8
+
 [sub_resource type="StyleBoxFlat" id="SB_Hope"]
-bg_color = Color(0.2, 0.8, 0.45, 1)
+bg_color = Color(0.18, 0.75, 0.42, 1)
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
 [sub_resource type="StyleBoxFlat" id="SB_Unrest"]
-bg_color = Color(0.92, 0.28, 0.28, 1)
+bg_color = Color(0.88, 0.25, 0.25, 1)
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
@@ -48,7 +74,7 @@ script = ExtResource("1_hud")
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 64.0
+offset_bottom = 76.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("SB_TopBarTex")
 
@@ -57,12 +83,12 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 28.0
-offset_top = -22.0
+offset_left = 24.0
+offset_top = -26.0
 offset_right = 580.0
-offset_bottom = 22.0
+offset_bottom = 26.0
 grow_vertical = 2
-theme_override_constants/separation = 22
+theme_override_constants/separation = 20
 
 [node name="Grain" type="VBoxContainer" parent="TopBar/HBoxResources"]
 layout_mode = 2
@@ -70,9 +96,9 @@ alignment = 1
 
 [node name="Val" type="Label" parent="TopBar/HBoxResources/Grain"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.92, 0.65, 1)
+theme_override_colors/font_color = Color(1, 0.94, 0.7, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 15
+theme_override_font_sizes/font_size = 16
 text = "🌾 1,420"
 
 [node name="Delta" type="Label" parent="TopBar/HBoxResources/Grain"]
@@ -88,9 +114,9 @@ alignment = 1
 
 [node name="Val" type="Label" parent="TopBar/HBoxResources/Timber"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.85, 0.65, 1)
+theme_override_colors/font_color = Color(0.95, 0.88, 0.7, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 15
+theme_override_font_sizes/font_size = 16
 text = "🪵 850"
 
 [node name="Delta" type="Label" parent="TopBar/HBoxResources/Timber"]
@@ -108,7 +134,7 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.92, 0.85, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 15
+theme_override_font_sizes/font_size = 16
 text = "⛰ 1,200"
 
 [node name="Delta" type="Label" parent="TopBar/HBoxResources/Stone"]
@@ -124,9 +150,9 @@ alignment = 1
 
 [node name="Val" type="Label" parent="TopBar/HBoxResources/Bronze"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.98, 0.78, 0.4, 1)
+theme_override_colors/font_color = Color(0.98, 0.8, 0.45, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 15
+theme_override_font_sizes/font_size = 16
 text = "⚔ 650"
 
 [node name="Delta" type="Label" parent="TopBar/HBoxResources/Bronze"]
@@ -142,9 +168,9 @@ alignment = 1
 
 [node name="Val" type="Label" parent="TopBar/HBoxResources/Gold"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.88, 0.3, 1)
+theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 15
+theme_override_font_sizes/font_size = 16
 text = "👑 5,200"
 
 [node name="Delta" type="Label" parent="TopBar/HBoxResources/Gold"]
@@ -160,9 +186,9 @@ alignment = 1
 
 [node name="Val" type="Label" parent="TopBar/HBoxResources/Pop"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.4, 0.92, 0.6, 1)
+theme_override_colors/font_color = Color(0.45, 0.95, 0.65, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 15
+theme_override_font_sizes/font_size = 16
 text = "👥 139 / 6.5k"
 
 [node name="Delta" type="Label" parent="TopBar/HBoxResources/Pop"]
@@ -172,21 +198,34 @@ theme_override_font_sizes/font_size = 11
 text = "100% Manpower"
 horizontal_alignment = 1
 
-[node name="DialsCenter" type="HBoxContainer" parent="TopBar"]
+[node name="DialsPlinth" type="Panel" parent="TopBar"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -170.0
-offset_top = 2.0
-offset_right = 170.0
-offset_bottom = 100.0
+offset_left = -160.0
+offset_top = 4.0
+offset_right = 160.0
+offset_bottom = 86.0
 grow_horizontal = 2
-theme_override_constants/separation = 24
+theme_override_styles/panel = SubResource("SB_DialPlinth")
+
+[node name="DialsCenter" type="HBoxContainer" parent="TopBar/DialsPlinth"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 4.0
+offset_right = -12.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
 alignment = 1
 
-[node name="DialAltar" type="TextureRect" parent="TopBar/DialsCenter"]
-custom_minimum_size = Vector2(84, 84)
+[node name="DialAltar" type="TextureRect" parent="TopBar/DialsPlinth/DialsCenter"]
+custom_minimum_size = Vector2(74, 74)
 layout_mode = 2
 texture = ExtResource("3_dial_tex")
 expand_mode = 1
@@ -194,43 +233,43 @@ stretch_mode = 5
 script = ExtResource("12_dial_script")
 fill_percent = 65.0
 
-[node name="Title" type="Label" parent="TopBar/DialsCenter/DialAltar"]
+[node name="Title" type="Label" parent="TopBar/DialsPlinth/DialsCenter/DialAltar"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -32.0
-offset_top = 84.0
-offset_right = 32.0
-offset_bottom = 100.0
+offset_left = -30.0
+offset_top = 54.0
+offset_right = 30.0
+offset_bottom = 70.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.95, 0.85, 0.65, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 10
 text = "ALTAR"
 horizontal_alignment = 1
 
-[node name="Pct" type="Label" parent="TopBar/DialsCenter/DialAltar"]
+[node name="Pct" type="Label" parent="TopBar/DialsPlinth/DialsCenter/DialAltar"]
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -25.0
-offset_top = 16.0
-offset_right = 25.0
-offset_bottom = 32.0
+anchor_bottom = 0.5
+offset_left = -22.0
+offset_top = -8.0
+offset_right = 22.0
+offset_bottom = 8.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
 theme_override_font_sizes/font_size = 12
 text = "65%"
 horizontal_alignment = 1
 
-[node name="DialThrone" type="TextureRect" parent="TopBar/DialsCenter"]
-custom_minimum_size = Vector2(84, 84)
+[node name="DialThrone" type="TextureRect" parent="TopBar/DialsPlinth/DialsCenter"]
+custom_minimum_size = Vector2(74, 74)
 layout_mode = 2
 texture = ExtResource("3_dial_tex")
 expand_mode = 1
@@ -238,43 +277,43 @@ stretch_mode = 5
 script = ExtResource("12_dial_script")
 fill_percent = 60.0
 
-[node name="Title" type="Label" parent="TopBar/DialsCenter/DialThrone"]
+[node name="Title" type="Label" parent="TopBar/DialsPlinth/DialsCenter/DialThrone"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -32.0
-offset_top = 84.0
-offset_right = 32.0
-offset_bottom = 100.0
+offset_left = -30.0
+offset_top = 54.0
+offset_right = 30.0
+offset_bottom = 70.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.95, 0.85, 0.65, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 10
 text = "THRONE"
 horizontal_alignment = 1
 
-[node name="Pct" type="Label" parent="TopBar/DialsCenter/DialThrone"]
+[node name="Pct" type="Label" parent="TopBar/DialsPlinth/DialsCenter/DialThrone"]
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -25.0
-offset_top = 16.0
-offset_right = 25.0
-offset_bottom = 32.0
+anchor_bottom = 0.5
+offset_left = -22.0
+offset_top = -8.0
+offset_right = 22.0
+offset_bottom = 8.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
 theme_override_font_sizes/font_size = 12
 text = "60%"
 horizontal_alignment = 1
 
-[node name="DialMasses" type="TextureRect" parent="TopBar/DialsCenter"]
-custom_minimum_size = Vector2(84, 84)
+[node name="DialMasses" type="TextureRect" parent="TopBar/DialsPlinth/DialsCenter"]
+custom_minimum_size = Vector2(74, 74)
 layout_mode = 2
 texture = ExtResource("3_dial_tex")
 expand_mode = 1
@@ -282,35 +321,35 @@ stretch_mode = 5
 script = ExtResource("12_dial_script")
 fill_percent = 58.0
 
-[node name="Title" type="Label" parent="TopBar/DialsCenter/DialMasses"]
+[node name="Title" type="Label" parent="TopBar/DialsPlinth/DialsCenter/DialMasses"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -32.0
-offset_top = 84.0
-offset_right = 32.0
-offset_bottom = 100.0
+offset_left = -30.0
+offset_top = 54.0
+offset_right = 30.0
+offset_bottom = 70.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.95, 0.85, 0.65, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 10
 text = "MASSES"
 horizontal_alignment = 1
 
-[node name="Pct" type="Label" parent="TopBar/DialsCenter/DialMasses"]
+[node name="Pct" type="Label" parent="TopBar/DialsPlinth/DialsCenter/DialMasses"]
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -25.0
-offset_top = 16.0
-offset_right = 25.0
-offset_bottom = 32.0
+anchor_bottom = 0.5
+offset_left = -22.0
+offset_top = -8.0
+offset_right = 22.0
+offset_bottom = 8.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 theme_override_colors/font_color = Color(1, 0.9, 0.35, 1)
 theme_override_fonts/font = ExtResource("11_font_serif")
 theme_override_font_sizes/font_size = 12
@@ -325,9 +364,9 @@ anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = -380.0
-offset_top = -22.0
+offset_top = -26.0
 offset_right = -24.0
-offset_bottom = 22.0
+offset_bottom = 26.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_constants/separation = 18
@@ -396,7 +435,7 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 20.0
-offset_top = -210.0
+offset_top = -215.0
 offset_right = 440.0
 offset_bottom = -20.0
 grow_vertical = 0
@@ -447,30 +486,43 @@ theme_override_colors/font_color = Color(0.95, 0.82, 0.35, 1)
 theme_override_font_sizes/font_size = 11
 text = "REALM STABILITY: High"
 
-[node name="ActionRibbon" type="HBoxContainer" parent="."]
+[node name="ActionDock" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -210.0
-offset_top = -94.0
-offset_right = 210.0
-offset_bottom = -18.0
+offset_left = -225.0
+offset_top = -102.0
+offset_right = 225.0
+offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/separation = 14
+theme_override_styles/panel = SubResource("SB_ActionDock")
+
+[node name="ActionRibbon" type="HBoxContainer" parent="ActionDock"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 8.0
+offset_right = -12.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
 alignment = 1
 
-[node name="Btn1" type="TextureButton" parent="ActionRibbon"]
-custom_minimum_size = Vector2(68, 68)
+[node name="Btn1" type="TextureButton" parent="ActionDock/ActionRibbon"]
+custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 texture_normal = ExtResource("6_btn_spear")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="ActionRibbon/Btn1"]
+[node name="Label" type="Label" parent="ActionDock/ActionRibbon/Btn1"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -484,14 +536,14 @@ theme_override_fonts/font = ExtResource("11_font_serif")
 theme_override_font_sizes/font_size = 12
 text = "[1]"
 
-[node name="Btn2" type="TextureButton" parent="ActionRibbon"]
-custom_minimum_size = Vector2(68, 68)
+[node name="Btn2" type="TextureButton" parent="ActionDock/ActionRibbon"]
+custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 texture_normal = ExtResource("7_btn_slinger")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="ActionRibbon/Btn2"]
+[node name="Label" type="Label" parent="ActionDock/ActionRibbon/Btn2"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -505,14 +557,14 @@ theme_override_fonts/font = ExtResource("11_font_serif")
 theme_override_font_sizes/font_size = 12
 text = "[2]"
 
-[node name="Btn3" type="TextureButton" parent="ActionRibbon"]
-custom_minimum_size = Vector2(68, 68)
+[node name="Btn3" type="TextureButton" parent="ActionDock/ActionRibbon"]
+custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 texture_normal = ExtResource("8_btn_chariot")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="ActionRibbon/Btn3"]
+[node name="Label" type="Label" parent="ActionDock/ActionRibbon/Btn3"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -526,14 +578,14 @@ theme_override_fonts/font = ExtResource("11_font_serif")
 theme_override_font_sizes/font_size = 12
 text = "[3]"
 
-[node name="Btn4" type="TextureButton" parent="ActionRibbon"]
-custom_minimum_size = Vector2(68, 68)
+[node name="Btn4" type="TextureButton" parent="ActionDock/ActionRibbon"]
+custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 texture_normal = ExtResource("9_btn_formation")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="ActionRibbon/Btn4"]
+[node name="Label" type="Label" parent="ActionDock/ActionRibbon/Btn4"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -547,14 +599,14 @@ theme_override_fonts/font = ExtResource("11_font_serif")
 theme_override_font_sizes/font_size = 12
 text = "[4]"
 
-[node name="Btn5" type="TextureButton" parent="ActionRibbon"]
-custom_minimum_size = Vector2(68, 68)
+[node name="Btn5" type="TextureButton" parent="ActionDock/ActionRibbon"]
+custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 texture_normal = ExtResource("10_btn_raiders")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="ActionRibbon/Btn5"]
+[node name="Label" type="Label" parent="ActionDock/ActionRibbon/Btn5"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -604,9 +656,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -320.0
-offset_top = 80.0
+offset_top = 92.0
 offset_right = 320.0
-offset_bottom = 114.0
+offset_bottom = 126.0
 grow_horizontal = 2
 
 [node name="Margin" type="MarginContainer" parent="NotificationBanner"]
@@ -682,10 +734,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "DECREE OPTION 2"
 
-[connection signal="pressed" from="ActionRibbon/Btn1" to="." method="_on_action_spearmen_pressed"]
-[connection signal="pressed" from="ActionRibbon/Btn2" to="." method="_on_action_slingers_pressed"]
-[connection signal="pressed" from="ActionRibbon/Btn3" to="." method="_on_action_chariots_pressed"]
-[connection signal="pressed" from="ActionRibbon/Btn4" to="." method="_on_action_formation_pressed"]
-[connection signal="pressed" from="ActionRibbon/Btn5" to="." method="_on_action_raider_wave_pressed"]
+[connection signal="pressed" from="ActionDock/ActionRibbon/Btn1" to="." method="_on_action_spearmen_pressed"]
+[connection signal="pressed" from="ActionDock/ActionRibbon/Btn2" to="." method="_on_action_slingers_pressed"]
+[connection signal="pressed" from="ActionDock/ActionRibbon/Btn3" to="." method="_on_action_chariots_pressed"]
+[connection signal="pressed" from="ActionDock/ActionRibbon/Btn4" to="." method="_on_action_formation_pressed"]
+[connection signal="pressed" from="ActionDock/ActionRibbon/Btn5" to="." method="_on_action_raider_wave_pressed"]
 [connection signal="pressed" from="CrisisModal/Margin/VBox/HBoxOptions/Option1" to="." method="_on_crisis_option_pressed" binds= [0]]
 [connection signal="pressed" from="CrisisModal/Margin/VBox/HBoxOptions/Option2" to="." method="_on_crisis_option_pressed" binds= [1]]

@@ -1,15 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://unit_token_01"]
+[gd_scene load_steps=6 format=3 uid="uid://unit_squad_3d_01"]
 
 [ext_resource type="Script" path="res://scenes/units/Unit.gd" id="1_unit"]
-[ext_resource type="Texture2D" path="res://assets/textures/T_Spearman_Cohort.png" id="2_spear_tex"]
+[ext_resource type="ArrayMesh" path="res://assets/models/soldier_spearman.obj" id="2_spear_mesh"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_Unit"]
-radius = 0.5
-height = 2.0
+radius = 1.8
+height = 3.0
 
 [sub_resource type="TorusMesh" id="TorusMesh_Ring"]
-inner_radius = 0.8
-outer_radius = 0.95
+inner_radius = 2.0
+outer_radius = 2.25
 
 [sub_resource type="StandardMaterial3D" id="Mat_Ring"]
 shading_mode = 0
@@ -21,14 +21,10 @@ collision_mask = 3
 script = ExtResource("1_unit")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 shape = SubResource("CapsuleShape3D_Unit")
 
-[node name="SpriteToken" type="Sprite3D" parent="."]
-transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 1.3, 0)
-billboard = 1
-alpha_cut = 1
-texture = ExtResource("2_spear_tex")
+[node name="SquadRoot" type="Node3D" parent="."]
 
 [node name="SelectionRing" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
@@ -36,9 +32,9 @@ mesh = SubResource("TorusMesh_Ring")
 surface_material_override/0 = SubResource("Mat_Ring")
 
 [node name="HPBar" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8, 0)
 billboard = 1
 double_sided = false
 text = "100 / 100"
-font_size = 20
-outline_size = 4
+font_size = 22
+outline_size = 5

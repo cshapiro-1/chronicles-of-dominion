@@ -1,0 +1,9 @@
+newmtl Mudbrick
+Ka 0.6 0.5 0.35
+Kd 0.8 0.7 0.55
+map_Kd ../textures/T_Mudbrick_PBR.png
+
+newmtl LapisLazuli
+Ka 0.1 0.2 0.5
+Kd 0.15 0.35 0.85
+map_Kd ../textures/T_LapisLazuli_PBR.png

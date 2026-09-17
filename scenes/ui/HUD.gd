@@ -10,13 +10,13 @@ extends Control
 @onready var lbl_pop: Label = $TopBar/HBoxResources/Pop/Val
 
 # Estate dials
-@onready var dial_altar: Control = $TopBar/DialsCenter/DialAltar
-@onready var dial_throne: Control = $TopBar/DialsCenter/DialThrone
-@onready var dial_masses: Control = $TopBar/DialsCenter/DialMasses
+@onready var dial_altar: Control = $TopBar/DialsPlinth/DialsCenter/DialAltar
+@onready var dial_throne: Control = $TopBar/DialsPlinth/DialsCenter/DialThrone
+@onready var dial_masses: Control = $TopBar/DialsPlinth/DialsCenter/DialMasses
 
-@onready var lbl_altar_pct: Label = $TopBar/DialsCenter/DialAltar/Pct
-@onready var lbl_throne_pct: Label = $TopBar/DialsCenter/DialThrone/Pct
-@onready var lbl_masses_pct: Label = $TopBar/DialsCenter/DialMasses/Pct
+@onready var lbl_altar_pct: Label = $TopBar/DialsPlinth/DialsCenter/DialAltar/Pct
+@onready var lbl_throne_pct: Label = $TopBar/DialsPlinth/DialsCenter/DialThrone/Pct
+@onready var lbl_masses_pct: Label = $TopBar/DialsPlinth/DialsCenter/DialMasses/Pct
 
 # Inspector card
 @onready var card_title: Label = $BottomLeftCard/VBoxInfo/Title

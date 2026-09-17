@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://palm_tree_3d_01"]
+
+[ext_resource type="ArrayMesh" path="res://assets/models/palm_tree.obj" id="1_palm_mesh"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_Palm"]
+height = 7.0
+radius = 0.5
+
+[node name="PalmTree" type="StaticBody3D"]
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_palm_mesh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+shape = SubResource("CylinderShape3D_Palm")

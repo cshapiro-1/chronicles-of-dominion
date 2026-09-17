@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://city_gate_3d_01"]
+
+[ext_resource type="ArrayMesh" path="res://assets/models/city_wall_gate.obj" id="1_gate_mesh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_Wall"]
+size = Vector3(45, 8, 5)
+
+[node name="CityGate" type="StaticBody3D"]
+
+[node name="GateMesh" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_gate_mesh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+shape = SubResource("BoxShape3D_Wall")

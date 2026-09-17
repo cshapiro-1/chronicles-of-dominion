@@ -1,146 +1,135 @@
 extends CharacterBody3D
 
-@export var unit_data: Resource
-@export var team_id: int = 0
-
-enum State { IDLE, MOVING, ATTACKING, DEAD }
-var current_state: State = State.IDLE
-
-var current_health: float = 100.0
-var target_destination: Vector3 = Vector3.ZERO
-var target_enemy: Node = null
-var attack_cooldown: float = 0.0
-var is_selected: bool = false
+@export var unit_data: UnitData
 
 @onready var selection_ring: MeshInstance3D = $SelectionRing
-@onready var sprite_token: Sprite3D = $SpriteToken
 @onready var hp_bar: Label3D = $HPBar
+@onready var squad_root: Node3D = $SquadRoot
+
+var is_selected: bool = false
+var target_destination: Vector3
+var has_target: bool = false
+var current_hp: int = 100
+var is_moving: bool = false
+var march_time: float = 0.0
+
+var soldier_nodes: Array[Node3D] = []
+
+# Preloaded 3D meshes for squad types
+var mesh_spearman = preload("res://assets/models/soldier_spearman.obj")
+var mesh_slinger = preload("res://assets/models/soldier_slinger.obj")
+var mesh_chariot = preload("res://assets/models/chariot_rig.obj")
 
 func _ready() -> void:
-	if unit_data:
-		current_health = unit_data.max_health
-		_setup_sprite_texture()
-	
 	target_destination = global_position
-	set_selected(false)
-	if is_instance_valid(MilitaryManager):
-		MilitaryManager.register_unit(self)
-	_update_hp_display()
+	selection_ring.visible = false
+	
+	if unit_data:
+		current_hp = unit_data.max_hp
+	update_hp_display()
+	_build_squad()
 
-func _setup_sprite_texture() -> void:
-	if not sprite_token or not unit_data:
-		return
-	var uname = unit_data.unit_name
-	var tex_path = "res://assets/textures/T_Spearman_Cohort.png"
-	if "Slinger" in uname:
-		tex_path = "res://assets/textures/T_Slinger_Cohort.png"
-	elif "Chariot" in uname:
-		tex_path = "res://assets/textures/T_Chariot_Cohort.png"
-	elif "Raider" in uname:
-		tex_path = "res://assets/textures/T_Slinger_Cohort.png"
-		sprite_token.modulate = Color(1.2, 0.55, 0.55)
-		
-	var tex = load(tex_path)
-	if tex:
-		sprite_token.texture = tex
-
-func _exit_tree() -> void:
-	if is_instance_valid(MilitaryManager):
-		MilitaryManager.unregister_unit(self)
-
-func set_selected(selected: bool) -> void:
-	is_selected = selected
-	selection_ring.visible = is_selected
-
-func move_to_position(pos: Vector3) -> void:
-	target_destination = pos
-	target_enemy = null
-	current_state = State.MOVING
-
-func attack_target(enemy: Node) -> void:
-	target_enemy = enemy
-	current_state = State.ATTACKING
+func _build_squad() -> void:
+	for child in squad_root.get_children():
+		child.queue_free()
+	soldier_nodes.clear()
+	
+	var unit_type = unit_data.unit_name if unit_data else "Spearman"
+	
+	if "Chariot" in unit_type:
+		var chariot_inst = MeshInstance3D.new()
+		chariot_inst.mesh = mesh_chariot
+		squad_root.add_child(chariot_inst)
+		soldier_nodes.append(chariot_inst)
+	elif "Slinger" in unit_type:
+		# 6 skirmishers dispersed
+		var offsets = [
+			Vector3(-1.2, 0, -0.6), Vector3(0.0, 0, -0.8), Vector3(1.2, 0, -0.6),
+			Vector3(-0.9, 0, 0.8), Vector3(0.9, 0, 0.8), Vector3(0.0, 0, 1.4)
+		]
+		for offset in offsets:
+			var s_inst = MeshInstance3D.new()
+			s_inst.mesh = mesh_slinger
+			s_inst.position = offset
+			squad_root.add_child(s_inst)
+			soldier_nodes.append(s_inst)
+	else:
+		# 3x3 Phalanx rank of 9 spearmen
+		for r in range(3):
+			for c in range(3):
+				var s_inst = MeshInstance3D.new()
+				s_inst.mesh = mesh_spearman
+				s_inst.position = Vector3((c - 1) * 1.1, 0, (r - 1) * 1.1)
+				squad_root.add_child(s_inst)
+				soldier_nodes.append(s_inst)
 
 func _physics_process(delta: float) -> void:
-	if current_state == State.DEAD:
-		return
-	
-	if attack_cooldown > 0.0:
-		attack_cooldown -= delta
-	
-	match current_state:
-		State.IDLE:
-			velocity = velocity.lerp(Vector3.ZERO, 10.0 * delta)
-			_scan_for_enemies()
+	if has_target:
+		var dir = (target_destination - global_position)
+		dir.y = 0.0
+		var dist = dir.length()
 		
-		State.MOVING:
-			_navigate_to(target_destination, delta)
-			if global_position.distance_to(target_destination) < 0.5:
-				current_state = State.IDLE
-		
-		State.ATTACKING:
-			if is_instance_valid(target_enemy) and target_enemy.current_state != State.DEAD:
-				var dist = global_position.distance_to(target_enemy.global_position)
-				var rng = unit_data.attack_range if unit_data else 2.5
-				if dist <= rng:
-					velocity = velocity.lerp(Vector3.ZERO, 10.0 * delta)
-					_perform_attack()
-				else:
-					_navigate_to(target_enemy.global_position, delta)
-			else:
-				target_enemy = null
-				current_state = State.IDLE
-	
-	move_and_slide()
-
-func _navigate_to(dest: Vector3, _delta: float) -> void:
-	var dir = (dest - global_position)
-	dir.y = 0.0
-	if dir.length() > 0.1:
-		dir = dir.normalized()
-		var spd = unit_data.move_speed if unit_data else 5.0
-		velocity = dir * spd
+		if dist > 0.8:
+			is_moving = true
+			var speed = unit_data.movement_speed if unit_data else 4.5
+			velocity = dir.normalized() * speed
+			
+			# Smooth facing rotation towards movement heading
+			var target_rot_y = atan2(dir.x, dir.z)
+			squad_root.rotation.y = lerp_angle(squad_root.rotation.y, target_rot_y, 10.0 * delta)
+			
+			# Procedural march cadence
+			march_time += delta * speed * 2.8
+			_animate_marching()
+			
+			move_and_slide()
+		else:
+			is_moving = false
+			velocity = Vector3.ZERO
+			has_target = false
+			_reset_stance()
 	else:
+		is_moving = false
 		velocity = Vector3.ZERO
+		_reset_stance()
 
-func _perform_attack() -> void:
-	if attack_cooldown <= 0.0 and is_instance_valid(target_enemy):
-		var spd = unit_data.attack_speed if unit_data else 1.0
-		attack_cooldown = 1.0 / max(0.1, spd)
-		var dmg = unit_data.damage if unit_data else 15.0
-		target_enemy.take_damage(dmg, self)
+func _animate_marching() -> void:
+	for i in range(soldier_nodes.size()):
+		var s = soldier_nodes[i]
+		var phase = march_time + i * 0.45
+		# Subtle vertical ground stride & forward spear tilt
+		s.position.y = abs(sin(phase)) * 0.08
+		s.rotation.x = sin(phase) * 0.08
+		s.rotation.z = cos(phase) * 0.04
 
-func take_damage(amount: float, _attacker: Node) -> void:
-	var arm = unit_data.armor if unit_data else 2.0
-	var effective_damage = max(2.0, amount - arm)
-	current_health -= effective_damage
-	_update_hp_display()
-	
-	if sprite_token:
-		var tween = create_tween()
-		sprite_token.modulate = Color(2.0, 0.4, 0.4)
-		tween.tween_property(sprite_token, "modulate", Color(1.0, 1.0, 1.0) if team_id == 0 else Color(1.2, 0.55, 0.55), 0.25)
-	
-	if current_health <= 0.0:
-		die()
+func _reset_stance() -> void:
+	for s in soldier_nodes:
+		s.position.y = lerp(s.position.y, 0.0, 0.15)
+		s.rotation.x = lerp(s.rotation.x, 0.0, 0.15)
+		s.rotation.z = lerp(s.rotation.z, 0.0, 0.15)
 
-func die() -> void:
-	current_state = State.DEAD
-	set_selected(false)
-	var tween = create_tween()
-	tween.tween_property(self, "scale", Vector3.ZERO, 0.35)
-	tween.tween_callback(queue_free)
+func set_target_destination(dest: Vector3) -> void:
+	target_destination = Vector3(dest.x, global_position.y, dest.z)
+	has_target = true
 
-func _update_hp_display() -> void:
-	var max_hp = unit_data.max_health if unit_data else 100.0
-	hp_bar.text = "%d / %d" % [int(current_health), int(max_hp)]
+func select() -> void:
+	is_selected = true
+	selection_ring.visible = true
 
-func _scan_for_enemies() -> void:
-	if not is_instance_valid(MilitaryManager):
-		return
-	for u in MilitaryManager.all_units:
-		if is_instance_valid(u) and u.team_id != team_id and u.current_state != State.DEAD:
-			if global_position.distance_to(u.global_position) < 14.0:
-				target_enemy = u
-				current_state = State.ATTACKING
-				break
+func deselect() -> void:
+	is_selected = false
+	selection_ring.visible = false
+
+func take_damage(amount: int) -> void:
+	current_hp = max(0, current_hp - amount)
+	update_hp_display()
+	if current_hp <= 0:
+		queue_free()
+
+func update_hp_display() -> void:
+	var max_val = unit_data.max_hp if unit_data else 100
+	hp_bar.text = str(current_hp) + " / " + str(max_val)
+	if current_hp < max_val * 0.4:
+		hp_bar.modulate = Color(1.0, 0.3, 0.3)
+	else:
+		hp_bar.modulate = Color(1.0, 1.0, 1.0)
