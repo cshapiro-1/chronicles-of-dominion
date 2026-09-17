@@ -21,7 +21,7 @@ func recruit_unit(unit_type_name: String) -> void:
 		new_unit.unit_data = load(tres_path)
 		new_unit.team_id = 0
 		
-		var spawn_offset = Vector3(randf_range(-4.0, 4.0), 0.0, 8.0 + randf_range(0.0, 3.0))
+		var spawn_offset = Vector3(randf_range(-3.0, 3.0), 0.0, 12.0 + randf_range(0.0, 3.0))
 		var units_node = get_parent().get_node_or_null("Units")
 		if not units_node:
 			units_node = get_parent()

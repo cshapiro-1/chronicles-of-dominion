@@ -169,25 +169,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 16)
 [node name="Units" type="Node3D" parent="."]
 
 [node name="Spearman1" parent="Units" instance=ExtResource("5_unit")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 14)
 unit_data = ExtResource("7_spear")
 
 [node name="Spearman2" parent="Units" instance=ExtResource("5_unit")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 14)
 unit_data = ExtResource("7_spear")
 
 [node name="Spearman3" parent="Units" instance=ExtResource("5_unit")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 14)
 unit_data = ExtResource("7_spear")
 
 [node name="Slinger1" parent="Units" instance=ExtResource("5_unit")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 18)
 unit_data = ExtResource("8_slinger")
 
 [node name="Slinger2" parent="Units" instance=ExtResource("5_unit")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 18)
 unit_data = ExtResource("8_slinger")
 
 [node name="Chariot1" parent="Units" instance=ExtResource("5_unit")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 17)
 unit_data = ExtResource("9_chariot")

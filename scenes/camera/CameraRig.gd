@@ -16,7 +16,8 @@ var target_zoom: float = 35.0
 var target_yaw: float = 45.0
 
 func _ready() -> void:
-	target_position = global_position
+	target_position = Vector3(0.0, 0.0, 8.0)
+	global_position = target_position
 	target_zoom = spring_arm.spring_length
 	EventBus.minimap_pan_requested.connect(_on_minimap_pan)
 
