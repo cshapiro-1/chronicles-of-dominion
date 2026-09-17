@@ -12,6 +12,11 @@ var target_enemy: Node = null
 var attack_cooldown: float = 0.0
 var is_selected: bool = false
 
+# Animation variables
+var anim_time: float = 0.0
+var initial_sprite_y: float = 1.3
+var attack_anim_timer: float = 0.0
+
 @onready var selection_ring: MeshInstance3D = $SelectionRing
 @onready var sprite_token: Sprite3D = $SpriteToken
 @onready var hp_bar: Label3D = $HPBar
@@ -26,6 +31,8 @@ func _ready() -> void:
 	if is_instance_valid(MilitaryManager):
 		MilitaryManager.register_unit(self)
 	_update_hp_display()
+	if sprite_token:
+		initial_sprite_y = sprite_token.position.y
 
 func _setup_sprite_texture() -> void:
 	if not sprite_token or not unit_data:
@@ -38,7 +45,7 @@ func _setup_sprite_texture() -> void:
 		tex_path = "res://assets/textures/T_Chariot_Cohort.png"
 	elif "Raider" in uname:
 		tex_path = "res://assets/textures/T_Slinger_Cohort.png"
-		sprite_token.modulate = Color(1.2, 0.6, 0.6)
+		sprite_token.modulate = Color(1.2, 0.55, 0.55)
 		
 	var tex = load(tex_path)
 	if tex:
@@ -67,13 +74,18 @@ func _physics_process(delta: float) -> void:
 	
 	if attack_cooldown > 0.0:
 		attack_cooldown -= delta
+		
+	if attack_anim_timer > 0.0:
+		attack_anim_timer -= delta
 	
 	match current_state:
 		State.IDLE:
 			velocity = Vector3.ZERO
+			_animate_idle(delta)
 			_scan_for_enemies()
 		
 		State.MOVING:
+			_animate_marching(delta)
 			_navigate_to(target_destination, delta)
 			if global_position.distance_to(target_destination) < 0.6:
 				current_state = State.IDLE
@@ -86,12 +98,45 @@ func _physics_process(delta: float) -> void:
 					velocity = Vector3.ZERO
 					_perform_attack()
 				else:
+					_animate_marching(delta)
 					_navigate_to(target_enemy.global_position, delta)
 			else:
 				target_enemy = null
 				current_state = State.IDLE
 	
 	move_and_slide()
+
+func _animate_marching(delta: float) -> void:
+	anim_time += delta * 14.0
+	if sprite_token:
+		# Sinusoidal vertical footstep bobbing
+		var bob = abs(sin(anim_time)) * 0.18
+		sprite_token.position.y = initial_sprite_y + bob
+		# Rhythmic march tilt
+		var sway = sin(anim_time * 0.5) * deg_to_rad(4.5)
+		sprite_token.rotation.z = sway
+
+func _animate_idle(delta: float) -> void:
+	anim_time += delta * 2.5
+	if sprite_token:
+		# Subtle gentle breathing
+		var breathe = sin(anim_time) * 0.03
+		sprite_token.position.y = lerp(sprite_token.position.y, initial_sprite_y + breathe, 6.0 * delta)
+		sprite_token.rotation.z = lerp(sprite_token.rotation.z, 0.0, 8.0 * delta)
+
+func _perform_attack() -> void:
+	if attack_cooldown <= 0.0 and is_instance_valid(target_enemy):
+		var spd = unit_data.attack_speed if unit_data else 1.0
+		attack_cooldown = 1.0 / max(0.1, spd)
+		var dmg = unit_data.damage if unit_data else 15.0
+		target_enemy.take_damage(dmg, self)
+		
+		# Attack lunge animation
+		if sprite_token:
+			var tween = create_tween()
+			var to_enemy = (target_enemy.global_position - global_position).normalized() * 0.4
+			tween.tween_property(sprite_token, "position", Vector3(to_enemy.x, initial_sprite_y + 0.1, to_enemy.z), 0.08)
+			tween.tween_property(sprite_token, "position", Vector3(0.0, initial_sprite_y, 0.0), 0.18)
 
 func _navigate_to(dest: Vector3, _delta: float) -> void:
 	var dir = (dest - global_position)
@@ -103,18 +148,17 @@ func _navigate_to(dest: Vector3, _delta: float) -> void:
 	else:
 		velocity = Vector3.ZERO
 
-func _perform_attack() -> void:
-	if attack_cooldown <= 0.0 and is_instance_valid(target_enemy):
-		var spd = unit_data.attack_speed if unit_data else 1.0
-		attack_cooldown = 1.0 / max(0.1, spd)
-		var dmg = unit_data.damage if unit_data else 15.0
-		target_enemy.take_damage(dmg, self)
-
 func take_damage(amount: float, _attacker: Node) -> void:
 	var arm = unit_data.armor if unit_data else 2.0
 	var effective_damage = max(2.0, amount - arm)
 	current_health -= effective_damage
 	_update_hp_display()
+	
+	# Hurt flash
+	if sprite_token:
+		var tween = create_tween()
+		sprite_token.modulate = Color(2.0, 0.4, 0.4)
+		tween.tween_property(sprite_token, "modulate", Color(1.0, 1.0, 1.0) if team_id == 0 else Color(1.2, 0.55, 0.55), 0.25)
 	
 	if current_health <= 0.0:
 		die()
