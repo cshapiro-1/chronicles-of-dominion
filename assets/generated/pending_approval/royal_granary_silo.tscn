@@ -1,0 +1,42 @@
+[gd_scene load_steps=8 format=3 uid="uid://royal_granary_silo_pending"]
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Granary_Mudbrick"]
+albedo_color = Color(0.90, 0.82, 0.70, 1.0)
+uv1_scale = Vector3(4, 3, 4)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Lapis_Seal"]
+metallic = 0.35
+roughness = 0.25
+
+[sub_resource type="BoxMesh" id="Mesh_Main_Vault"]
+material = SubResource("Mat_Granary_Mudbrick")
+size = Vector3(12.0, 6.5, 16.0)
+
+[sub_resource type="CylinderMesh" id="Mesh_Grain_Dome"]
+material = SubResource("Mat_Granary_Mudbrick")
+top_radius = 2.2
+bottom_radius = 2.8
+height = 3.5
+
+[sub_resource type="BoxMesh" id="Mesh_Tally_Portal"]
+material = SubResource("Mat_Lapis_Seal")
+size = Vector3(3.2, 3.8, 0.8)
+
+[node name="RoyalGranarySilo" type="Node3D"]
+
+[node name="MainVault" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.25, 0)
+mesh = SubResource("Mesh_Main_Vault")
+
+[node name="SiloDomeNorth" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.5, -4.5)
+mesh = SubResource("Mesh_Grain_Dome")
+
+[node name="SiloDomeSouth" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.5, 4.5)
+mesh = SubResource("Mesh_Grain_Dome")
+
+[node name="TallySealPortal" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 8.3)
+mesh = SubResource("Mesh_Tally_Portal")

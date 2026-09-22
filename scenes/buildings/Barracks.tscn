@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://building_barracks_scene_02"]
+
+[ext_resource type="Script" path="res://scenes/buildings/Barracks.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/models/military_barracks_muster_yard.tscn" id="2_model"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_barracks"]
+size = Vector3(18.0, 10.0, 16.0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_Scaffold"]
+size = Vector3(16.0, 8.0, 14.0)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Scaffold"]
+transparency = 1
+albedo_color = Color(0.85, 0.65, 0.35, 0.6)
+roughness = 0.9
+
+[sub_resource type="TorusMesh" id="TorusMesh_Ring"]
+inner_radius = 10.0
+outer_radius = 10.5
+
+[sub_resource type="StandardMaterial3D" id="Mat_Ring"]
+shading_mode = 0
+albedo_color = Color(0.95, 0.85, 0.25, 1)
+
+[node name="Barracks" type="StaticBody3D" groups=["Barracks", "Buildings", "PlayerBuildings"]]
+collision_layer = 1
+collision_mask = 0
+script = ExtResource("1_script")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.0, 0)
+shape = SubResource("BoxShape3D_barracks")
+
+[node name="ModelRoot" type="Node3D" parent="."]
+
+[node name="MusterYard" parent="ModelRoot" instance=ExtResource("2_model")]
+transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 0, 0, 0)
+
+[node name="Scaffolding" type="Node3D" parent="."]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Scaffolding"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.0, 0)
+mesh = SubResource("BoxMesh_Scaffold")
+surface_material_override/0 = SubResource("Mat_Scaffold")
+
+[node name="HPBar" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.0, 0)
+billboard = 1
+double_sided = false
+text = "Military Barracks"
+font_size = 24
+outline_size = 6
+
+[node name="SelectionRing" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+mesh = SubResource("TorusMesh_Ring")
+surface_material_override/0 = SubResource("Mat_Ring")

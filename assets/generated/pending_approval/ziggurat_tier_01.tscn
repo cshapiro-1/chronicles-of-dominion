@@ -1,0 +1,466 @@
+[gd_scene load_steps=12 format=3 uid="uid://ziggurat_tier_01_pending"]
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Mudbrick_Base"]
+albedo_color = Color(0.92, 0.85, 0.72, 1.0)
+uv1_scale = Vector3(8, 8, 8)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Mudbrick_Mid"]
+albedo_color = Color(0.88, 0.80, 0.68, 1.0)
+uv1_scale = Vector3(6, 6, 6)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Mudbrick_Top"]
+albedo_color = Color(0.84, 0.75, 0.62, 1.0)
+uv1_scale = Vector3(4, 4, 4)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Lapis_Shrine"]
+albedo_color = Color(1.0, 1.0, 1.0, 1.0)
+metallic = 0.40
+uv1_scale = Vector3(3, 3, 3)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Gold_Trim"]
+albedo_color = Color(0.85, 0.70, 0.22, 1.0)
+metallic = 0.88
+roughness = 0.30
+
+[sub_resource type="StandardMaterial3D" id="Mat_Cedar_Wood"]
+albedo_color = Color(0.24, 0.15, 0.09, 1.0)
+roughness = 0.75
+
+[sub_resource type="StandardMaterial3D" id="Mat_Stair_Step"]
+albedo_color = Color(0.88, 0.80, 0.68, 1.0)
+roughness = 0.90
+uv1_scale = Vector3(2, 2, 2)
+
+[sub_resource type="BoxMesh" id="Mesh_T1"]
+material = SubResource("Mat_Mudbrick_Base")
+size = Vector3(36, 6, 32)
+
+[sub_resource type="BoxMesh" id="Mesh_T1_Buttress"]
+material = SubResource("Mat_Mudbrick_Base")
+size = Vector3(1.2, 6.1, 0.7)
+
+[sub_resource type="BoxMesh" id="Mesh_T2"]
+material = SubResource("Mat_Mudbrick_Mid")
+size = Vector3(24, 4.5, 22)
+
+[sub_resource type="BoxMesh" id="Mesh_T2_Buttress"]
+material = SubResource("Mat_Mudbrick_Mid")
+size = Vector3(1.0, 4.6, 0.6)
+
+[sub_resource type="BoxMesh" id="Mesh_T3"]
+material = SubResource("Mat_Mudbrick_Top")
+size = Vector3(15, 3.5, 14)
+
+[sub_resource type="BoxMesh" id="Mesh_Cornice"]
+material = SubResource("Mat_Gold_Trim")
+size = Vector3(15.4, 0.4, 14.4)
+
+[sub_resource type="BoxMesh" id="Mesh_Shrine"]
+material = SubResource("Mat_Lapis_Shrine")
+size = Vector3(9, 4.2, 7)
+
+[sub_resource type="BoxMesh" id="Mesh_Shrine_Roof"]
+material = SubResource("Mat_Gold_Trim")
+size = Vector3(9.4, 0.5, 7.4)
+
+[sub_resource type="BoxMesh" id="Mesh_Portal_Frame"]
+material = SubResource("Mat_Gold_Trim")
+size = Vector3(3.2, 3.2, 0.5)
+
+[sub_resource type="BoxMesh" id="Mesh_Portal_Door"]
+material = SubResource("Mat_Cedar_Wood")
+size = Vector3(2.2, 2.8, 0.6)
+
+[sub_resource type="CylinderMesh" id="Mesh_Spire"]
+material = SubResource("Mat_Gold_Trim")
+top_radius = 0.05
+bottom_radius = 0.35
+height = 2.4
+
+[sub_resource type="BoxMesh" id="Mesh_Step_Central_Lower"]
+material = SubResource("Mat_Stair_Step")
+size = Vector3(5.2, 0.38, 0.95)
+
+[sub_resource type="BoxMesh" id="Mesh_Step_Central_Upper"]
+material = SubResource("Mat_Stair_Step")
+size = Vector3(4.0, 0.38, 0.85)
+
+[sub_resource type="BoxMesh" id="Mesh_Step_Wing"]
+material = SubResource("Mat_Stair_Step")
+size = Vector3(1.1, 0.38, 3.4)
+
+[sub_resource type="BoxMesh" id="Mesh_Arch_T1"]
+material = SubResource("Mat_Gold_Trim")
+size = Vector3(5.4, 4.0, 1.4)
+
+[sub_resource type="CylinderMesh" id="Mesh_Brazier_Pillar"]
+material = SubResource("Mat_Gold_Trim")
+top_radius = 0.4
+bottom_radius = 0.5
+height = 1.0
+
+[node name="ZigguratTier01" type="Node3D"]
+
+[node name="Tier1_Base" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+mesh = SubResource("Mesh_T1")
+
+[node name="Buttress_T1_F_-5" type="MeshInstance3D" parent="Tier1_Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.0, 0, 16.2)
+mesh = SubResource("Mesh_T1_Buttress")
+
+[node name="Buttress_T1_F_-4" type="MeshInstance3D" parent="Tier1_Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.8, 0, 16.2)
+mesh = SubResource("Mesh_T1_Buttress")
+
+[node name="Buttress_T1_F_-3" type="MeshInstance3D" parent="Tier1_Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.600000000000001, 0, 16.2)
+mesh = SubResource("Mesh_T1_Buttress")
+
+[node name="Buttress_T1_F_-2" type="MeshInstance3D" parent="Tier1_Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.4, 0, 16.2)
+mesh = SubResource("Mesh_T1_Buttress")
+
+[node name="Buttress_T1_F_2" type="MeshInstance3D" parent="Tier1_Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.4, 0, 16.2)
+mesh = SubResource("Mesh_T1_Buttress")
+
+[node name="Buttress_T1_F_3" type="MeshInstance3D" parent="Tier1_Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.600000000000001, 0, 16.2)
+mesh = SubResource("Mesh_T1_Buttress")
+
+[node name="Buttress_T1_F_4" type="MeshInstance3D" parent="Tier1_Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.8, 0, 16.2)
+mesh = SubResource("Mesh_T1_Buttress")
+
+[node name="Buttress_T1_F_5" type="MeshInstance3D" parent="Tier1_Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.0, 0, 16.2)
+mesh = SubResource("Mesh_T1_Buttress")
+
+[node name="Tier2_Mid" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.25, 0)
+mesh = SubResource("Mesh_T2")
+
+[node name="Buttress_T2_F_-3" type="MeshInstance3D" parent="Tier2_Mid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.600000000000001, 0, 11.15)
+mesh = SubResource("Mesh_T2_Buttress")
+
+[node name="Buttress_T2_F_-2" type="MeshInstance3D" parent="Tier2_Mid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.4, 0, 11.15)
+mesh = SubResource("Mesh_T2_Buttress")
+
+[node name="Buttress_T2_F_-1" type="MeshInstance3D" parent="Tier2_Mid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2, 0, 11.15)
+mesh = SubResource("Mesh_T2_Buttress")
+
+[node name="Buttress_T2_F_1" type="MeshInstance3D" parent="Tier2_Mid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2, 0, 11.15)
+mesh = SubResource("Mesh_T2_Buttress")
+
+[node name="Buttress_T2_F_2" type="MeshInstance3D" parent="Tier2_Mid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.4, 0, 11.15)
+mesh = SubResource("Mesh_T2_Buttress")
+
+[node name="Buttress_T2_F_3" type="MeshInstance3D" parent="Tier2_Mid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.600000000000001, 0, 11.15)
+mesh = SubResource("Mesh_T2_Buttress")
+
+[node name="Tier3_Upper" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.25, 0)
+mesh = SubResource("Mesh_T3")
+
+[node name="Tier3_Cornice" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.1, 0)
+mesh = SubResource("Mesh_Cornice")
+
+[node name="Summit_Shrine_Cella" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.1, -1.0)
+mesh = SubResource("Mesh_Shrine")
+
+[node name="Shrine_Crenellated_Roof" type="MeshInstance3D" parent="Summit_Shrine_Cella"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+mesh = SubResource("Mesh_Shrine_Roof")
+
+[node name="Shrine_Portal_Frame" type="MeshInstance3D" parent="Summit_Shrine_Cella"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 3.6)
+mesh = SubResource("Mesh_Portal_Frame")
+
+[node name="Shrine_Portal_Interior" type="MeshInstance3D" parent="Summit_Shrine_Cella"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7, 3.65)
+mesh = SubResource("Mesh_Portal_Door")
+
+[node name="Temple_Golden_Emblem" type="MeshInstance3D" parent="Summit_Shrine_Cella"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+mesh = SubResource("Mesh_Spire")
+
+[node name="Gate_Tier1_Arch" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.0, 16.0)
+mesh = SubResource("Mesh_Arch_T1")
+
+[node name="Shrine_Brazier_L" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 14.5, 4.2)
+mesh = SubResource("Mesh_Brazier_Pillar")
+
+[node name="Shrine_Brazier_R" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 14.5, 4.2)
+mesh = SubResource("Mesh_Brazier_Pillar")
+
+[node name="Facade_Steps" type="Node3D" parent="."]
+
+[node name="Step_Central_Lower_0" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.20, 30.50)
+mesh = SubResource("Mesh_Step_Central_Lower")
+
+[node name="Step_Central_Lower_1" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.59, 29.53)
+mesh = SubResource("Mesh_Step_Central_Lower")
+
+[node name="Step_Central_Lower_2" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.97, 28.57)
+mesh = SubResource("Mesh_Step_Central_Lower")
+
+[node name="Step_Central_Lower_3" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.36, 27.60)
+mesh = SubResource("Mesh_Step_Central_Lower")
+
+[node name="Step_Central_Lower_4" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 26.63)
+mesh = SubResource("Mesh_Step_Central_Lower")
+
+[node name="Step_Central_Lower_5" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.13, 25.67)
+mesh = SubResource("Mesh_Step_Central_Lower")
+
+[node name="Step_Central_Lower_6" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.52, 24.70)
+mesh = SubResource("Mesh_Step_Central_Lower")
+
+[node name="Step_Central_Lower_7" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.91, 23.73)
+mesh = SubResource("Mesh_Step_Central_Lower")
+
+[node name="Step_Central_Lower_8" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.29, 22.77)
+mesh = SubResource("Mesh_Step_Central_Lower")
+
+[node name="Step_Central_Lower_9" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.68, 21.80)
+mesh = SubResource("Mesh_Step_Central_Lower")
+
+[node name="Step_Central_Lower_10" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.07, 20.83)
+mesh = SubResource("Mesh_Step_Central_Lower")
+
+[node name="Step_Central_Lower_11" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.45, 19.87)
+mesh = SubResource("Mesh_Step_Central_Lower")
+
+[node name="Step_Central_Lower_12" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.84, 18.90)
+mesh = SubResource("Mesh_Step_Central_Lower")
+
+[node name="Step_Central_Lower_13" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.23, 17.93)
+mesh = SubResource("Mesh_Step_Central_Lower")
+
+[node name="Step_Central_Lower_14" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.61, 16.97)
+mesh = SubResource("Mesh_Step_Central_Lower")
+
+[node name="Step_Central_Lower_15" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.00, 16.00)
+mesh = SubResource("Mesh_Step_Central_Lower")
+
+[node name="Step_Central_Upper_0" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.20, 15.50)
+mesh = SubResource("Mesh_Step_Central_Upper")
+
+[node name="Step_Central_Upper_1" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.61, 14.87)
+mesh = SubResource("Mesh_Step_Central_Upper")
+
+[node name="Step_Central_Upper_2" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.02, 14.24)
+mesh = SubResource("Mesh_Step_Central_Upper")
+
+[node name="Step_Central_Upper_3" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.43, 13.61)
+mesh = SubResource("Mesh_Step_Central_Upper")
+
+[node name="Step_Central_Upper_4" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.84, 12.97)
+mesh = SubResource("Mesh_Step_Central_Upper")
+
+[node name="Step_Central_Upper_5" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.25, 12.34)
+mesh = SubResource("Mesh_Step_Central_Upper")
+
+[node name="Step_Central_Upper_6" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.66, 11.71)
+mesh = SubResource("Mesh_Step_Central_Upper")
+
+[node name="Step_Central_Upper_7" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.07, 11.08)
+mesh = SubResource("Mesh_Step_Central_Upper")
+
+[node name="Step_Central_Upper_8" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.48, 10.45)
+mesh = SubResource("Mesh_Step_Central_Upper")
+
+[node name="Step_Central_Upper_9" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.89, 9.82)
+mesh = SubResource("Mesh_Step_Central_Upper")
+
+[node name="Step_Central_Upper_10" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.31, 9.18)
+mesh = SubResource("Mesh_Step_Central_Upper")
+
+[node name="Step_Central_Upper_11" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.72, 8.55)
+mesh = SubResource("Mesh_Step_Central_Upper")
+
+[node name="Step_Central_Upper_12" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.13, 7.92)
+mesh = SubResource("Mesh_Step_Central_Upper")
+
+[node name="Step_Central_Upper_13" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.54, 7.29)
+mesh = SubResource("Mesh_Step_Central_Upper")
+
+[node name="Step_Central_Upper_14" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.95, 6.66)
+mesh = SubResource("Mesh_Step_Central_Upper")
+
+[node name="Step_Central_Upper_15" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.36, 6.03)
+mesh = SubResource("Mesh_Step_Central_Upper")
+
+[node name="Step_Central_Upper_16" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.77, 5.39)
+mesh = SubResource("Mesh_Step_Central_Upper")
+
+[node name="Step_Central_Upper_17" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.18, 4.76)
+mesh = SubResource("Mesh_Step_Central_Upper")
+
+[node name="Step_Central_Upper_18" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.59, 4.13)
+mesh = SubResource("Mesh_Step_Central_Upper")
+
+[node name="Step_Central_Upper_19" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.00, 3.50)
+mesh = SubResource("Mesh_Step_Central_Upper")
+
+[node name="Step_Wing_L_0" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.00, 0.30, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_R_0" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.00, 0.30, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_L_1" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.00, 0.74, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_R_1" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.00, 0.74, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_L_2" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.00, 1.18, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_R_2" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.00, 1.18, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_L_3" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.00, 1.62, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_R_3" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.00, 1.62, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_L_4" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.00, 2.05, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_R_4" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.00, 2.05, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_L_5" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.00, 2.49, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_R_5" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.00, 2.49, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_L_6" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.00, 2.93, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_R_6" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.00, 2.93, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_L_7" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.00, 3.37, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_R_7" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.00, 3.37, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_L_8" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.00, 3.81, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_R_8" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.00, 3.81, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_L_9" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.00, 4.25, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_R_9" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.00, 4.25, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_L_10" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.00, 4.68, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_R_10" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.00, 4.68, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_L_11" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.00, 5.12, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_R_11" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.00, 5.12, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_L_12" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.00, 5.56, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_R_12" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.00, 5.56, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_L_13" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.00, 6.00, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+
+[node name="Step_Wing_R_13" type="MeshInstance3D" parent="Facade_Steps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.00, 6.00, 17.20)
+mesh = SubResource("Mesh_Step_Wing")
+

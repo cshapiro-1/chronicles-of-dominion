@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://road_mudbrick_cobbles_pending"]
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Mudbrick_Cobbles"]
+roughness = 0.85
+uv1_scale = Vector3(3, 3, 3)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Curb_Stone"]
+albedo_color = Color(0.68, 0.52, 0.35, 1.0)
+roughness = 0.90
+
+[node name="RoadMudbrickCobbles" type="Node3D"]
+
+[node name="PavedBed" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+size = Vector3(7.2, 0.3, 8.0)
+material = SubResource("Mat_Mudbrick_Cobbles")
+
+[node name="CurbLeft" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8, 0.25, 0)
+size = Vector3(0.4, 0.5, 8.0)
+material = SubResource("Mat_Curb_Stone")
+
+[node name="CurbRight" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.8, 0.25, 0)
+size = Vector3(0.4, 0.5, 8.0)
+material = SubResource("Mat_Curb_Stone")

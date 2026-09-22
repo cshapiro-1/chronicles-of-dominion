@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://foliage_date_palm_clump_pending"]
+
+[ext_resource type="PackedScene" uid="uid://foliage_date_palm_mature_pending" path="res://assets/generated/pending_approval/foliage_date_palm_mature.tscn" id="1_mature"]
+[ext_resource type="PackedScene" uid="uid://foliage_date_palm_curved_pending" path="res://assets/generated/pending_approval/foliage_date_palm_curved.tscn" id="2_curved"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_Mound_Dirt"]
+roughness = 0.95
+
+[node name="DatePalmClump" type="Node3D"]
+
+[node name="DirtMound" type="CSGSphere3D" parent="."]
+transform = Transform3D(1.5, 0, 0, 0, 0.3, 0, 0, 0, 1.5, 0, 0.1, 0)
+radius = 2.4
+material = SubResource("Mat_Mound_Dirt")
+
+[node name="Palm_Main" parent="." instance=ExtResource("1_mature")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -0.6, 0, 0.4)
+
+[node name="Palm_Curved" parent="." instance=ExtResource("2_curved")]
+transform = Transform3D(0.707, 0, 0.707, 0, 1, 0, -0.707, 0, 0.707, 0.8, 0, -0.5)
+
+[node name="Palm_Sapling" parent="." instance=ExtResource("1_mature")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.9, 0, 0.9)

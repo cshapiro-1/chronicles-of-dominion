@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://building_castrum_scene"]
+
+[ext_resource type="PackedScene" path="res://assets/models/campaign_field_palisade_camp.tscn" id="1_model"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_castrum"]
+size = Vector3(24, 10, 24)
+
+[node name="MarchingCamp" type="StaticBody3D"]
+
+[node name="Model" parent="." instance=ExtResource("1_model")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+shape = SubResource("BoxShape3D_castrum")

@@ -1,15 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://city_gate_3d_02"]
+[gd_scene load_steps=4 format=3 uid="uid://city_gate_prod_01"]
 
 [ext_resource type="Script" path="res://scenes/buildings/CityGate.gd" id="1_gate_script"]
+[ext_resource type="PackedScene" uid="uid://city_gatehouse_monumental_pending" path="res://assets/models/city_gatehouse_monumental.tscn" id="2_gate_model"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_Wall"]
-size = Vector3(40, 8, 5)
+[sub_resource type="BoxShape3D" id="BoxShape3D_Gate"]
+size = Vector3(24.0, 14.0, 10.0)
 
-[node name="CityGate" type="StaticBody3D"]
+[node name="CityGate" type="StaticBody3D" groups=["CityGate", "Building"]]
 script = ExtResource("1_gate_script")
 
-[node name="GateMesh" type="MeshInstance3D" parent="."]
+[node name="GateModel" parent="." instance=ExtResource("2_gate_model")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
-shape = SubResource("BoxShape3D_Wall")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.0, 0)
+shape = SubResource("BoxShape3D_Gate")

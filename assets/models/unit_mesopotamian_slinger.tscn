@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://unit_mesopotamian_slinger"]
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Linen_Tunic"]
+albedo_color = Color(0.85, 0.80, 0.72, 1.0)
+roughness = 0.90
+
+[sub_resource type="StandardMaterial3D" id="Mat_Leather_Bag"]
+albedo_color = Color(0.48, 0.35, 0.22, 1.0)
+roughness = 0.85
+
+[node name="MesopotamianSlinger" type="Node3D"]
+
+[node name="Torso" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+size = Vector3(0.55, 0.5, 0.35)
+material = SubResource("Mat_Linen_Tunic")
+
+[node name="Skirt" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
+size = Vector3(0.6, 0.7, 0.4)
+material = SubResource("Mat_Linen_Tunic")
+
+[node name="SlingBag" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 1.15, 0)
+size = Vector3(0.22, 0.35, 0.3)
+material = SubResource("Mat_Leather_Bag")

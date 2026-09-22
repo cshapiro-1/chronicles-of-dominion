@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://housing_social_classes_pending"]
+
+[ext_resource type="PackedScene" uid="uid://housing_tier_rural_farm_pending" path="res://assets/generated/pending_approval/housing_tier_rural_farm.tscn" id="1_farm"]
+[ext_resource type="PackedScene" uid="uid://housing_tier_urban_slums_pending" path="res://assets/generated/pending_approval/housing_tier_urban_slums.tscn" id="2_slum"]
+[ext_resource type="PackedScene" uid="uid://housing_tier_aristocracy_pending" path="res://assets/generated/pending_approval/housing_tier_aristocracy_temple.tscn" id="3_noble"]
+
+[node name="HousingSocialClassesShowcase" type="Node3D"]
+
+[node name="Tier1_RuralFarmer" parent="." instance=ExtResource("1_farm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.0, 0, 0)
+
+[node name="Tier2_UrbanSlums" parent="." instance=ExtResource("2_slum")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Tier3_AristocracyTemple" parent="." instance=ExtResource("3_noble")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.0, 0, 0)

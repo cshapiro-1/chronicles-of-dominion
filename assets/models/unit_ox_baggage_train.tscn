@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://unit_ox_baggage_train"]
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Timber_Bed"]
+albedo_color = Color(0.42, 0.28, 0.16, 1.0)
+roughness = 0.90
+
+[sub_resource type="StandardMaterial3D" id="Mat_Grain_Sacks"]
+albedo_color = Color(0.72, 0.62, 0.45, 1.0)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="Mat_Ox_Hide"]
+albedo_color = Color(0.38, 0.26, 0.18, 1.0)
+roughness = 0.90
+
+[node name="OxBaggageTrain" type="Node3D"]
+
+[node name="CartBed" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, -0.8)
+size = Vector3(1.8, 0.6, 2.4)
+material = SubResource("Mat_Timber_Bed")
+
+[node name="CargoSacks" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.8)
+size = Vector3(1.5, 0.6, 2.0)
+material = SubResource("Mat_Grain_Sacks")
+
+[node name="HeavyOx" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 1.3)
+size = Vector3(0.85, 1.1, 2.0)
+material = SubResource("Mat_Ox_Hide")

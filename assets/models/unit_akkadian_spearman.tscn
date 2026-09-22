@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=3 uid="uid://unit_akkadian_spearman"]
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Bronze_Scale_Armor"]
+albedo_color = Color(0.95, 0.72, 0.32, 1.0)
+metallic = 0.85
+roughness = 0.32
+
+[sub_resource type="StandardMaterial3D" id="Mat_Wicker_Shield"]
+albedo_color = Color(0.58, 0.42, 0.24, 1.0)
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="Mat_Linen_Kilt"]
+albedo_color = Color(0.82, 0.76, 0.68, 1.0)
+roughness = 0.90
+
+[sub_resource type="StandardMaterial3D" id="Mat_Spear_Shaft"]
+albedo_color = Color(0.28, 0.16, 0.08, 1.0)
+roughness = 0.90
+
+[node name="AkkadianSpearman" type="Node3D"]
+
+[node name="Torso" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45, 0)
+size = Vector3(0.65, 0.65, 0.4)
+material = SubResource("Mat_Bronze_Scale_Armor")
+
+[node name="Head" type="CSGSphere3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.95, 0)
+radius = 0.18
+
+[node name="BronzeHelmet" type="CSGCylinder3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+radius = 0.26
+height = 0.45
+cone = true
+material = SubResource("Mat_Bronze_Scale_Armor")
+
+[node name="Kilt" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+radius = 0.38
+height = 0.5
+material = SubResource("Mat_Linen_Kilt")
+
+[node name="TowerShield" type="CSGBox3D" parent="."]
+transform = Transform3D(0.966, 0, -0.259, 0, 1, 0, 0.259, 0, 0.966, -0.55, 1.3, 0.3)
+size = Vector3(0.12, 1.5, 0.75)
+material = SubResource("Mat_Wicker_Shield")
+
+[node name="Spear" type="CSGCylinder3D" parent="."]
+transform = Transform3D(0.966, -0.259, 0, 0.259, 0.966, 0, 0, 0, 1, 0.55, 1.7, 0.2)
+radius = 0.04
+height = 2.8
+material = SubResource("Mat_Spear_Shaft")

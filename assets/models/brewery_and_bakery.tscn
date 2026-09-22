@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://brewery_and_bakery_pending"]
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Brewery_Mudbrick"]
+albedo_color = Color(0.88, 0.78, 0.65, 1.0)
+uv1_scale = Vector3(3, 3, 3)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Cedar"]
+albedo_color = Color(0.26, 0.16, 0.10, 1.0)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Copper_Vat"]
+albedo_color = Color(0.75, 0.45, 0.25, 1.0)
+metallic = 0.75
+roughness = 0.35
+
+[sub_resource type="BoxMesh" id="Mesh_Brewery_Main"]
+material = SubResource("Mat_Brewery_Mudbrick")
+size = Vector3(10.0, 4.5, 12.0)
+
+[sub_resource type="CylinderMesh" id="Mesh_Mash_Vat"]
+material = SubResource("Mat_Copper_Vat")
+top_radius = 1.4
+bottom_radius = 1.6
+height = 2.2
+
+[node name="BreweryAndBakery" type="Node3D"]
+
+[node name="MainBuilding" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25, 0)
+mesh = SubResource("Mesh_Brewery_Main")
+
+[node name="MashVat_1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.1, 7.0)
+mesh = SubResource("Mesh_Mash_Vat")
+
+[node name="MashVat_2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.1, 7.0)
+mesh = SubResource("Mesh_Mash_Vat")

@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://housing_cluster_set_pending"]
+
+[ext_resource type="PackedScene" uid="uid://house_variant_a_pending" path="res://assets/generated/pending_approval/house_variant_a.tscn" id="1_ha"]
+[ext_resource type="PackedScene" uid="uid://house_variant_b_pending" path="res://assets/generated/pending_approval/house_variant_b.tscn" id="2_hb"]
+[ext_resource type="PackedScene" uid="uid://house_courtyard_pending" path="res://assets/generated/pending_approval/house_courtyard.tscn" id="3_hc"]
+
+[node name="HousingClusterSet" type="Node3D"]
+
+[node name="CourtyardVilla" parent="." instance=ExtResource("3_hc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.0, 0, -6.0)
+
+[node name="Townhouse_1" parent="." instance=ExtResource("2_hb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.0, 0, -6.0)
+
+[node name="WorkerHouse_1" parent="." instance=ExtResource("1_ha")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.0, 0, 8.0)
+
+[node name="WorkerHouse_2" parent="." instance=ExtResource("1_ha")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.0)
+
+[node name="Townhouse_2" parent="." instance=ExtResource("2_hb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.0, 0, 8.0)

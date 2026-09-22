@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://house_variant_a_pending"]
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Mudbrick_House"]
+albedo_color = Color(0.92, 0.84, 0.72, 1.0)
+uv1_scale = Vector3(3, 2, 3)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Cedar"]
+albedo_color = Color(0.26, 0.16, 0.10, 1.0)
+roughness = 0.80
+
+[sub_resource type="BoxMesh" id="Mesh_House_Body"]
+material = SubResource("Mat_Mudbrick_House")
+size = Vector3(6.0, 3.8, 6.0)
+
+[sub_resource type="BoxMesh" id="Mesh_Rooftop_Parapet"]
+material = SubResource("Mat_Mudbrick_House")
+size = Vector3(6.2, 0.6, 6.2)
+
+[sub_resource type="BoxMesh" id="Mesh_Door"]
+material = SubResource("Mat_Cedar")
+size = Vector3(1.2, 2.2, 0.3)
+
+[node name="HouseVariantA" type="Node3D"]
+
+[node name="MainStructure" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 0)
+mesh = SubResource("Mesh_House_Body")
+
+[node name="RoofParapet" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9, 0)
+mesh = SubResource("Mesh_Rooftop_Parapet")
+
+[node name="Doorway" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 3.05)
+mesh = SubResource("Mesh_Door")

@@ -1,59 +1,46 @@
-[gd_scene load_steps=4 format=3 uid="uid://res_badge_obj_01"]
+[gd_scene load_steps=4 format=3 uid="uid://res_badge_clean_04"]
 
 [ext_resource type="Script" path="res://scenes/ui/components/ResourceBadge.gd" id="1_badge"]
-[ext_resource type="FontFile" path="res://assets/fonts/constanb.ttf" id="2_font"]
+[ext_resource type="FontFile" uid="uid://cuab4sw7r66ip" path="res://assets/fonts/constan.ttf" id="2_font_reg"]
+[ext_resource type="FontFile" uid="uid://df2msh532q3k" path="res://assets/fonts/constanb.ttf" id="3_font_bold"]
 
-[sub_resource type="StyleBoxFlat" id="SB_Pill"]
-bg_color = Color(0.12, 0.1, 0.08, 0.92)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.65, 0.52, 0.28, 0.95)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-shadow_color = Color(0, 0, 0, 0.5)
-shadow_size = 4
-
-[node name="ResourceBadge" type="PanelContainer"]
-custom_minimum_size = Vector2(92, 44)
-offset_right = 92.0
-offset_bottom = 44.0
-theme_override_styles/panel = SubResource("SB_Pill")
-script = ExtResource("1_badge")
-
-[node name="Margin" type="MarginContainer" parent="."]
-layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 4
-
-[node name="HBox" type="HBoxContainer" parent="Margin"]
-layout_mode = 2
+[node name="ResourceBadge" type="HBoxContainer"]
+offset_right = 75.0
+offset_bottom = 36.0
 theme_override_constants/separation = 6
 alignment = 1
+script = ExtResource("1_badge")
 
-[node name="Icon" type="Label" parent="Margin/HBox"]
+[node name="IconRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "🌾"
+size_flags_vertical = 4
+expand_mode = 1
+stretch_mode = 5
 
-[node name="VBox" type="VBoxContainer" parent="Margin/HBox"]
+[node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = -3
 alignment = 1
 
-[node name="Value" type="Label" parent="Margin/HBox/VBox"]
+[node name="Value" type="Label" parent="VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.92, 0.7, 1)
-theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 14
-text = "1,420"
+theme_override_fonts/font = ExtResource("3_font_bold")
+theme_override_colors/font_color = Color(0.92, 0.89, 0.82, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.7)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 13
+text = "1420"
 
-[node name="Delta" type="Label" parent="Margin/HBox/VBox"]
+[node name="Delta" type="Label" parent="VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.45, 0.92, 0.5, 1)
+theme_override_fonts/font = ExtResource("2_font_reg")
+theme_override_colors/font_color = Color(0.38, 0.72, 0.66, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.6)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
 theme_override_font_sizes/font_size = 10
-text = "+45/m"
+text = "(+45/m)"
+

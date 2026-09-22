@@ -1,0 +1,28 @@
+[gd_scene load_steps=7 format=3 uid="uid://potters_kiln_workshop_pending"]
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Potter_Clay"]
+albedo_color = Color(0.82, 0.70, 0.55, 1.0)
+[sub_resource type="StandardMaterial3D" id="Mat_Terracotta_Kiln"]
+albedo_color = Color(0.70, 0.38, 0.25, 1.0)
+roughness = 0.90
+
+[sub_resource type="BoxMesh" id="Mesh_Workshop_Shed"]
+material = SubResource("Mat_Potter_Clay")
+size = Vector3(6.0, 3.2, 8.0)
+
+[sub_resource type="CylinderMesh" id="Mesh_Updraft_Kiln"]
+material = SubResource("Mat_Terracotta_Kiln")
+top_radius = 0.8
+bottom_radius = 1.8
+height = 3.6
+
+[node name="PottersKilnWorkshop" type="Node3D"]
+
+[node name="WorkshopShed" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.6, 0)
+mesh = SubResource("Mesh_Workshop_Shed")
+
+[node name="UpdraftKiln" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2, 1.8, 0)
+mesh = SubResource("Mesh_Updraft_Kiln")

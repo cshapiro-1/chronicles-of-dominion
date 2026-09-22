@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://road_alluvial_dirt_path"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_Dirt_Path"]
+albedo_color = Color(0.64, 0.52, 0.38, 1.0)
+roughness = 0.95
+
+[node name="RoadAlluvialDirtPath" type="Node3D"]
+
+[node name="RoadBed" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+size = Vector3(8.0, 0.2, 8.0)
+material = SubResource("Mat_Dirt_Path")
+
+[node name="WagonRutLeft" type="CSGBox3D" parent="RoadBed"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8, 0.05, 0)
+size = Vector3(0.6, 0.08, 8.0)
+material = SubResource("Mat_Dirt_Path")
+
+[node name="WagonRutRight" type="CSGBox3D" parent="RoadBed"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8, 0.05, 0)
+size = Vector3(0.6, 0.08, 8.0)
+material = SubResource("Mat_Dirt_Path")

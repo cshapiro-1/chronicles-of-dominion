@@ -1,0 +1,97 @@
+[gd_scene load_steps=7 format=3 uid="uid://foliage_date_palm_mature"]
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Palm_Bark"]
+albedo_color = Color(0.42, 0.28, 0.16, 1.0)
+roughness = 0.88
+uv1_scale = Vector3(2, 6, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Palm_Frond"]
+albedo_color = Color(0.28, 0.48, 0.14, 1.0)
+roughness = 0.75
+cull_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="Mat_Date_Cluster"]
+albedo_color = Color(0.85, 0.48, 0.12, 1.0)
+roughness = 0.60
+
+[sub_resource type="BoxMesh" id="Mesh_Frond_Leaf"]
+material = SubResource("Mat_Palm_Frond")
+size = Vector3(0.7, 0.04, 3.8)
+
+[sub_resource type="SphereMesh" id="Mesh_Date_Cluster"]
+material = SubResource("Mat_Date_Cluster")
+radius = 0.4
+height = 0.7
+
+[node name="DatePalmMature" type="Node3D"]
+
+[node name="TrunkBase" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+radius = 0.45
+height = 3.0
+sides = 12
+material = SubResource("Mat_Palm_Bark")
+
+[node name="TrunkMid" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.25, 0)
+radius = 0.38
+height = 3.0
+sides = 12
+material = SubResource("Mat_Palm_Bark")
+
+[node name="TrunkTop" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.75, 0)
+radius = 0.32
+height = 2.5
+sides = 12
+material = SubResource("Mat_Palm_Bark")
+
+[node name="CrownHub" type="CSGSphere3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.0, 0)
+radius = 0.5
+material = SubResource("Mat_Palm_Bark")
+
+[node name="Fronds" type="Node3D" parent="CrownHub"]
+
+[node name="Frond_0" type="MeshInstance3D" parent="CrownHub/Fronds"]
+transform = Transform3D(1, 0, 0, 0, 0.866, -0.5, 0, 0.5, 0.866, 0, 0.2, 1.8)
+mesh = SubResource("Mesh_Frond_Leaf")
+
+[node name="Frond_1" type="MeshInstance3D" parent="CrownHub/Fronds"]
+transform = Transform3D(0.5, 0, 0.866, -0.433, 0.866, 0.25, -0.75, -0.5, 0.433, 1.56, 0.2, 0.9)
+mesh = SubResource("Mesh_Frond_Leaf")
+
+[node name="Frond_2" type="MeshInstance3D" parent="CrownHub/Fronds"]
+transform = Transform3D(-0.5, 0, 0.866, -0.433, 0.866, -0.25, -0.75, -0.5, -0.433, 1.56, 0.2, -0.9)
+mesh = SubResource("Mesh_Frond_Leaf")
+
+[node name="Frond_3" type="MeshInstance3D" parent="CrownHub/Fronds"]
+transform = Transform3D(-1, 0, 0, 0, 0.866, -0.5, 0, 0.5, 0.866, 0, 0.2, -1.8)
+mesh = SubResource("Mesh_Frond_Leaf")
+
+[node name="Frond_4" type="MeshInstance3D" parent="CrownHub/Fronds"]
+transform = Transform3D(-0.5, 0, -0.866, 0.433, 0.866, -0.25, 0.75, -0.5, -0.433, -1.56, 0.2, -0.9)
+mesh = SubResource("Mesh_Frond_Leaf")
+
+[node name="Frond_5" type="MeshInstance3D" parent="CrownHub/Fronds"]
+transform = Transform3D(0.5, 0, -0.866, 0.433, 0.866, 0.25, 0.75, -0.5, 0.433, -1.56, 0.2, 0.9)
+mesh = SubResource("Mesh_Frond_Leaf")
+
+[node name="Dates" type="Node3D" parent="CrownHub"]
+
+[node name="DateCluster_0" type="MeshInstance3D" parent="CrownHub/Dates"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, -0.4, 0.35)
+mesh = SubResource("Mesh_Date_Cluster")
+
+[node name="DateCluster_1" type="MeshInstance3D" parent="CrownHub/Dates"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, -0.4, 0.35)
+mesh = SubResource("Mesh_Date_Cluster")
+
+[node name="DateCluster_2" type="MeshInstance3D" parent="CrownHub/Dates"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, -0.4, -0.35)
+mesh = SubResource("Mesh_Date_Cluster")
+
+[node name="DateCluster_3" type="MeshInstance3D" parent="CrownHub/Dates"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, -0.4, -0.35)
+mesh = SubResource("Mesh_Date_Cluster")

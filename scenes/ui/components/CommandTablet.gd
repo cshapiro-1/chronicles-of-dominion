@@ -1,23 +1,15 @@
-extends PanelContainer
-
-signal pressed()
+extends TextureButton
 
 @export var hotkey: String = "[1]"
-@export var cost_text: String = "🌾50 ⚔20"
-@export var tablet_icon: Texture2D
-
-@onready var btn: TextureButton = $Margin/VBox/Btn
-@onready var lbl_hotkey: Label = $Margin/VBox/Btn/HotkeyBadge
-@onready var lbl_cost: Label = $Margin/VBox/CostLabel
 
 func _ready() -> void:
-	lbl_hotkey.text = hotkey
-	lbl_cost.text = cost_text
-	if tablet_icon:
-		btn.texture_normal = tablet_icon
+	pass
 
-func _on_btn_pressed() -> void:
-	pressed.emit()
+func set_icon_texture(tex: Texture2D) -> void:
+	if tex:
+		texture_normal = tex
+
+func _pressed() -> void:
 	var tween = create_tween()
-	tween.tween_property(self, "scale", Vector2(0.92, 0.92), 0.06)
+	tween.tween_property(self, "scale", Vector2(0.92, 0.92), 0.05)
 	tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.08)

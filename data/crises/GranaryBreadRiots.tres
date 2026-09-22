@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CrisisData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/CrisisData.gd" id="1_crisis"]
+
+[resource]
+script = ExtResource("1_crisis")
+title = "Granary Bread Riots"
+description = "Commoner loyalty has plummeted and bread shortages have sparked violent riots at the central granaries. Starving laborers are breaking down warehouse gates."
+options = ["Open Imperial Granary Reserves (-200 Grain, +15% Masses)", "Deploy Legion Garrison (-10 Pop, -15% Masses, +10% Nobility)"]
+option_consequences = ["Feeds the plebeian crowds, stabilizing commoner unrest.", "Crushes the revolt by spearpoint, causing casualties."]

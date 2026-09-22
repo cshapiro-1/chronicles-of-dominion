@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cg4v8itxo5cmf"
+path="res://.godot/imported/ziggurat_monument.obj-5d29b5c304da9dee6efad05dca56a72d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/ziggurat_monument.obj-5d29b5c304da9dee6efad05dca56a72d.mesh"]
+
+source_file="res://assets/models/ziggurat_monument.obj"
+dest_files=["res://.godot/imported/ziggurat_monument.obj-5d29b5c304da9dee6efad05dca56a72d.mesh", "res://.godot/imported/ziggurat_monument.obj-5d29b5c304da9dee6efad05dca56a72d.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

@@ -1,7 +1,7 @@
 extends StaticBody3D
 
-@onready var soil_bed: MeshInstance3D = $SoilBed
+@onready var farm_mesh: MeshInstance3D = get_node_or_null("SoilBed")
 
 func _ready() -> void:
-	if soil_bed:
-		soil_bed.mesh = MeshFactory.create_farm_mesh()
+	if farm_mesh:
+		farm_mesh.mesh = MeshFactory.create_farm_mesh()

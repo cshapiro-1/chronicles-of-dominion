@@ -1,0 +1,60 @@
+[gd_scene load_steps=6 format=3 uid="uid://wall_segment_straight_pending"]
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Wall_Mudbrick"]
+albedo_color = Color(0.90, 0.82, 0.70, 1.0)
+uv1_scale = Vector3(4, 3, 2)
+
+[sub_resource type="BoxMesh" id="Mesh_Wall_Body"]
+material = SubResource("Mat_Wall_Mudbrick")
+size = Vector3(16.0, 7.0, 4.0)
+
+[sub_resource type="BoxMesh" id="Mesh_Parapet"]
+material = SubResource("Mat_Wall_Mudbrick")
+size = Vector3(16.0, 1.2, 0.6)
+
+[sub_resource type="BoxMesh" id="Mesh_Crenel"]
+material = SubResource("Mat_Wall_Mudbrick")
+size = Vector3(1.2, 0.8, 0.65)
+
+[sub_resource type="BoxMesh" id="Mesh_Buttress"]
+material = SubResource("Mat_Wall_Mudbrick")
+size = Vector3(1.4, 7.2, 0.8)
+
+[node name="WallSegmentStraight" type="Node3D"]
+
+[node name="WallBody" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+mesh = SubResource("Mesh_Wall_Body")
+
+[node name="ParapetOuter" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.6, 1.7)
+mesh = SubResource("Mesh_Parapet")
+
+[node name="ParapetInner" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.6, -1.7)
+mesh = SubResource("Mesh_Parapet")
+
+[node name="Crenel_1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0, 8.4, 1.7)
+mesh = SubResource("Mesh_Crenel")
+
+[node name="Crenel_2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0, 8.4, 1.7)
+mesh = SubResource("Mesh_Crenel")
+
+[node name="Crenel_3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0, 8.4, 1.7)
+mesh = SubResource("Mesh_Crenel")
+
+[node name="Crenel_4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0, 8.4, 1.7)
+mesh = SubResource("Mesh_Crenel")
+
+[node name="Buttress_F1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.0, 3.6, 2.3)
+mesh = SubResource("Mesh_Buttress")
+
+[node name="Buttress_F2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0, 3.6, 2.3)
+mesh = SubResource("Mesh_Buttress")

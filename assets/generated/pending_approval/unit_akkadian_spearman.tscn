@@ -1,0 +1,62 @@
+[gd_scene load_steps=11 format=3 uid="uid://unit_akkadian_spearman_pending"]
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Bronze_Scale_Armor"]
+albedo_color = Color(1.0, 0.92, 0.82, 1.0)
+metallic = 0.90
+roughness = 0.28
+uv1_scale = Vector3(3, 3, 3)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Wicker_Shield"]
+roughness = 0.85
+uv1_scale = Vector3(2, 4, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Linen_Kilt"]
+roughness = 0.90
+uv1_scale = Vector3(2, 2, 2)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Spear_Shaft"]
+albedo_color = Color(0.28, 0.16, 0.08, 1.0)
+roughness = 0.90
+
+[sub_resource type="BoxMesh" id="Mesh_Shield"]
+material = SubResource("Mat_Wicker_Shield")
+size = Vector3(0.12, 1.5, 0.75)
+
+[sub_resource type="CylinderMesh" id="Mesh_Spear"]
+material = SubResource("Mat_Spear_Shaft")
+top_radius = 0.04
+bottom_radius = 0.04
+height = 2.8
+
+[node name="AkkadianSpearman" type="Node3D"]
+
+[node name="Torso" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45, 0)
+size = Vector3(0.65, 0.65, 0.4)
+material = SubResource("Mat_Bronze_Scale_Armor")
+
+[node name="Head" type="CSGSphere3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.95, 0)
+radius = 0.18
+
+[node name="BronzeHelmet" type="CSGCylinder3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+radius = 0.26
+height = 0.45
+cone = true
+material = SubResource("Mat_Bronze_Scale_Armor")
+
+[node name="Kilt" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+radius = 0.38
+height = 0.5
+material = SubResource("Mat_Linen_Kilt")
+
+[node name="TowerShield" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.966, 0, -0.259, 0, 1, 0, 0.259, 0, 0.966, -0.55, 1.3, 0.3)
+mesh = SubResource("Mesh_Shield")
+
+[node name="Spear" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.966, -0.259, 0, 0.259, 0.966, 0, 0, 0, 1, 0.55, 1.7, 0.2)
+mesh = SubResource("Mesh_Spear")

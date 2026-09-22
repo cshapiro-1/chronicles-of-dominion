@@ -1,6 +1,6 @@
 extends StaticBody3D
 
-@onready var monument_mesh: MeshInstance3D = $MonumentMesh
+@onready var monument_mesh: MeshInstance3D = get_node_or_null("MonumentMesh")
 
 func _ready() -> void:
 	if monument_mesh:

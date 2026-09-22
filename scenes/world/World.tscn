@@ -1,154 +1,92 @@
-[gd_scene load_steps=17 format=3 uid="uid://world_epic_citadel_02"]
+[gd_scene load_steps=18 format=3 uid="uid://world_master_mesopotamia_grand"]
 
-[ext_resource type="PackedScene" path="res://scenes/buildings/Ziggurat.tscn" id="1_zig"]
-[ext_resource type="PackedScene" path="res://scenes/buildings/CityGate.tscn" id="2_gate"]
-[ext_resource type="PackedScene" path="res://scenes/buildings/House.tscn" id="3_house"]
-[ext_resource type="PackedScene" path="res://scenes/buildings/Granary.tscn" id="4_granary"]
-[ext_resource type="PackedScene" path="res://scenes/world/PalmTree.tscn" id="5_palm"]
-[ext_resource type="PackedScene" path="res://scenes/buildings/FarmPlot.tscn" id="6_farm"]
-[ext_resource type="PackedScene" path="res://scenes/units/Unit.tscn" id="7_unit"]
-[ext_resource type="Resource" path="res://data/units/Spearman.tres" id="8_spear"]
-[ext_resource type="Resource" path="res://data/units/Slinger.tres" id="9_slinger"]
-[ext_resource type="Resource" path="res://data/units/Chariot.tres" id="10_chariot"]
+[ext_resource type="Script" path="res://scenes/world/World.gd" id="1_world_script"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/EnemyCitadel.tscn" id="2_enemy_citadel"]
+[ext_resource type="PackedScene" path="res://scenes/buildings/Ziggurat.tscn" id="3_zig"]
+[sub_resource type="ProceduralSkyMaterial" id="SkyMat_Grand"]
+sky_top_color = Color(0.22, 0.30, 0.42, 1)
+sky_horizon_color = Color(0.80, 0.72, 0.60, 1)
+sky_curve = 0.14
+ground_bottom_color = Color(0.16, 0.12, 0.08, 1)
+ground_horizon_color = Color(0.55, 0.46, 0.35, 1)
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_Gloomy"]
-sky_top_color = Color(0.2, 0.25, 0.35, 1)
-sky_horizon_color = Color(0.68, 0.55, 0.4, 1)
-sky_curve = 0.15
-ground_bottom_color = Color(0.18, 0.14, 0.1, 1)
-ground_horizon_color = Color(0.48, 0.38, 0.28, 1)
+[sub_resource type="Sky" id="Sky_Grand"]
+sky_material = SubResource("SkyMat_Grand")
 
-[sub_resource type="Sky" id="Sky_Gloomy"]
-sky_material = SubResource("ProceduralSkyMaterial_Gloomy")
-
-[sub_resource type="Environment" id="Environment_Grimdark"]
+[sub_resource type="Environment" id="Env_Grand"]
 background_mode = 2
-sky = SubResource("Sky_Gloomy")
+sky = SubResource("Sky_Grand")
 ambient_light_source = 2
-ambient_light_color = Color(0.55, 0.48, 0.4, 1)
-ambient_light_energy = 1.35
+ambient_light_color = Color(0.75, 0.70, 0.60, 1)
+ambient_light_energy = 0.88
 tonemap_mode = 3
-tonemap_exposure = 1.15
+tonemap_exposure = 1.08
 tonemap_white = 1.15
 ssao_enabled = true
 ssao_radius = 2.8
-ssao_intensity = 2.4
-ssao_power = 1.2
-ssil_enabled = true
+ssao_intensity = 3.2
 glow_enabled = true
-glow_intensity = 0.3
+glow_intensity = 0.4
 glow_bloom = 0.15
-fog_enabled = true
-fog_light_color = Color(0.58, 0.48, 0.38, 1)
-fog_density = 0.002
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0022
+volumetric_fog_albedo = Color(0.86, 0.78, 0.66, 1)
 
-[sub_resource type="StandardMaterial3D" id="Mat_Ground"]
-albedo_color = Color(0.62, 0.50, 0.35, 1)
+[sub_resource type="StandardMaterial3D" id="Mat_Terrain_Grand"]
+albedo_color = Color(0.72, 0.62, 0.48, 1)
 roughness = 0.92
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_Ground"]
-size = Vector2(260, 260)
+size = Vector2(360, 360)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_Ground"]
-size = Vector3(260, 1, 260)
+size = Vector3(360, 1, 360)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_Grand"]
+agent_radius = 2.4
+agent_height = 2.2
+agent_max_climb = 0.5
+agent_max_slope = 45.0
+cell_size = 0.25
+cell_height = 0.25
+geometry_parsed_geometry_type = 1
+
+
 
 [node name="World" type="Node3D"]
+script = ExtResource("1_world_script")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_Grimdark")
+environment = SubResource("Env_Grand")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.707107, -0.40558, 0.579228, 0, 0.819152, 0.573576, -0.707107, -0.40558, 0.579228, 0, 40, 0)
-light_color = Color(1.0, 0.94, 0.82, 1)
-light_energy = 1.45
+transform = Transform3D(0.707107, -0.40558, 0.579228, 0, 0.819152, 0.573576, -0.707107, -0.40558, 0.579228, 0, 60, 0)
+light_color = Color(1.0, 0.95, 0.85, 1)
+light_energy = 1.3
 shadow_enabled = true
 shadow_bias = 0.02
 shadow_blur = 1.2
 
-[node name="Ground" type="StaticBody3D" parent="."]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_Grand")
+
+[node name="Ground" type="StaticBody3D" parent="NavigationRegion3D"]
 collision_mask = 0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Ground"]
 mesh = SubResource("PlaneMesh_Ground")
-surface_material_override/0 = SubResource("Mat_Ground")
+surface_material_override/0 = SubResource("Mat_Terrain_Grand")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Ground"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_Ground")
 
-[node name="Ziggurat" parent="." instance=ExtResource("1_zig")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+[node name="Ziggurat" parent="NavigationRegion3D" instance=ExtResource("3_zig")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 6, 0, 6)
 
-[node name="Defenses" type="Node3D" parent="."]
-
-[node name="NorthGate" parent="Defenses" instance=ExtResource("2_gate")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -32)
-
-[node name="SouthGate" parent="Defenses" instance=ExtResource("2_gate")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 32)
-
-[node name="CityDistrict" type="Node3D" parent="."]
-
-[node name="House1" parent="CityDistrict" instance=ExtResource("3_house")]
-transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -28, 0, -10)
-
-[node name="House2" parent="CityDistrict" instance=ExtResource("3_house")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28, 0, 4)
-
-[node name="House3" parent="CityDistrict" instance=ExtResource("3_house")]
-transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -26, 0, 18)
-
-[node name="Granary1" parent="CityDistrict" instance=ExtResource("4_granary")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, -22)
-
-[node name="Granary2" parent="CityDistrict" instance=ExtResource("4_granary")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -22)
-
-[node name="PalmGroves" type="Node3D" parent="."]
-
-[node name="Palm1" parent="PalmGroves" instance=ExtResource("5_palm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, -18)
-
-[node name="Palm2" parent="PalmGroves" instance=ExtResource("5_palm")]
-transform = Transform3D(0.9, 0, 0.43, 0, 1, 0, -0.43, 0, 0.9, 24, 0, -14)
-
-[node name="Palm3" parent="PalmGroves" instance=ExtResource("5_palm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -24)
-
-[node name="Palm4" parent="PalmGroves" instance=ExtResource("5_palm")]
-transform = Transform3D(0.8, 0, -0.6, 0, 1, 0, 0.6, 0, 0.8, 26, 0, 14)
-
-[node name="Palm5" parent="PalmGroves" instance=ExtResource("5_palm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 22)
-
-[node name="Farms" type="Node3D" parent="."]
-
-[node name="FarmPlot1" parent="Farms" instance=ExtResource("6_farm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -4)
-
-[node name="FarmPlot2" parent="Farms" instance=ExtResource("6_farm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, -4)
-
-[node name="FarmPlot3" parent="Farms" instance=ExtResource("6_farm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 6)
-
-[node name="FarmPlot4" parent="Farms" instance=ExtResource("6_farm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 6)
+[node name="EnemyCitadel" parent="NavigationRegion3D" instance=ExtResource("2_enemy_citadel")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 32, 0, -38)
 
 [node name="Units" type="Node3D" parent="."]
 
-[node name="SpearmanCohort1" parent="Units" instance=ExtResource("7_unit")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 22)
-unit_data = ExtResource("8_spear")
 
-[node name="SpearmanCohort2" parent="Units" instance=ExtResource("7_unit")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0, 0, 22)
-unit_data = ExtResource("8_spear")
-
-[node name="SlingerCohort1" parent="Units" instance=ExtResource("7_unit")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0, 0, 24)
-unit_data = ExtResource("9_slinger")
-
-[node name="ChariotCohort1" parent="Units" instance=ExtResource("7_unit")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0, 0, 24)
-unit_data = ExtResource("10_chariot")

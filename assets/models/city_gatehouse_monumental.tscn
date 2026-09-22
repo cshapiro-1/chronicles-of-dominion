@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=3 uid="uid://city_gatehouse_monumental_pending"]
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Gate_Mudbrick"]
+albedo_color = Color(0.90, 0.82, 0.70, 1.0)
+uv1_scale = Vector3(6, 4, 3)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Gate_Lapis"]
+metallic = 0.35
+roughness = 0.25
+uv1_scale = Vector3(3, 2, 2)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Bronze"]
+albedo_color = Color(0.80, 0.62, 0.25, 1.0)
+metallic = 0.88
+roughness = 0.32
+
+[sub_resource type="StandardMaterial3D" id="Mat_Cedar"]
+albedo_color = Color(0.24, 0.15, 0.09, 1.0)
+roughness = 0.75
+
+[sub_resource type="BoxMesh" id="Mesh_Gate_Tower"]
+material = SubResource("Mat_Gate_Mudbrick")
+size = Vector3(7.0, 13.0, 8.0)
+
+[sub_resource type="BoxMesh" id="Mesh_Gate_Span"]
+material = SubResource("Mat_Gate_Mudbrick")
+size = Vector3(10.0, 4.5, 7.5)
+
+[sub_resource type="BoxMesh" id="Mesh_Lapis_Frieze"]
+material = SubResource("Mat_Gate_Lapis")
+size = Vector3(9.6, 1.8, 7.8)
+
+[sub_resource type="BoxMesh" id="Mesh_Bronze_Arch"]
+material = SubResource("Mat_Bronze")
+size = Vector3(6.2, 7.5, 0.6)
+
+[sub_resource type="BoxMesh" id="Mesh_Cedar_Gate_Door"]
+material = SubResource("Mat_Cedar")
+size = Vector3(5.4, 6.8, 0.8)
+
+[node name="CityGatehouse" type="Node3D"]
+
+[node name="TowerLeft" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 6.5, 0)
+mesh = SubResource("Mesh_Gate_Tower")
+
+[node name="TowerRight" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5, 6.5, 0)
+mesh = SubResource("Mesh_Gate_Tower")
+
+[node name="ArchLintelSpan" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.5, 0)
+mesh = SubResource("Mesh_Gate_Span")
+
+[node name="LapisFrieze" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.2, 0)
+mesh = SubResource("Mesh_Lapis_Frieze")
+
+[node name="BronzeArchFrame" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8, 3.6)
+mesh = SubResource("Mesh_Bronze_Arch")
+
+[node name="CedarGateDoors" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 3.4)
+mesh = SubResource("Mesh_Cedar_Gate_Door")

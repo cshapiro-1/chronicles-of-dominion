@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://farmland_and_granary_set_pending"]
+
+[ext_resource type="PackedScene" uid="uid://farm_crop_field_tile_pending" path="res://assets/generated/pending_approval/farm_crop_field_tile.tscn" id="1_farm"]
+[ext_resource type="PackedScene" uid="uid://irrigation_canal_sluice_pending" path="res://assets/generated/pending_approval/irrigation_canal_sluice.tscn" id="2_sluice"]
+[ext_resource type="PackedScene" uid="uid://royal_granary_silo_pending" path="res://assets/generated/pending_approval/royal_granary_silo.tscn" id="3_granary"]
+
+[node name="FarmlandAndGranarySet" type="Node3D"]
+
+[node name="CropFieldTile1" parent="." instance=ExtResource("1_farm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.0, 0, 0)
+
+[node name="CanalSluiceGate" parent="." instance=ExtResource("2_sluice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 0)
+
+[node name="RoyalGranary" parent="." instance=ExtResource("3_granary")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0, 0, 0)

@@ -1,15 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://farm_pbr_02"]
+[gd_scene load_steps=4 format=3 uid="uid://farm_plot_prod_01"]
 
 [ext_resource type="Script" path="res://scenes/buildings/FarmPlot.gd" id="1_farm_script"]
+[ext_resource type="PackedScene" uid="uid://farm_crop_field_tile_pending" path="res://assets/models/farm_crop_field_tile.tscn" id="2_farm_model"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_Farm"]
-size = Vector3(8, 1, 8)
+size = Vector3(16.0, 1.5, 16.0)
 
-[node name="FarmPlot" type="StaticBody3D" groups=["FarmPlots"]]
+[node name="FarmPlot" type="StaticBody3D" groups=["Building", "FarmPlot"]]
 script = ExtResource("1_farm_script")
 
-[node name="SoilBed" type="MeshInstance3D" parent="."]
+[node name="FarmModel" parent="." instance=ExtResource("2_farm_model")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 shape = SubResource("BoxShape3D_Farm")

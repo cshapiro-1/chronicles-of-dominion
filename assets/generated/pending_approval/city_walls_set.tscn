@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://city_walls_set_pending"]
+
+[ext_resource type="PackedScene" uid="uid://city_gatehouse_monumental_pending" path="res://assets/generated/pending_approval/city_gatehouse_monumental.tscn" id="1_gate"]
+[ext_resource type="PackedScene" uid="uid://wall_segment_straight_pending" path="res://assets/generated/pending_approval/wall_segment_straight.tscn" id="2_wall"]
+[ext_resource type="PackedScene" uid="uid://wall_corner_tower_pending" path="res://assets/generated/pending_approval/wall_corner_tower.tscn" id="3_tower"]
+
+[node name="CityWallsAndGatesSet" type="Node3D"]
+
+[node name="Gatehouse" parent="." instance=ExtResource("1_gate")]
+
+[node name="WallLeft" parent="." instance=ExtResource("2_wall")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.0, 0, 0)
+
+[node name="WallRight" parent="." instance=ExtResource("2_wall")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.0, 0, 0)
+
+[node name="TowerLeftEnd" parent="." instance=ExtResource("3_tower")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.0, 0, 0)
+
+[node name="TowerRightEnd" parent="." instance=ExtResource("3_tower")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.0, 0, 0)

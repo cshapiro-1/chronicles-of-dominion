@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://bazaar_market_square_pending"]
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Plaza_Paving"]
+albedo_color = Color(0.82, 0.74, 0.62, 1.0)
+uv1_scale = Vector3(4, 4, 4)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Canopy_Terracotta"]
+albedo_color = Color(0.78, 0.32, 0.22, 1.0)
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="Mat_Canopy_Saffron"]
+albedo_color = Color(0.85, 0.65, 0.20, 1.0)
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="Mat_Canopy_Indigo"]
+albedo_color = Color(0.20, 0.40, 0.70, 1.0)
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="Mat_Cedar_Wood"]
+albedo_color = Color(0.26, 0.16, 0.10, 1.0)
+roughness = 0.80
+
+[sub_resource type="BoxMesh" id="Mesh_Plaza_Base"]
+material = SubResource("Mat_Plaza_Paving")
+size = Vector3(16.0, 0.4, 16.0)
+
+[sub_resource type="BoxMesh" id="Mesh_Stall_Table"]
+material = SubResource("Mat_Cedar_Wood")
+size = Vector3(3.2, 0.9, 1.6)
+
+[node name="BazaarMarketSquare" type="Node3D"]
+
+[node name="PlazaBase" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+mesh = SubResource("Mesh_Plaza_Base")
+
+[node name="StallNorth_Table" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, -4.5)
+mesh = SubResource("Mesh_Stall_Table")
+
+[node name="StallWest_Table" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -4.5, 0.65, 0)
+mesh = SubResource("Mesh_Stall_Table")
+
+[node name="StallEast_Table" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 4.5, 0.65, 0)
+mesh = SubResource("Mesh_Stall_Table")

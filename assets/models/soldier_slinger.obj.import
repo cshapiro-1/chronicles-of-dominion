@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cci08s4tqv1ub"
+path="res://.godot/imported/soldier_slinger.obj-f4e4451bc415d73974ed25c3484f158c.mesh"
+
+[deps]
+
+files=["res://.godot/imported/soldier_slinger.obj-f4e4451bc415d73974ed25c3484f158c.mesh"]
+
+source_file="res://assets/models/soldier_slinger.obj"
+dest_files=["res://.godot/imported/soldier_slinger.obj-f4e4451bc415d73974ed25c3484f158c.mesh", "res://.godot/imported/soldier_slinger.obj-f4e4451bc415d73974ed25c3484f158c.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

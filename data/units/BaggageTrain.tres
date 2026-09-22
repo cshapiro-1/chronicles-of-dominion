@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="UnitData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/UnitData.gd" id="1_1"]
+
+[resource]
+script = ExtResource("1_1")
+unit_name = "Ox Baggage Train"
+max_health = 250.0
+damage = 0.0
+attack_range = 1.0
+attack_speed = 1.0
+move_speed = 3.8
+armor = 4.0
+cost = {
+"Wood": 40.0,
+"Grain": 80.0
+}
+mesh_color = Color(0.65, 0.45, 0.25, 1)
+is_ranged = false
+projectile_speed = 0.0

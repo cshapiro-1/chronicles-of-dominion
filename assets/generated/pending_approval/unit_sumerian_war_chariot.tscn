@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://unit_sumerian_war_chariot_pending"]
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Cedar_Wood"]
+roughness = 0.85
+uv1_scale = Vector3(2, 2, 2)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Bronze_Trim"]
+metallic = 0.90
+roughness = 0.28
+
+[sub_resource type="StandardMaterial3D" id="Mat_Onager_Hide"]
+roughness = 0.90
+
+[sub_resource type="BoxMesh" id="Mesh_Chariot_Cab"]
+material = SubResource("Mat_Cedar_Wood")
+size = Vector3(1.8, 0.9, 2.0)
+
+[sub_resource type="CylinderMesh" id="Mesh_Solid_Wheel"]
+material = SubResource("Mat_Bronze_Trim")
+top_radius = 0.65
+bottom_radius = 0.65
+height = 0.2
+
+[node name="SumerianWarChariot" type="Node3D"]
+
+[node name="Cab" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -0.9)
+mesh = SubResource("Mesh_Chariot_Cab")
+
+[node name="WheelFL" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -1.05, 0.8, -0.3)
+mesh = SubResource("Mesh_Solid_Wheel")
+
+[node name="WheelFR" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 1.05, 0.8, -0.3)
+mesh = SubResource("Mesh_Solid_Wheel")
+
+[node name="WheelRL" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -1.05, 0.8, -1.5)
+mesh = SubResource("Mesh_Solid_Wheel")
+
+[node name="WheelRR" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 1.05, 0.8, -1.5)
+mesh = SubResource("Mesh_Solid_Wheel")
+
+[node name="OnagerLeft" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.65, 1.1, 1.5)
+size = Vector3(0.55, 0.9, 1.7)
+material = SubResource("Mat_Onager_Hide")
+
+[node name="OnagerRight" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65, 1.1, 1.5)
+size = Vector3(0.55, 0.9, 1.7)
+material = SubResource("Mat_Onager_Hide")

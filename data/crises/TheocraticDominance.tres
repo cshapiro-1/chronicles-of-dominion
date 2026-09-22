@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CrisisData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/CrisisData.gd" id="1_crisis"]
+
+[resource]
+script = ExtResource("1_crisis")
+title = "Theocratic Tithe Dominance"
+description = "Excessive religious tithes have concentrated immense wealth in the temple vaults. The High Priesthood asserts authority over royal trade and secular magistrates."
+options = ["Grant Temple Tax Exemption (+15% Altar, -25 Gold/m)", "Assert Royal Sovereignty (-25% Altar, +15% Masses, +20 Gold/m)"]
+option_consequences = ["Surrenders economic revenue to ecclesiastical hierarchy.", "Reclaims state sovereignty and secures treasury income."]

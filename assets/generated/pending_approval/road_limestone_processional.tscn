@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://road_limestone_processional_pending"]
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Limestone_Processional"]
+roughness = 0.40
+uv1_scale = Vector3(2, 2, 2)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Lapis_Trim"]
+albedo_color = Color(0.12, 0.26, 0.53, 1.0)
+metallic = 0.20
+roughness = 0.30
+
+[sub_resource type="StandardMaterial3D" id="Mat_Bronze_Brazier"]
+albedo_color = Color(0.85, 0.62, 0.22, 1.0)
+metallic = 0.90
+roughness = 0.28
+
+[node name="RoadLimestoneProcessional" type="Node3D"]
+
+[node name="ProcessionalPavement" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+size = Vector3(8.0, 0.4, 8.0)
+material = SubResource("Mat_Limestone_Processional")
+
+[node name="LapisBorderLeft" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85, 0.35, 0)
+size = Vector3(0.3, 0.3, 8.0)
+material = SubResource("Mat_Lapis_Trim")
+
+[node name="LapisBorderRight" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.85, 0.35, 0)
+size = Vector3(0.3, 0.3, 8.0)
+material = SubResource("Mat_Lapis_Trim")
+
+[node name="BrazierPostL" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.85, 1.0, 0)
+radius = 0.18
+height = 1.0
+material = SubResource("Mat_Bronze_Brazier")
+
+[node name="BrazierBowlL" type="CSGCylinder3D" parent="BrazierPostL"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+radius = 0.35
+height = 0.25
+material = SubResource("Mat_Bronze_Brazier")
+
+[node name="BrazierPostR" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.85, 1.0, 0)
+radius = 0.18
+height = 1.0
+material = SubResource("Mat_Bronze_Brazier")
+
+[node name="BrazierBowlR" type="CSGCylinder3D" parent="BrazierPostR"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+radius = 0.35
+height = 0.25
+material = SubResource("Mat_Bronze_Brazier")

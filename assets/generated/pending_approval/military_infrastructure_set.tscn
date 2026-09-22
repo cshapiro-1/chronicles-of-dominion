@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://military_infrastructure_set_pending"]
+
+[ext_resource type="PackedScene" uid="uid://military_barracks_muster_yard_pending" path="res://assets/generated/pending_approval/military_barracks_muster_yard.tscn" id="1_barracks"]
+[ext_resource type="PackedScene" uid="uid://chariot_foundry_stables_pending" path="res://assets/generated/pending_approval/chariot_foundry_stables.tscn" id="2_chariot"]
+[ext_resource type="PackedScene" uid="uid://campaign_field_palisade_camp_pending" path="res://assets/generated/pending_approval/campaign_field_palisade_camp.tscn" id="3_palisade"]
+
+[node name="MilitaryInfrastructureSet" type="Node3D"]
+
+[node name="MusterBarracks" parent="." instance=ExtResource("1_barracks")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.0, 0, 0)
+
+[node name="ChariotFoundry" parent="." instance=ExtResource("2_chariot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0, 0, 0)
+
+[node name="CampaignCamp" parent="." instance=ExtResource("3_palisade")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.0, 0, 0)

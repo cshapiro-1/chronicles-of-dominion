@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://housing_tier_rural_farm_pending"]
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Farmer_Mudbrick"]
+albedo_color = Color(0.86, 0.76, 0.62, 1.0)
+uv1_scale = Vector3(3, 2, 3)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Reed_Thatch"]
+albedo_color = Color(0.72, 0.62, 0.38, 1.0)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="Mat_Cedar_Fence"]
+albedo_color = Color(0.30, 0.20, 0.12, 1.0)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="Mesh_Farmer_Hut"]
+material = SubResource("Mat_Farmer_Mudbrick")
+size = Vector3(5.0, 3.2, 5.0)
+
+[sub_resource type="BoxMesh" id="Mesh_Reed_Canopy"]
+material = SubResource("Mat_Reed_Thatch")
+size = Vector3(3.5, 0.15, 3.0)
+
+[sub_resource type="BoxMesh" id="Mesh_Pen_Fence"]
+material = SubResource("Mat_Cedar_Fence")
+size = Vector3(5.0, 1.0, 0.15)
+
+[node name="HousingRuralFarmer" type="Node3D"]
+
+[node name="MainHut" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 1.6, 0)
+mesh = SubResource("Mesh_Farmer_Hut")
+
+[node name="ReedLeanTo" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, 2.0, 2.5, 0)
+mesh = SubResource("Mesh_Reed_Canopy")
+
+[node name="LivestockFenceNorth" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2, 0.5, -2.5)
+mesh = SubResource("Mesh_Pen_Fence")
+
+[node name="LivestockFenceEast" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 4.6, 0.5, 0)
+mesh = SubResource("Mesh_Pen_Fence")

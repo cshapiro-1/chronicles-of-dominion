@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://farm_crop_field_tile_pending"]
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Soil_Alluvium"]
+albedo_color = Color(0.42, 0.32, 0.22, 1.0)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="Mat_Canal_Water"]
+albedo_color = Color(0.18, 0.42, 0.48, 0.9)
+roughness = 0.15
+metallic = 0.3
+
+[sub_resource type="StandardMaterial3D" id="Mat_Wheat_Crop"]
+albedo_color = Color(0.85, 0.72, 0.32, 1.0)
+roughness = 0.90
+
+[sub_resource type="BoxMesh" id="Mesh_Field_Base"]
+material = SubResource("Mat_Soil_Alluvium")
+size = Vector3(16.0, 0.6, 16.0)
+
+[sub_resource type="BoxMesh" id="Mesh_Canal_Trench"]
+material = SubResource("Mat_Canal_Water")
+size = Vector3(2.0, 0.1, 16.0)
+
+[sub_resource type="BoxMesh" id="Mesh_Crop_Furrow"]
+material = SubResource("Mat_Wheat_Crop")
+size = Vector3(1.4, 0.8, 14.0)
+
+[node name="FarmCropFieldTile" type="Node3D"]
+
+[node name="FieldSoilBase" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+mesh = SubResource("Mesh_Field_Base")
+
+[node name="WaterDitchWest" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0, 0.55, 0)
+mesh = SubResource("Mesh_Canal_Trench")
+
+[node name="CropFurrow_1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0.9, 0)
+mesh = SubResource("Mesh_Crop_Furrow")
+
+[node name="CropFurrow_2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8, 0.9, 0)
+mesh = SubResource("Mesh_Crop_Furrow")
+
+[node name="CropFurrow_3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 0.9, 0)
+mesh = SubResource("Mesh_Crop_Furrow")
+
+[node name="CropFurrow_4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6, 0.9, 0)
+mesh = SubResource("Mesh_Crop_Furrow")
+
+[node name="CropFurrow_5" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.3, 0.9, 0)
+mesh = SubResource("Mesh_Crop_Furrow")

@@ -1,3 +1,11 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
 config_version=5
 
 [application]
@@ -9,6 +17,7 @@ config/features=PackedStringArray("4.3", "Forward Plus")
 
 [autoload]
 
+MatchSignals="*res://scripts/core/MatchSignals.gd"
 EventBus="*res://scripts/systems/EventBus.gd"
 MeshFactory="*res://scripts/systems/MeshFactory.gd"
 GameManager="*res://scripts/systems/GameManager.gd"
@@ -26,7 +35,6 @@ SaveManager="*res://scripts/systems/SaveManager.gd"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=0
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 

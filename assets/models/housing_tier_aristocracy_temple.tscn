@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://housing_tier_aristocracy_pending"]
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Noble_Mudbrick"]
+albedo_color = Color(0.94, 0.88, 0.78, 1.0)
+uv1_scale = Vector3(6, 4, 6)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Lapis_Noble"]
+metallic = 0.40
+roughness = 0.22
+uv1_scale = Vector3(2, 2, 2)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Gold_Trim"]
+albedo_color = Color(0.85, 0.70, 0.22, 1.0)
+metallic = 0.88
+roughness = 0.30
+
+[sub_resource type="BoxMesh" id="Mesh_Noble_Wing_North"]
+material = SubResource("Mat_Noble_Mudbrick")
+size = Vector3(14.0, 5.5, 4.0)
+
+[sub_resource type="BoxMesh" id="Mesh_Noble_Wing_Side"]
+material = SubResource("Mat_Noble_Mudbrick")
+size = Vector3(3.8, 5.0, 8.0)
+
+[sub_resource type="BoxMesh" id="Mesh_Lapis_Grand_Gate"]
+material = SubResource("Mat_Lapis_Noble")
+size = Vector3(3.6, 4.5, 1.0)
+
+[sub_resource type="BoxMesh" id="Mesh_Pavilion_Roof"]
+material = SubResource("Mat_Gold_Trim")
+size = Vector3(5.0, 0.25, 4.5)
+
+[node name="HousingAristocracyTemple" type="Node3D"]
+
+[node name="NorthWing" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.75, -5.0)
+mesh = SubResource("Mesh_Noble_Wing_North")
+
+[node name="SouthWing" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 5.0)
+mesh = SubResource("Mesh_Noble_Wing_North")
+
+[node name="WestWing" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.1, 2.5, 0)
+mesh = SubResource("Mesh_Noble_Wing_Side")
+
+[node name="EastWing" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.1, 2.5, 0)
+mesh = SubResource("Mesh_Noble_Wing_Side")
+
+[node name="LapisGatePortal" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25, 7.1)
+mesh = SubResource("Mesh_Lapis_Grand_Gate")
+
+[node name="RooftopPavilion" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.2, -5.0)
+mesh = SubResource("Mesh_Pavilion_Roof")

@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dg1dqpr300fwn"
+path="res://.godot/imported/city_wall_gate.obj-2c3d11070fc11b11d1e173440d132bd3.mesh"
+
+[deps]
+
+files=["res://.godot/imported/city_wall_gate.obj-2c3d11070fc11b11d1e173440d132bd3.mesh"]
+
+source_file="res://assets/models/city_wall_gate.obj"
+dest_files=["res://.godot/imported/city_wall_gate.obj-2c3d11070fc11b11d1e173440d132bd3.mesh", "res://.godot/imported/city_wall_gate.obj-2c3d11070fc11b11d1e173440d132bd3.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

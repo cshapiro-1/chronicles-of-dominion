@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://j2q3707y1war"
+path="res://.godot/imported/chariot_rig.obj-50d065da905b34d5fe11ab276afea636.mesh"
+
+[deps]
+
+files=["res://.godot/imported/chariot_rig.obj-50d065da905b34d5fe11ab276afea636.mesh"]
+
+source_file="res://assets/models/chariot_rig.obj"
+dest_files=["res://.godot/imported/chariot_rig.obj-50d065da905b34d5fe11ab276afea636.mesh", "res://.godot/imported/chariot_rig.obj-50d065da905b34d5fe11ab276afea636.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://civic_market_precinct_set_pending"]
+
+[ext_resource type="PackedScene" uid="uid://bazaar_market_square_pending" path="res://assets/generated/pending_approval/bazaar_market_square.tscn" id="1_bazaar"]
+[ext_resource type="PackedScene" uid="uid://brewery_and_bakery_pending" path="res://assets/generated/pending_approval/brewery_and_bakery.tscn" id="2_brewery"]
+[ext_resource type="PackedScene" uid="uid://potters_kiln_workshop_pending" path="res://assets/generated/pending_approval/potters_kiln_workshop.tscn" id="3_potter"]
+
+[node name="CivicMarketPrecinctSet" type="Node3D"]
+
+[node name="GreatBazaar" parent="." instance=ExtResource("1_bazaar")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.0, 0, 0)
+
+[node name="BreweryBakery" parent="." instance=ExtResource("2_brewery")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0, 0, -5.0)
+
+[node name="PotterKiln" parent="." instance=ExtResource("3_potter")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0, 0, 6.0)

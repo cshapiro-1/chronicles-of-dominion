@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CrisisData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/CrisisData.gd" id="1_crisis"]
+
+[resource]
+script = ExtResource("1_crisis")
+title = "Pestilence in the Mudbrick Quarters"
+description = "Rapid urban housing expansion without canal drainage has caused pestilence to fester in the lower wards. Sickness spreads through the mudbrick quarters."
+options = ["Quarantine the Slums (-100 Gold, -5 Pop, -5% Discontent)", "Neglect the Outbreak (-25 Pop, +20% Discontent, -15% Hope)"]
+option_consequences = ["Apothecaries establish cordons to stop contagion.", "Disease runs unchecked through crowded tenements."]

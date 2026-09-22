@@ -1,0 +1,32 @@
+[gd_scene load_steps=8 format=3 uid="uid://environment_foliage_infrastructure_set_pending"]
+
+[ext_resource type="PackedScene" uid="uid://foliage_date_palm_mature_pending" path="res://assets/generated/pending_approval/foliage_date_palm_mature.tscn" id="1_palm_mat"]
+[ext_resource type="PackedScene" uid="uid://foliage_date_palm_curved_pending" path="res://assets/generated/pending_approval/foliage_date_palm_curved.tscn" id="2_palm_curv"]
+[ext_resource type="PackedScene" uid="uid://foliage_date_palm_clump_pending" path="res://assets/generated/pending_approval/foliage_date_palm_clump.tscn" id="3_palm_clmp"]
+[ext_resource type="PackedScene" uid="uid://terrain_riverbank_reeds_pending" path="res://assets/generated/pending_approval/terrain_riverbank_reeds.tscn" id="4_riverbank"]
+[ext_resource type="PackedScene" uid="uid://road_alluvial_dirt_path_pending" path="res://assets/generated/pending_approval/road_alluvial_dirt_path.tscn" id="5_road_dirt"]
+[ext_resource type="PackedScene" uid="uid://road_mudbrick_cobbles_pending" path="res://assets/generated/pending_approval/road_mudbrick_cobbles.tscn" id="6_road_cobb"]
+[ext_resource type="PackedScene" uid="uid://road_limestone_processional_pending" path="res://assets/generated/pending_approval/road_limestone_processional.tscn" id="7_road_lime"]
+
+[node name="EnvironmentFoliageSet" type="Node3D"]
+
+[node name="MaturePalm" parent="." instance=ExtResource("1_palm_mat")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 6)
+
+[node name="CurvedPalm" parent="." instance=ExtResource("2_palm_curv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 6)
+
+[node name="PalmClump" parent="." instance=ExtResource("3_palm_clmp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+
+[node name="RiverbankTile" parent="." instance=ExtResource("4_riverbank")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 6)
+
+[node name="DirtRoad" parent="." instance=ExtResource("5_road_dirt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -6)
+
+[node name="CobblestoneRoad" parent="." instance=ExtResource("6_road_cobb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+[node name="ProcessionalWay" parent="." instance=ExtResource("7_road_lime")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -6)

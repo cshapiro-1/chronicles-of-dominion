@@ -1,67 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://cmd_tablet_obj_01"]
+[gd_scene load_steps=2 format=3 uid="uid://cmd_tablet_obj_02"]
 
 [ext_resource type="Script" path="res://scenes/ui/components/CommandTablet.gd" id="1_tablet"]
-[ext_resource type="Texture2D" path="res://assets/ui/gen_btn_spear.png" id="2_icon"]
-[ext_resource type="FontFile" path="res://assets/fonts/constanb.ttf" id="3_font"]
 
-[sub_resource type="StyleBoxFlat" id="SB_Tablet"]
-bg_color = Color(0.12, 0.1, 0.08, 0.95)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.7, 0.55, 0.28, 1)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-shadow_color = Color(0, 0, 0, 0.6)
-shadow_size = 6
-
-[node name="CommandTablet" type="PanelContainer"]
-custom_minimum_size = Vector2(72, 78)
-offset_right = 72.0
-offset_bottom = 78.0
-theme_override_styles/panel = SubResource("SB_Tablet")
-script = ExtResource("1_tablet")
-
-[node name="Margin" type="MarginContainer" parent="."]
-layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="VBox" type="VBoxContainer" parent="Margin"]
-layout_mode = 2
-alignment = 1
-
-[node name="Btn" type="TextureButton" parent="Margin/VBox"]
-custom_minimum_size = Vector2(56, 50)
-layout_mode = 2
-texture_normal = ExtResource("2_icon")
+[node name="CommandTablet" type="TextureButton"]
+custom_minimum_size = Vector2(60, 68)
+offset_right = 60.0
+offset_bottom = 68.0
 ignore_texture_size = true
 stretch_mode = 5
-
-[node name="HotkeyBadge" type="Label" parent="Margin/VBox/Btn"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 2.0
-offset_top = -14.0
-offset_right = 18.0
-grow_vertical = 0
-theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
-theme_override_fonts/font = ExtResource("3_font")
-theme_override_font_sizes/font_size = 11
-text = "[1]"
-
-[node name="CostLabel" type="Label" parent="Margin/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.85, 0.8, 0.65, 1)
-theme_override_font_sizes/font_size = 9
-text = "🌾50 ⚔20"
-horizontal_alignment = 1
-
-[connection signal="pressed" from="Margin/VBox/Btn" to="." method="_on_btn_pressed"]
+script = ExtResource("1_tablet")

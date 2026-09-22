@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=3 uid="uid://house_courtyard_pending"]
+
+
+[sub_resource type="StandardMaterial3D" id="Mat_Mudbrick_House"]
+albedo_color = Color(0.92, 0.84, 0.72, 1.0)
+uv1_scale = Vector3(6, 3, 6)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Lapis_Trim"]
+metallic = 0.35
+roughness = 0.28
+uv1_scale = Vector3(2, 2, 2)
+
+[sub_resource type="BoxMesh" id="Mesh_Wing_North"]
+material = SubResource("Mat_Mudbrick_House")
+size = Vector3(12.0, 4.5, 3.5)
+
+[sub_resource type="BoxMesh" id="Mesh_Wing_Side"]
+material = SubResource("Mat_Mudbrick_House")
+size = Vector3(3.2, 4.2, 6.0)
+
+[sub_resource type="BoxMesh" id="Mesh_Portal_Lapis"]
+material = SubResource("Mat_Lapis_Trim")
+size = Vector3(2.8, 3.5, 0.6)
+
+[node name="HouseCourtyard" type="Node3D"]
+
+[node name="NorthWing" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25, -4.25)
+mesh = SubResource("Mesh_Wing_North")
+
+[node name="SouthWing" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 4.5)
+mesh = SubResource("Mesh_Wing_North")
+
+[node name="WestWing" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4, 2.1, 0)
+mesh = SubResource("Mesh_Wing_Side")
+
+[node name="EastWing" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4, 2.1, 0)
+mesh = SubResource("Mesh_Wing_Side")
+
+[node name="GrandPortal" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 6.3)
+mesh = SubResource("Mesh_Portal_Lapis")

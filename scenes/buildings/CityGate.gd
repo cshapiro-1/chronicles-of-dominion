@@ -1,6 +1,6 @@
 extends StaticBody3D
 
-@onready var gate_mesh: MeshInstance3D = $GateMesh
+@onready var gate_mesh: MeshInstance3D = get_node_or_null("GateMesh")
 
 func _ready() -> void:
 	if gate_mesh:

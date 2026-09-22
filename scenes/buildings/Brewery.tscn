@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://bld_brewery"]
+
+[ext_resource type="Script" path="res://scenes/buildings/Building.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://assets/models/brewery_and_bakery.tscn" id="2_model"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1"]
+size = Vector3(6, 4, 6)
+
+[node name="Brewery" type="StaticBody3D"]
+script = ExtResource("1_script")
+
+[node name="Model" parent="." instance=ExtResource("2_model")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("BoxShape3D_1")
