@@ -1,4 +1,4 @@
-extends Building
+extends "res://scenes/buildings/Building.gd"
 class_name ChariotFoundry
 
 func _init() -> void:
@@ -9,4 +9,4 @@ func _init() -> void:
 	gold_cost = 300
 	wood_cost = 200
 	mudbrick_cost = 80
-	construction_time = 6.0
+	construction_time = 5.5

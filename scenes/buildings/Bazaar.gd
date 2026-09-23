@@ -1,4 +1,4 @@
-extends Building
+extends "res://scenes/buildings/Building.gd"
 class_name Bazaar
 
 func _init() -> void:

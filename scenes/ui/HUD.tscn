@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://hud_modular_master_02"]
+[gd_scene load_steps=8 format=3 uid="uid://hud_modular_master_02"]
 
 [ext_resource type="Script" path="res://scenes/ui/HUD.gd" id="1_hud"]
 [ext_resource type="PackedScene" path="res://scenes/ui/components/ResourceBadge.tscn" id="2_res_badge"]
@@ -7,15 +7,19 @@
 [ext_resource type="FontFile" uid="uid://cuab4sw7r66ip" path="res://assets/fonts/constan.ttf" id="6_font_era"]
 [ext_resource type="FontFile" uid="uid://df2msh532q3k" path="res://assets/fonts/constanb.ttf" id="7_font_bold"]
 
-[sub_resource type="StyleBoxFlat" id="SB_MasterTopBar"]
-bg_color = Color(0.09, 0.10, 0.13, 0.96)
-border_width_left = 0
+[sub_resource type="StyleBoxFlat" id="SB_Panel"]
+bg_color = Color(0.10, 0.12, 0.16, 0.92)
+border_width_left = 1
 border_width_top = 1
-border_width_right = 0
+border_width_right = 1
 border_width_bottom = 2
-border_color = Color(0.40, 0.32, 0.20, 0.95)
-shadow_color = Color(0, 0, 0, 0.75)
-shadow_size = 6
+border_color = Color(0.45, 0.40, 0.30, 0.85)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_left = 4
+corner_radius_bottom_right = 4
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_size = 4
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -27,236 +31,282 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_hud")
 
-[node name="TopMasterHeader" type="TextureRect" parent="."]
+[node name="TopMasterHeader" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 170.0
+offset_bottom = 54.0
 grow_horizontal = 2
 mouse_filter = 2
-expand_mode = 1
-stretch_mode = 0
+theme_override_styles/panel = SubResource("SB_Panel")
 
-[node name="ResourceTray" type="HBoxContainer" parent="TopMasterHeader"]
-layout_mode = 0
-offset_left = 60.0
-offset_top = 45.0
-offset_right = 740.0
-offset_bottom = 98.0
-theme_override_constants/separation = 20
+[node name="Margin" type="MarginContainer" parent="TopMasterHeader"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 6
+
+[node name="HBoxHeader" type="HBoxContainer" parent="TopMasterHeader/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 0
+
+[node name="EraTitle" type="Label" parent="TopMasterHeader/Margin/HBoxHeader"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_font_bold")
+theme_override_colors/font_color = Color(0.95, 0.85, 0.45, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 15
+text = "CHRONICLES OF DOMINION"
+
+[node name="VSeparator" type="VSeparator" parent="TopMasterHeader/Margin/HBoxHeader"]
+layout_mode = 2
+
+[node name="ResourceTray" type="HBoxContainer" parent="TopMasterHeader/Margin/HBoxHeader"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 18
 alignment = 1
 
-[node name="BadgeGrain" parent="TopMasterHeader/ResourceTray" instance=ExtResource("2_res_badge")]
+[node name="BadgeGrain" parent="TopMasterHeader/Margin/HBoxHeader/ResourceTray" instance=ExtResource("2_res_badge")]
 layout_mode = 2
 resource_name = "grain"
 default_value = 1420
 default_delta = 45
 
-[node name="BadgeTimber" parent="TopMasterHeader/ResourceTray" instance=ExtResource("2_res_badge")]
+[node name="BadgeTimber" parent="TopMasterHeader/Margin/HBoxHeader/ResourceTray" instance=ExtResource("2_res_badge")]
 layout_mode = 2
 resource_name = "timber"
 default_value = 850
 default_delta = 18
 
-[node name="BadgeStone" parent="TopMasterHeader/ResourceTray" instance=ExtResource("2_res_badge")]
+[node name="BadgeStone" parent="TopMasterHeader/Margin/HBoxHeader/ResourceTray" instance=ExtResource("2_res_badge")]
 layout_mode = 2
 resource_name = "stone"
 default_value = 1200
 default_delta = 25
 
-[node name="BadgeBronze" parent="TopMasterHeader/ResourceTray" instance=ExtResource("2_res_badge")]
+[node name="BadgeBronze" parent="TopMasterHeader/Margin/HBoxHeader/ResourceTray" instance=ExtResource("2_res_badge")]
 layout_mode = 2
 resource_name = "bronze"
 default_value = 650
 default_delta = 12
 
-[node name="BadgeGold" parent="TopMasterHeader/ResourceTray" instance=ExtResource("2_res_badge")]
+[node name="BadgeGold" parent="TopMasterHeader/Margin/HBoxHeader/ResourceTray" instance=ExtResource("2_res_badge")]
 layout_mode = 2
 resource_name = "gold"
 default_value = 5200
 default_delta = 80
 
-[node name="BadgePop" parent="TopMasterHeader/ResourceTray" instance=ExtResource("2_res_badge")]
+[node name="BadgePop" parent="TopMasterHeader/Margin/HBoxHeader/ResourceTray" instance=ExtResource("2_res_badge")]
 layout_mode = 2
 resource_name = "pop"
 default_value = 6500
 default_delta = 0
 
-[node name="EraPlate" type="Control" parent="TopMasterHeader"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -460.0
-offset_top = 42.0
-offset_right = -50.0
-offset_bottom = 102.0
-grow_horizontal = 0
-
-[node name="EraTitle" type="Label" parent="TopMasterHeader/EraPlate"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("7_font_bold")
-theme_override_colors/font_color = Color(0.95, 0.85, 0.45, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.95)
-theme_override_constants/shadow_offset_x = 1
-theme_override_constants/shadow_offset_y = 1
-theme_override_font_sizes/font_size = 22
-text = "BRONZE AGE"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ProvinceCard" type="TextureRect" parent="."]
+[node name="ProvinceCard" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 12.0
-offset_top = -250.0
-offset_right = 502.0
-offset_bottom = -12.0
+offset_left = 16.0
+offset_top = -210.0
+offset_right = 340.0
+offset_bottom = -16.0
 grow_vertical = 0
 mouse_filter = 1
-expand_mode = 1
-stretch_mode = 0
+theme_override_styles/panel = SubResource("SB_Panel")
 
-[node name="VBoxInfo" type="VBoxContainer" parent="ProvinceCard"]
-layout_mode = 0
-offset_left = 195.0
-offset_top = 32.0
-offset_right = 465.0
-offset_bottom = 215.0
-theme_override_constants/separation = 5
+[node name="Margin" type="MarginContainer" parent="ProvinceCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxInfo" type="VBoxContainer" parent="ProvinceCard/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 4
 alignment = 1
 
-[node name="Title" type="Label" parent="ProvinceCard/VBoxInfo"]
+[node name="Title" type="Label" parent="ProvinceCard/Margin/VBoxInfo"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_font_bold")
-theme_override_colors/font_color = Color(0.96, 0.90, 0.78, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_colors/font_color = Color(0.96, 0.92, 0.82, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.95)
 theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 1
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 15
 text = "CITADEL OF UR-KISH"
 
-[node name="Subtitle" type="Label" parent="ProvinceCard/VBoxInfo"]
+[node name="Subtitle" type="Label" parent="ProvinceCard/Margin/VBoxInfo"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("6_font_era")
 theme_override_colors/font_color = Color(0.82, 0.75, 0.62, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 12
 text = "Sovereign Seat of the God-King"
 
-[node name="HSeparator" type="HSeparator" parent="ProvinceCard/VBoxInfo"]
+[node name="HSeparator" type="HSeparator" parent="ProvinceCard/Margin/VBoxInfo"]
 layout_mode = 2
-theme_override_constants/separation = 3
+theme_override_constants/separation = 6
 
-[node name="Stat1" type="Label" parent="ProvinceCard/VBoxInfo"]
+[node name="Stat1" type="Label" parent="ProvinceCard/Margin/VBoxInfo"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("6_font_era")
-theme_override_colors/font_color = Color(0.75, 0.70, 0.60, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.85, 0.82, 0.75, 1)
+theme_override_font_sizes/font_size = 12
 text = "PROVINCE POPULATION: 6,500"
 
-[node name="Stat2" type="Label" parent="ProvinceCard/VBoxInfo"]
+[node name="Stat2" type="Label" parent="ProvinceCard/Margin/VBoxInfo"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_font_bold")
 theme_override_colors/font_color = Color(0.92, 0.88, 0.80, 1)
 theme_override_font_sizes/font_size = 12
 text = "FORTIFICATION: 1,200 / 1,200"
 
-[node name="Stability" type="Label" parent="ProvinceCard/VBoxInfo"]
+[node name="Stability" type="Label" parent="ProvinceCard/Margin/VBoxInfo"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("6_font_era")
 theme_override_colors/font_color = Color(0.48, 0.88, 0.55, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 12
 text = "REALM STABILITY: High (92%)"
 
-[node name="CommandDock" type="TextureRect" parent="."]
+[node name="CommandDock" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -260.0
-offset_top = -100.0
-offset_right = 260.0
-offset_bottom = -12.0
+offset_left = -310.0
+offset_top = -124.0
+offset_right = 310.0
+offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 1
-expand_mode = 1
-stretch_mode = 0
+theme_override_styles/panel = SubResource("SB_Panel")
 
-[node name="HBoxTablets" type="HBoxContainer" parent="CommandDock"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 34.0
-offset_top = 14.0
-offset_right = -34.0
-offset_bottom = -14.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 14
+[node name="Margin" type="MarginContainer" parent="CommandDock"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxRows" type="VBoxContainer" parent="CommandDock/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 6
 alignment = 1
 
-[node name="TabletSpear" parent="CommandDock/HBoxTablets" instance=ExtResource("4_tablet_obj")]
+[node name="RowMilitary" type="HBoxContainer" parent="CommandDock/Margin/VBoxRows"]
 layout_mode = 2
-hotkey = "[1]"
+theme_override_constants/separation = 8
+alignment = 1
 
-[node name="TabletSlinger" parent="CommandDock/HBoxTablets" instance=ExtResource("4_tablet_obj")]
+[node name="TabletSpear" parent="CommandDock/Margin/VBoxRows/RowMilitary" instance=ExtResource("4_tablet_obj")]
 layout_mode = 2
-hotkey = "[2]"
+action_title = "SPEARMAN"
+hotkey_text = "[1]"
+cost_text = "50g"
+button_category = "military"
 
-[node name="TabletChariot" parent="CommandDock/HBoxTablets" instance=ExtResource("4_tablet_obj")]
+[node name="TabletSlinger" parent="CommandDock/Margin/VBoxRows/RowMilitary" instance=ExtResource("4_tablet_obj")]
 layout_mode = 2
-hotkey = "[3]"
+action_title = "ARCHER"
+hotkey_text = "[2]"
+cost_text = "35g"
+button_category = "military"
 
-[node name="TabletFormation" parent="CommandDock/HBoxTablets" instance=ExtResource("4_tablet_obj")]
+[node name="TabletChariot" parent="CommandDock/Margin/VBoxRows/RowMilitary" instance=ExtResource("4_tablet_obj")]
 layout_mode = 2
-hotkey = "[4]"
+action_title = "CHARIOT"
+hotkey_text = "[3]"
+cost_text = "120g"
+button_category = "military"
 
-[node name="TabletRaiders" parent="CommandDock/HBoxTablets" instance=ExtResource("4_tablet_obj")]
+[node name="TabletFormation" parent="CommandDock/Margin/VBoxRows/RowMilitary" instance=ExtResource("4_tablet_obj")]
 layout_mode = 2
-hotkey = "[5]"
+action_title = "FORMATION"
+hotkey_text = "[4]"
+cost_text = "Phalanx"
+button_category = "command"
 
-[node name="MinimapConsole" type="TextureRect" parent="."]
+[node name="TabletRaiders" parent="CommandDock/Margin/VBoxRows/RowMilitary" instance=ExtResource("4_tablet_obj")]
+layout_mode = 2
+action_title = "COUNCIL"
+hotkey_text = "[5]"
+cost_text = "Decree"
+button_category = "command"
+
+[node name="RowBuilding" type="HBoxContainer" parent="CommandDock/Margin/VBoxRows"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="BtnBarracks" parent="CommandDock/Margin/VBoxRows/RowBuilding" instance=ExtResource("4_tablet_obj")]
+layout_mode = 2
+action_title = "BARRACKS"
+hotkey_text = "[B]"
+cost_text = "150g"
+button_category = "building"
+
+[node name="BtnGranary" parent="CommandDock/Margin/VBoxRows/RowBuilding" instance=ExtResource("4_tablet_obj")]
+layout_mode = 2
+action_title = "GRANARY"
+hotkey_text = "[N]"
+cost_text = "100g"
+button_category = "building"
+
+[node name="BtnHouse" parent="CommandDock/Margin/VBoxRows/RowBuilding" instance=ExtResource("4_tablet_obj")]
+layout_mode = 2
+action_title = "TENEMENT"
+hotkey_text = "[H]"
+cost_text = "60g"
+button_category = "building"
+
+[node name="BtnBazaar" parent="CommandDock/Margin/VBoxRows/RowBuilding" instance=ExtResource("4_tablet_obj")]
+layout_mode = 2
+action_title = "BAZAAR"
+hotkey_text = "[M]"
+cost_text = "200g"
+button_category = "building"
+
+[node name="BtnFoundry" parent="CommandDock/Margin/VBoxRows/RowBuilding" instance=ExtResource("4_tablet_obj")]
+layout_mode = 2
+action_title = "FOUNDRY"
+hotkey_text = "[F]"
+cost_text = "300g"
+button_category = "building"
+
+[node name="MinimapConsole" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -470.0
-offset_top = -360.0
-offset_right = -12.0
-offset_bottom = -12.0
+offset_left = -210.0
+offset_top = -210.0
+offset_right = -16.0
+offset_bottom = -16.0
 grow_horizontal = 0
 grow_vertical = 0
 mouse_filter = 1
-expand_mode = 1
-stretch_mode = 0
+theme_override_styles/panel = SubResource("SB_Panel")
 
-[node name="Minimap" type="Control" parent="MinimapConsole"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 40.0
-offset_top = 34.0
-offset_right = -40.0
-offset_bottom = -34.0
-grow_horizontal = 2
-grow_vertical = 2
-offset_top = 44.0
-offset_right = 466.0
-offset_bottom = 362.0
+[node name="Margin" type="MarginContainer" parent="MinimapConsole"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Minimap" type="Control" parent="MinimapConsole/Margin"]
+layout_mode = 2
 script = ExtResource("5_minimap_script")
 
 [node name="CrisisModal" type="PanelContainer" parent="."]
@@ -268,12 +318,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -340.0
-offset_top = -170.0
-offset_right = 340.0
-offset_bottom = 170.0
+offset_left = -320.0
+offset_top = -160.0
+offset_right = 320.0
+offset_bottom = 160.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("SB_Panel")
 
 [node name="Margin" type="MarginContainer" parent="CrisisModal"]
 layout_mode = 2
@@ -290,7 +341,7 @@ theme_override_constants/separation = 16
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
 theme_override_font_sizes/font_size = 20
-text = "CRISIS DECREE TITLE"
+text = "IMPERIAL CRISIS"
 horizontal_alignment = 1
 
 [node name="Description" type="Label" parent="CrisisModal/Margin/VBox"]
@@ -298,24 +349,22 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.9, 0.88, 0.82, 1)
 theme_override_font_sizes/font_size = 13
-text = "Crisis narrative description and provincial impact..."
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="HBoxOptions" type="HBoxContainer" parent="CrisisModal/Margin/VBox"]
 layout_mode = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 20
+alignment = 1
 
 [node name="Option1" type="Button" parent="CrisisModal/Margin/VBox/HBoxOptions"]
-custom_minimum_size = Vector2(0, 48)
+custom_minimum_size = Vector2(160, 40)
 layout_mode = 2
-size_flags_horizontal = 3
-text = "DECREE OPTION 1"
+text = "Enforce Quarantine"
 
 [node name="Option2" type="Button" parent="CrisisModal/Margin/VBox/HBoxOptions"]
-custom_minimum_size = Vector2(0, 48)
+custom_minimum_size = Vector2(160, 40)
 layout_mode = 2
-size_flags_horizontal = 3
-text = "DECREE OPTION 2"
+text = "Distribute Herbs"
 
 [node name="ConquestModal" type="PanelContainer" parent="."]
 process_mode = 2
@@ -326,60 +375,51 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -420.0
-offset_top = -240.0
-offset_right = 420.0
-offset_bottom = 240.0
+offset_left = -280.0
+offset_top = -140.0
+offset_right = 280.0
+offset_bottom = 140.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("SB_Panel")
 
 [node name="Margin" type="MarginContainer" parent="ConquestModal"]
 layout_mode = 2
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 28
-theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 28
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
 
 [node name="VBox" type="VBoxContainer" parent="ConquestModal/Margin"]
 layout_mode = 2
-theme_override_constants/separation = 18
+theme_override_constants/separation = 14
 
 [node name="Title" type="Label" parent="ConquestModal/Margin/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.88, 0.35, 1)
-theme_override_font_sizes/font_size = 24
-text = "CITADEL SUBJUGATED"
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_font_sizes/font_size = 20
+text = "CITADEL CONQUERED!"
 horizontal_alignment = 1
-
-[node name="Description" type="Label" parent="ConquestModal/Margin/VBox"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.92, 0.88, 0.82, 1)
-theme_override_font_sizes/font_size = 14
-text = "The enemy fortress has fallen before your legions. Choose how to govern this newly conquered territory."
-autowrap_mode = 2
 
 [node name="HBoxDecrees" type="HBoxContainer" parent="ConquestModal/Margin/VBox"]
 layout_mode = 2
-theme_override_constants/separation = 14
+theme_override_constants/separation = 12
+alignment = 1
 
 [node name="BtnRaze" type="Button" parent="ConquestModal/Margin/VBox/HBoxDecrees"]
-custom_minimum_size = Vector2(0, 52)
+custom_minimum_size = Vector2(110, 40)
 layout_mode = 2
-size_flags_horizontal = 3
-text = "RAZE & PLUNDER\n(+800 Gold, -25 Masses)"
+text = "Raze"
 
 [node name="BtnConsecrate" type="Button" parent="ConquestModal/Margin/VBox/HBoxDecrees"]
-custom_minimum_size = Vector2(0, 52)
+custom_minimum_size = Vector2(110, 40)
 layout_mode = 2
-size_flags_horizontal = 3
-text = "CONSECRATE TEMPLE\n(+20 Altar, +15 Pop)"
+text = "Consecrate"
 
 [node name="BtnVassalize" type="Button" parent="ConquestModal/Margin/VBox/HBoxDecrees"]
-custom_minimum_size = Vector2(0, 52)
+custom_minimum_size = Vector2(110, 40)
 layout_mode = 2
-size_flags_horizontal = 3
-text = "TRIBUTARY HEGEMONY\n(+35/m Gold, +15 Throne)"
+text = "Vassalize"
 
 [node name="NotificationBanner" type="PanelContainer" parent="."]
 visible = false
@@ -387,22 +427,23 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -300.0
-offset_top = 180.0
-offset_right = 300.0
-offset_bottom = 225.0
+offset_left = -260.0
+offset_top = 64.0
+offset_right = 260.0
+offset_bottom = 100.0
 grow_horizontal = 2
+theme_override_styles/panel = SubResource("SB_Panel")
 
 [node name="Margin" type="MarginContainer" parent="NotificationBanner"]
 layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 8
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 4
 
 [node name="NotifText" type="Label" parent="NotificationBanner/Margin"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.96, 0.90, 0.70, 1)
+theme_override_colors/font_color = Color(0.95, 0.85, 0.35, 1)
 theme_override_font_sizes/font_size = 13
-text = "Campaign Initialized"
+text = "Imperial decree issued."
 horizontal_alignment = 1

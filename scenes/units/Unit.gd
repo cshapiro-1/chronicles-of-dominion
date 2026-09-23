@@ -53,11 +53,16 @@ func _ready() -> void:
 	
 	if selection_ring:
 		selection_ring.visible = false
-		# Set ring color: Gold for Player, Crimson for Raider
+		selection_ring.position.y = 0.08
 		var mat = StandardMaterial3D.new()
 		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-		mat.albedo_color = Color(0.95, 0.85, 0.25) if team_id == 0 else Color(0.95, 0.25, 0.25)
+		mat.albedo_color = Color(0.2, 1.0, 0.45) if team_id == 0 else Color(1.0, 0.25, 0.25)
 		selection_ring.material_override = mat
+		var t_lower = unit_type.to_lower()
+		if "chariot" in t_lower:
+			selection_ring.scale = Vector3(1.6, 1.0, 1.6)
+		else:
+			selection_ring.scale = Vector3(1.15, 1.0, 1.15)
 
 	update_hp_display()
 	_build_squad()

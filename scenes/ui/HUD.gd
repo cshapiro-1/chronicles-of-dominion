@@ -7,34 +7,42 @@ const MouseClickAnimationsHandler = preload("res://scripts/handlers/MouseClickAn
 const StructurePlacementHandler = preload("res://scripts/handlers/StructurePlacementHandler.gd")
 const ActionAttackingWhileInRange = preload("res://scripts/actions/AttackingWhileInRange.gd")
 const ActionMoving = preload("res://scripts/actions/Moving.gd")
+const Building = preload("res://scenes/buildings/Building.gd")
 
 # Modular Resource Badges
-@onready var top_header: TextureRect = $TopMasterHeader
-@onready var badge_grain: Control = $TopMasterHeader/ResourceTray/BadgeGrain
-@onready var badge_timber: Control = $TopMasterHeader/ResourceTray/BadgeTimber
-@onready var badge_stone: Control = $TopMasterHeader/ResourceTray/BadgeStone
-@onready var badge_bronze: Control = $TopMasterHeader/ResourceTray/BadgeBronze
-@onready var badge_gold: Control = $TopMasterHeader/ResourceTray/BadgeGold
-@onready var badge_pop: Control = $TopMasterHeader/ResourceTray/BadgePop
+@onready var top_header: PanelContainer = $TopMasterHeader
+@onready var badge_grain: Control = $TopMasterHeader/Margin/HBoxHeader/ResourceTray/BadgeGrain
+@onready var badge_timber: Control = $TopMasterHeader/Margin/HBoxHeader/ResourceTray/BadgeTimber
+@onready var badge_stone: Control = $TopMasterHeader/Margin/HBoxHeader/ResourceTray/BadgeStone
+@onready var badge_bronze: Control = $TopMasterHeader/Margin/HBoxHeader/ResourceTray/BadgeBronze
+@onready var badge_gold: Control = $TopMasterHeader/Margin/HBoxHeader/ResourceTray/BadgeGold
+@onready var badge_pop: Control = $TopMasterHeader/Margin/HBoxHeader/ResourceTray/BadgePop
 
 # Inspector console
-@onready var inspector_panel: TextureRect = $ProvinceCard
-@onready var card_title: Label = $ProvinceCard/VBoxInfo/Title
-@onready var card_subtitle: Label = $ProvinceCard/VBoxInfo/Subtitle
-@onready var card_stat1: Label = $ProvinceCard/VBoxInfo/Stat1
-@onready var card_stat2: Label = $ProvinceCard/VBoxInfo/Stat2
-@onready var card_stability: Label = $ProvinceCard/VBoxInfo/Stability
+@onready var inspector_panel: PanelContainer = $ProvinceCard
+@onready var card_title: Label = $ProvinceCard/Margin/VBoxInfo/Title
+@onready var card_subtitle: Label = $ProvinceCard/Margin/VBoxInfo/Subtitle
+@onready var card_stat1: Label = $ProvinceCard/Margin/VBoxInfo/Stat1
+@onready var card_stat2: Label = $ProvinceCard/Margin/VBoxInfo/Stat2
+@onready var card_stability: Label = $ProvinceCard/Margin/VBoxInfo/Stability
 
-# Command Action Ribbon
-@onready var cmd_dock: TextureRect = $CommandDock
-@onready var tablet_spear: TextureButton = $CommandDock/HBoxTablets/TabletSpear
-@onready var tablet_slinger: TextureButton = $CommandDock/HBoxTablets/TabletSlinger
-@onready var tablet_chariot: TextureButton = $CommandDock/HBoxTablets/TabletChariot
-@onready var tablet_formation: TextureButton = $CommandDock/HBoxTablets/TabletFormation
-@onready var tablet_raiders: TextureButton = $CommandDock/HBoxTablets/TabletRaiders
+# Command Action Dock
+@onready var cmd_dock: PanelContainer = $CommandDock
+@onready var tablet_spear: Button = $CommandDock/Margin/VBoxRows/RowMilitary/TabletSpear
+@onready var tablet_slinger: Button = $CommandDock/Margin/VBoxRows/RowMilitary/TabletSlinger
+@onready var tablet_chariot: Button = $CommandDock/Margin/VBoxRows/RowMilitary/TabletChariot
+@onready var tablet_formation: Button = $CommandDock/Margin/VBoxRows/RowMilitary/TabletFormation
+@onready var tablet_raiders: Button = $CommandDock/Margin/VBoxRows/RowMilitary/TabletRaiders
+
+# Building Action Buttons
+@onready var btn_barracks: Button = $CommandDock/Margin/VBoxRows/RowBuilding/BtnBarracks
+@onready var btn_granary: Button = $CommandDock/Margin/VBoxRows/RowBuilding/BtnGranary
+@onready var btn_house: Button = $CommandDock/Margin/VBoxRows/RowBuilding/BtnHouse
+@onready var btn_bazaar: Button = $CommandDock/Margin/VBoxRows/RowBuilding/BtnBazaar
+@onready var btn_foundry: Button = $CommandDock/Margin/VBoxRows/RowBuilding/BtnFoundry
 
 # Minimap frame
-@onready var minimap_console: TextureRect = $MinimapConsole
+@onready var minimap_console: PanelContainer = $MinimapConsole
 
 # Modals
 @onready var crisis_modal: PanelContainer = $CrisisModal
@@ -62,18 +70,6 @@ var placement_handler = null
 var selected_units: Array = []
 var current_formation: String = "Phalanx"
 
-func _load_tex(path: String) -> Texture2D:
-	if ResourceLoader.exists(path):
-		var res = load(path)
-		if res is Texture2D:
-			return res
-	var global_p = ProjectSettings.globalize_path(path)
-	if FileAccess.file_exists(global_p):
-		var img = Image.load_from_file(global_p)
-		if img:
-			return ImageTexture.create_from_image(img)
-	return null
-
 func _ready() -> void:
 	if crisis_modal: crisis_modal.visible = false
 	if conquest_modal: conquest_modal.visible = false
@@ -96,8 +92,6 @@ func _ready() -> void:
 	placement_handler = StructurePlacementHandler.new()
 	get_tree().root.get_node("Main/World").add_child(placement_handler)
 	
-	_apply_hud_textures()
-	
 	EventBus.economy_updated.connect(_on_economy_updated)
 	EventBus.population_updated.connect(_on_population_updated)
 	EventBus.estates_updated.connect(_on_estates_updated)
@@ -116,6 +110,24 @@ func _ready() -> void:
 	
 	EventBus.post_notification("DOMINION ACTIVE", "Campaign Initialized. Marquee drag selects units, RMB orders moves/attacks.", Color(0.95, 0.82, 0.35))
 
+func _wire_tablets() -> void:
+	if tablet_spear: tablet_spear.pressed.connect(func(): _spawn_unit("spearman"))
+	if tablet_slinger: tablet_slinger.pressed.connect(func(): _spawn_unit("archer"))
+	if tablet_chariot: tablet_chariot.pressed.connect(func(): _spawn_unit("chariot"))
+	if tablet_formation: tablet_formation.pressed.connect(_toggle_formation)
+	if tablet_raiders: tablet_raiders.pressed.connect(_trigger_decree_council)
+	
+	if btn_barracks: btn_barracks.pressed.connect(func(): start_structure_placement("barracks"))
+	if btn_granary: btn_granary.pressed.connect(func(): start_structure_placement("granary"))
+	if btn_house: btn_house.pressed.connect(func(): start_structure_placement("house"))
+	if btn_bazaar: btn_bazaar.pressed.connect(func(): start_structure_placement("bazaar"))
+	if btn_foundry: btn_foundry.pressed.connect(func(): start_structure_placement("chariot_foundry"))
+
+func _wire_conquest_buttons() -> void:
+	if btn_raze: btn_raze.pressed.connect(func(): _resolve_conquest("raze"))
+	if btn_consecrate: btn_consecrate.pressed.connect(func(): _resolve_conquest("consecrate"))
+	if btn_vassalize: btn_vassalize.pressed.connect(func(): _resolve_conquest("vassalize"))
+
 func _wire_crisis_buttons() -> void:
 	if btn_crisis_opt1:
 		btn_crisis_opt1.pressed.connect(func():
@@ -130,48 +142,8 @@ func _wire_crisis_buttons() -> void:
 			CrisisManager.resolve_crisis(1)
 		)
 
-func _apply_hud_textures() -> void:
-	var tex_top = _load_tex("res://assets/ui/T_HUD_TopHeader_Master.png")
-	if tex_top and top_header:
-		top_header.texture = tex_top
-
-	var tex_card = _load_tex("res://assets/ui/T_HUD_ProvinceCard_Master.png")
-	if tex_card and inspector_panel:
-		inspector_panel.texture = tex_card
-
-	var tex_cmd = _load_tex("res://assets/ui/T_HUD_CommandDock_Master.png")
-	if tex_cmd and cmd_dock:
-		cmd_dock.texture = tex_cmd
-
-	var tex_map = _load_tex("res://assets/ui/T_HUD_MinimapFrame_Master.png")
-	if tex_map and minimap_console:
-		minimap_console.texture = tex_map
-
-	var tex_spear = _load_tex("res://assets/ui/btn_action_spear.png")
-	var tex_bow = _load_tex("res://assets/ui/btn_action_bow.png")
-	var tex_chariot = _load_tex("res://assets/ui/btn_action_chariot.png")
-	var tex_phalanx = _load_tex("res://assets/ui/btn_action_phalanx.png")
-	var tex_decree = _load_tex("res://assets/ui/btn_action_decree.png")
-
-	if tablet_spear: tablet_spear.set_icon_texture(tex_spear)
-	if tablet_slinger: tablet_slinger.set_icon_texture(tex_bow)
-	if tablet_chariot: tablet_chariot.set_icon_texture(tex_chariot)
-	if tablet_formation: tablet_formation.set_icon_texture(tex_phalanx)
-	if tablet_raiders: tablet_raiders.set_icon_texture(tex_decree)
-
-func _wire_tablets() -> void:
-	if tablet_spear: tablet_spear.pressed.connect(func(): _spawn_unit("spearman"))
-	if tablet_slinger: tablet_slinger.pressed.connect(func(): _spawn_unit("archer"))
-	if tablet_chariot: tablet_chariot.pressed.connect(func(): _spawn_unit("chariot"))
-	if tablet_formation: tablet_formation.pressed.connect(_toggle_formation)
-	if tablet_raiders: tablet_raiders.pressed.connect(_trigger_decree_council)
-
-func _wire_conquest_buttons() -> void:
-	if btn_raze: btn_raze.pressed.connect(func(): _resolve_conquest("raze"))
-	if btn_consecrate: btn_consecrate.pressed.connect(func(): _resolve_conquest("consecrate"))
-	if btn_vassalize: btn_vassalize.pressed.connect(func(): _resolve_conquest("vassalize"))
-
 var rmb_press_pos: Vector2 = Vector2.ZERO
+var rmb_is_dragging: bool = false
 var selected_building: Building = null
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -472,6 +444,10 @@ func _toggle_formation() -> void:
 		current_formation = "Skirmish"
 	else:
 		current_formation = "Phalanx"
+		
+	if tablet_formation and tablet_formation.has_method("set_action_data"):
+		tablet_formation.set_action_data("FORMATION", "[4]", current_formation, "command")
+		
 	for u in selected_units:
 		if is_instance_valid(u):
 			u.set("active_formation", current_formation)
@@ -536,14 +512,35 @@ func _on_units_selected(units: Array) -> void:
 		card_stat1.text = "PROVINCE POPULATION: %d" % PopulationManager.total_population
 		card_stat2.text = "FORTIFICATION: 1200 / 1200"
 		card_stability.text = "REALM STABILITY: High"
-	else:
+	elif units.size() == 1:
 		var u = units[0]
-		card_title.text = "LEGION BATTALION"
-		var utype = u.get("unit_type")
-		card_subtitle.text = "%s Regiment (Rank I)" % (str(utype).capitalize() if utype else "Spearman")
-		card_stat1.text = "SOLDIERS: %d in formation" % units.size()
-		card_stat2.text = "READINESS: 100%"
-		card_stability.text = "ORDER: %s" % current_formation
+		var utype = str(u.get("unit_type")).capitalize() if u.get("unit_type") else "Cohort"
+		card_title.text = "%s REGIMENT" % utype.to_upper()
+		card_subtitle.text = "Active Battle Formation: %s" % u.get("active_formation")
+		card_stat1.text = "INTEGRITY: %d / %d HP" % [int(u.get("current_hp")), int(u.get("max_hp"))]
+		card_stat2.text = "SPEED: %.1f m/s  |  RANGE: %.1fm" % [u.get("move_speed"), u.get("attack_range")]
+		card_stability.text = "STATUS: Ready"
+	else:
+		var total_hp = 0.0
+		var max_hp_sum = 0.0
+		var counts = {}
+		for u in units:
+			if is_instance_valid(u):
+				total_hp += u.get("current_hp")
+				max_hp_sum += u.get("max_hp")
+				var t = str(u.get("unit_type")).capitalize()
+				counts[t] = counts.get(t, 0) + 1
+				
+		var breakdown_parts = []
+		for t in counts:
+			breakdown_parts.append("%dx %s" % [counts[t], t])
+		var breakdown_str = ", ".join(breakdown_parts)
+		
+		card_title.text = "IMPERIAL HOST (%d COHORTS)" % units.size()
+		card_subtitle.text = breakdown_str
+		card_stat1.text = "ARMY INTEGRITY: %d / %d HP" % [int(total_hp), int(max_hp_sum)]
+		card_stat2.text = "FORMATION: %s (Sync)" % current_formation
+		card_stability.text = "STATUS: Formed & Ready"
 
 func _on_crisis_triggered(crisis_data: Resource) -> void:
 	if not crisis_modal or not crisis_data: return

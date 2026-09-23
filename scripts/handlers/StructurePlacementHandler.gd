@@ -35,8 +35,8 @@ func start_placement(structure_type: String) -> void:
 	var data = BUILDING_DATA[key]
 	ghost_costs = {
 		"Gold": data.gold,
-		"Wood": data.wood,
-		"Mudbrick": data.mudbrick
+		"Timber": data.wood,
+		"Stone": data.mudbrick
 	}
 	footprint_size = data.size
 	_create_ghost()

@@ -30,6 +30,8 @@ PoliticsManager="*res://scripts/systems/PoliticsManager.gd"
 ReligionManager="*res://scripts/systems/ReligionManager.gd"
 CrisisManager="*res://scripts/systems/CrisisManager.gd"
 SaveManager="*res://scripts/systems/SaveManager.gd"
+TechManager="*res://scripts/systems/TechManager.gd"
+AudioManager="*res://scripts/systems/AudioManager.gd"
 
 [display]
 

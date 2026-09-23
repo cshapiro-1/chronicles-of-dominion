@@ -50,7 +50,8 @@ func _ready() -> void:
 		
 	_init_visual_state()
 	update_status_display()
-	EventBus.building_spawned.emit(self)
+	var eb = get_node_or_null("/root/EventBus")
+	if eb: eb.building_spawned.emit(self)
 
 func _process(delta: float) -> void:
 	if state == State.UNDER_CONSTRUCTION:
@@ -82,29 +83,36 @@ func complete_construction() -> void:
 	_init_visual_state()
 	update_status_display()
 	
+	var eco = get_node_or_null("/root/EconomyManager")
+	var pop = get_node_or_null("/root/PopulationManager")
+	var eb = get_node_or_null("/root/EventBus")
+	
 	# 1. Apply economic production deltas
-	if grain_production > 0:
-		EconomyManager.deltas["Grain"] = EconomyManager.deltas.get("Grain", 0.0) + grain_production
-	if gold_production > 0:
-		EconomyManager.deltas["Gold"] = EconomyManager.deltas.get("Gold", 0.0) + gold_production
-	EventBus.economy_updated.emit(EconomyManager.resources, EconomyManager.deltas)
+	if eco:
+		if grain_production > 0:
+			eco.deltas["Grain"] = eco.deltas.get("Grain", 0.0) + grain_production
+		if gold_production > 0:
+			eco.deltas["Gold"] = eco.deltas.get("Gold", 0.0) + gold_production
+		if eb: eb.economy_updated.emit(eco.resources, eco.deltas)
 	
 	# 2. Apply population and housing
-	if housing_provided > 0:
-		PopulationManager.add_urban_housing(int(housing_provided / 35.0) if housing_provided >= 35 else 1)
-	elif population_provided > 0:
-		PopulationManager.modify_population(population_provided)
+	if pop:
+		if housing_provided > 0:
+			pop.add_urban_housing(int(housing_provided / 35.0) if housing_provided >= 35 else 1)
+		elif population_provided > 0:
+			pop.modify_population(population_provided)
 		
 	# 3. Notify World to update NavMesh around this new structure
 	var world = get_tree().root.get_node_or_null("Main/World")
 	if world and world.has_method("notify_structure_built"):
 		world.notify_structure_built(self)
 		
-	EventBus.post_notification(
-		"CONSTRUCTION COMPLETE",
-		"%s fully erected." % building_name,
-		Color(0.4, 0.95, 0.5)
-	)
+	if eb:
+		eb.post_notification(
+			"CONSTRUCTION COMPLETE",
+			"%s fully erected." % building_name,
+			Color(0.4, 0.95, 0.5)
+		)
 
 func take_damage(amount: float, _attacker_pos: Vector3 = Vector3.ZERO, _is_projectile: bool = false) -> void:
 	current_health = max(0.0, current_health - amount)
@@ -125,18 +133,23 @@ func take_damage(amount: float, _attacker_pos: Vector3 = Vector3.ZERO, _is_proje
 func _destroy() -> void:
 	state = State.DESTROYED
 	
-	# Reclaim production deltas
-	if grain_production > 0:
-		EconomyManager.deltas["Grain"] = max(0.0, EconomyManager.deltas.get("Grain", 0.0) - grain_production)
-	if gold_production > 0:
-		EconomyManager.deltas["Gold"] = max(0.0, EconomyManager.deltas.get("Gold", 0.0) - gold_production)
-	EventBus.economy_updated.emit(EconomyManager.resources, EconomyManager.deltas)
+	var eco = get_node_or_null("/root/EconomyManager")
+	var eb = get_node_or_null("/root/EventBus")
 	
-	EventBus.post_notification(
-		"STRUCTURE DESTROYED",
-		"%s has collapsed!" % building_name,
-		Color(1.0, 0.25, 0.25)
-	)
+	# Reclaim production deltas
+	if eco:
+		if grain_production > 0:
+			eco.deltas["Grain"] = max(0.0, eco.deltas.get("Grain", 0.0) - grain_production)
+		if gold_production > 0:
+			eco.deltas["Gold"] = max(0.0, eco.deltas.get("Gold", 0.0) - gold_production)
+		if eb: eb.economy_updated.emit(eco.resources, eco.deltas)
+	
+	if eb:
+		eb.post_notification(
+			"STRUCTURE DESTROYED",
+			"%s has collapsed!" % building_name,
+			Color(1.0, 0.25, 0.25)
+		)
 	
 	var world = get_tree().root.get_node_or_null("Main/World")
 	if world and world.has_method("notify_structure_destroyed"):
@@ -160,15 +173,21 @@ func set_selected(val: bool) -> void:
 
 func set_rally_point(pos: Vector3) -> void:
 	rally_point = Vector3(pos.x, 0.0, pos.z)
-	EventBus.post_notification(
-		"RALLY POINT SET",
-		"New recruits will muster at (%d, %d)." % [int(rally_point.x), int(rally_point.z)],
-		Color(0.85, 0.75, 0.35)
-	)
+	var eb = get_node_or_null("/root/EventBus")
+	if eb:
+		eb.post_notification(
+			"RALLY POINT SET",
+			"New recruits will muster at (%d, %d)." % [int(rally_point.x), int(rally_point.z)],
+			Color(0.85, 0.75, 0.35)
+		)
 
 func recruit_unit(unit_type: String) -> Node3D:
+	var eb = get_node_or_null("/root/EventBus")
+	var eco = get_node_or_null("/root/EconomyManager")
+	var pop = get_node_or_null("/root/PopulationManager")
+	
 	if state != State.COMPLETED:
-		EventBus.post_notification("CANNOT RECRUIT", "Structure is still under construction.", Color(1.0, 0.3, 0.3))
+		if eb: eb.post_notification("CANNOT RECRUIT", "Structure is still under construction.", Color(1.0, 0.3, 0.3))
 		return null
 		
 	# Check cost
@@ -185,16 +204,19 @@ func recruit_unit(unit_type: String) -> Node3D:
 		gold_req = 40
 		pop_req = 1
 		
-	if EconomyManager.resources.get("Gold", 0) < gold_req:
-		EventBus.post_notification("INSUFFICIENT GOLD", "Need %d Gold to recruit %s." % [gold_req, unit_type], Color(1.0, 0.3, 0.3))
+	if eco and eco.resources.get("Gold", 0) < gold_req:
+		if eb: eb.post_notification("INSUFFICIENT GOLD", "Need %d Gold to recruit %s." % [gold_req, unit_type], Color(1.0, 0.3, 0.3))
 		return null
-	if PopulationManager.conscription_pool < pop_req:
-		EventBus.post_notification("NO MANPOWER", "Not enough recruits in conscription pool.", Color(1.0, 0.3, 0.3))
+	if pop and pop.conscription_pool < pop_req:
+		if eb: eb.post_notification("NO MANPOWER", "Not enough recruits in conscription pool.", Color(1.0, 0.3, 0.3))
 		return null
 		
-	EconomyManager.resources["Gold"] -= gold_req
-	PopulationManager.conscription_pool -= pop_req
-	EventBus.economy_updated.emit(EconomyManager.resources, EconomyManager.deltas)
+	if eco:
+		eco.resources["Gold"] -= gold_req
+	if pop:
+		pop.conscription_pool -= pop_req
+	if eb and eco:
+		eb.economy_updated.emit(eco.resources, eco.deltas)
 	
 	var unit_scene = load("res://scenes/units/Unit.tscn")
 	if not unit_scene: return null
@@ -214,14 +236,15 @@ func recruit_unit(unit_type: String) -> Node3D:
 		get_parent().add_child(unit_inst)
 		
 	# Issue automatic move order to rally point
-	if rally_point != Vector3.ZERO and rally_point.distance_to(spawn_pos) > 2.0:
+	if rally_point.distance_to(spawn_pos) > 2.0:
 		unit_inst.set_target_destination(rally_point)
 		
-	EventBus.post_notification(
-		"COHORT MUSTERED",
-		"%s mustered and marching to rally point." % unit_type.capitalize(),
-		Color(0.4, 0.95, 0.5)
-	)
+	if eb:
+		eb.post_notification(
+			"COHORT MUSTERED",
+			"%s mustered and marching to rally point." % unit_type.capitalize(),
+			Color(0.4, 0.95, 0.5)
+		)
 	return unit_inst
 
 func update_status_display() -> void:
