@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/ui/Minimap.gd" id="5_minimap_script"]
 [ext_resource type="FontFile" uid="uid://cuab4sw7r66ip" path="res://assets/fonts/constan.ttf" id="6_font_era"]
 [ext_resource type="FontFile" uid="uid://df2msh532q3k" path="res://assets/fonts/constanb.ttf" id="7_font_bold"]
+[ext_resource type="PackedScene" path="res://scenes/ui/components/DynastyModal.tscn" id="8_dynasty_modal"]
 
 [sub_resource type="StyleBoxFlat" id="SB_Panel"]
 bg_color = Color(0.10, 0.12, 0.16, 0.92)
@@ -447,3 +448,7 @@ theme_override_colors/font_color = Color(0.95, 0.85, 0.35, 1)
 theme_override_font_sizes/font_size = 13
 text = "Imperial decree issued."
 horizontal_alignment = 1
+
+[node name="DynastyModal" parent="." instance=ExtResource("8_dynasty_modal")]
+visible = false
+

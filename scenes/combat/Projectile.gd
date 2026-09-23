@@ -13,6 +13,7 @@ var travel_time: float = 1.0
 var elapsed_time: float = 0.0
 var peak_height: float = 2.0
 var has_hit: bool = false
+var team_id: int = 0
 
 @onready var mesh_inst: MeshInstance3D = $MeshInstance3D
 
@@ -22,6 +23,21 @@ func launch(from_pos: Vector3, target: Node3D, dmg: float, type: String = "stone
 	target_pos = target.global_position + Vector3(0, 1.0, 0)
 	damage = dmg
 	projectile_type = type
+	
+	global_position = start_pos
+	total_distance = max(1.0, start_pos.distance_to(target_pos))
+	travel_time = total_distance / max(5.0, speed)
+	peak_height = clamp(total_distance * 0.22, 1.2, 7.5)
+	
+	_setup_mesh()
+
+func launch_to_position(from_pos: Vector3, dest_pos: Vector3, dmg: float, type: String = "arrow", firing_team: int = 0) -> void:
+	start_pos = from_pos
+	target_node = null
+	target_pos = dest_pos + Vector3(0, 0.5, 0)
+	damage = dmg
+	projectile_type = type
+	team_id = firing_team
 	
 	global_position = start_pos
 	total_distance = max(1.0, start_pos.distance_to(target_pos))
@@ -75,7 +91,11 @@ func _process(delta: float) -> void:
 	# Orient towards flight direction
 	var vel_dir = (next_pos - global_position)
 	if vel_dir.length_squared() > 0.001:
-		look_at(global_position + vel_dir.normalized(), Vector3.UP)
+		var norm_dir = vel_dir.normalized()
+		var up_vec = Vector3.UP
+		if abs(norm_dir.dot(Vector3.UP)) > 0.95:
+			up_vec = Vector3.FORWARD
+		look_at(global_position + norm_dir, up_vec)
 		
 	global_position = next_pos
 	
@@ -86,12 +106,18 @@ func _on_impact() -> void:
 	has_hit = true
 	if is_instance_valid(target_node) and target_node.has_method("take_damage"):
 		target_node.take_damage(damage, start_pos, true)
+	else:
+		# Area splash damage for ground volleys
+		var units = get_tree().get_nodes_in_group("Units")
+		for u in units:
+			if is_instance_valid(u) and u.get("team_id") != team_id:
+				if u.global_position.distance_to(global_position) <= 3.2:
+					u.take_damage(damage, start_pos, true)
 		
 	_spawn_impact_fx()
 	queue_free()
 
 func _spawn_impact_fx() -> void:
-	# Subtle impact flash
 	var root_world = get_tree().root.get_node_or_null("Main/World")
 	if not root_world: return
 	

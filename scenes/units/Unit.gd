@@ -30,6 +30,18 @@ var soldier_nodes: Array[Node3D] = []
 var target_enemy: Node3D = null
 var attack_timer: float = 0.0
 
+# Tactical Abilities State
+var rally_cooldown: float = 0.0
+var brace_cooldown: float = 0.0
+var trample_cooldown: float = 0.0
+var volley_cooldown: float = 0.0
+
+var is_braced: bool = false
+var brace_timer: float = 0.0
+var is_trampling: bool = false
+var trample_timer: float = 0.0
+var trample_hit_cooldown: float = 0.0
+
 # Preload Unit Model & Projectile Scenes
 const SCENE_SPEARMAN = preload("res://assets/models/unit_akkadian_spearman.tscn")
 const SCENE_SLINGER = preload("res://assets/models/unit_mesopotamian_slinger.tscn")
@@ -175,6 +187,24 @@ var last_progress_pos: Vector3 = Vector3.ZERO
 
 func _physics_process(delta: float) -> void:
 	attack_timer = max(0.0, attack_timer - delta)
+	rally_cooldown = max(0.0, rally_cooldown - delta)
+	brace_cooldown = max(0.0, brace_cooldown - delta)
+	trample_cooldown = max(0.0, trample_cooldown - delta)
+	volley_cooldown = max(0.0, volley_cooldown - delta)
+	
+	# Process Active Tactical Ability Buffs
+	if brace_timer > 0.0:
+		brace_timer -= delta
+		if brace_timer <= 0.0:
+			is_braced = false
+			
+	if trample_timer > 0.0:
+		trample_timer -= delta
+		trample_hit_cooldown = max(0.0, trample_hit_cooldown - delta)
+		if trample_hit_cooldown <= 0.0:
+			_process_trample_impacts()
+		if trample_timer <= 0.0:
+			is_trampling = false
 	
 	# 1. Combat & Target Tracking
 	if is_instance_valid(target_enemy):
@@ -307,6 +337,11 @@ func _compute_crowd_separation() -> Vector3:
 	return sep
 
 func _move_towards(dest: Vector3, delta: float) -> void:
+	if is_braced:
+		velocity = Vector3.ZERO
+		is_moving = false
+		return
+		
 	var dir = (dest - global_position)
 	dir.y = 0.0
 	var dist = dir.length()
@@ -316,20 +351,22 @@ func _move_towards(dest: Vector3, delta: float) -> void:
 		var move_dir = dir.normalized()
 		var sep = _compute_crowd_separation()
 		
+		var effective_speed = move_speed * (1.6 if is_trampling else 1.0)
+		
 		# Cap separation force to at most 20% of move speed
-		sep = sep.limit_length(move_speed * 0.20)
+		sep = sep.limit_length(effective_speed * 0.20)
 		
 		# Prevent separation from pushing backwards against travel direction
 		var dot = sep.dot(move_dir)
 		if dot < 0.0:
 			sep -= move_dir * dot
 			
-		velocity = move_dir * move_speed + sep
+		velocity = move_dir * effective_speed + sep
 		
 		var target_rot_y = atan2(move_dir.x, move_dir.z)
 		squad_root.rotation.y = lerp_angle(squad_root.rotation.y, target_rot_y, 12.0 * delta)
 		
-		march_time += delta * move_speed * 2.8
+		march_time += delta * effective_speed * 2.8
 		_animate_marching()
 		
 		move_and_slide()
@@ -494,6 +531,10 @@ func take_damage(amount: float, attack_origin: Vector3 = Vector3.ZERO, is_projec
 		if attack_origin.y > global_position.y + 0.5:
 			final_damage *= 1.25
 			
+	# Braced Stance Damage Reduction (-50% all incoming damage)
+	if is_braced:
+		final_damage *= 0.5
+			
 	current_hp = max(0.0, current_hp - final_damage)
 	update_hp_display()
 	
@@ -505,6 +546,74 @@ func take_damage(amount: float, attack_origin: Vector3 = Vector3.ZERO, is_projec
 		
 	if current_hp <= 0:
 		_die()
+
+func activate_rally() -> bool:
+	if rally_cooldown > 0.0: return false
+	rally_cooldown = 12.0
+	current_hp = min(max_hp, current_hp + 20.0)
+	update_hp_display()
+	for s in soldier_nodes:
+		if is_instance_valid(s):
+			var tw = create_tween()
+			tw.tween_property(s, "scale", Vector3(1.3, 1.3, 1.3), 0.15)
+			tw.tween_property(s, "scale", Vector3(1.0, 1.0, 1.0), 0.2)
+	return true
+
+func activate_shield_brace() -> bool:
+	if brace_cooldown > 0.0: return false
+	var t = unit_type.to_lower()
+	if "chariot" in t or "archer" in t or "slinger" in t or "baggage" in t:
+		return false
+	brace_cooldown = 15.0
+	is_braced = true
+	brace_timer = 10.0
+	velocity = Vector3.ZERO
+	is_moving = false
+	return true
+
+func activate_chariot_trample() -> bool:
+	if trample_cooldown > 0.0: return false
+	var t = unit_type.to_lower()
+	if not ("chariot" in t or "cavalry" in t):
+		return false
+	trample_cooldown = 14.0
+	is_trampling = true
+	trample_timer = 6.0
+	trample_hit_cooldown = 0.0
+	return true
+
+func activate_arrow_volley(target_pos: Vector3 = Vector3.ZERO) -> bool:
+	if volley_cooldown > 0.0: return false
+	var t = unit_type.to_lower()
+	if not ("archer" in t or "slinger" in t):
+		return false
+	volley_cooldown = 10.0
+	
+	var volley_target = target_pos
+	if volley_target == Vector3.ZERO:
+		if is_instance_valid(target_enemy):
+			volley_target = target_enemy.global_position
+		else:
+			volley_target = global_position - squad_root.global_transform.basis.z * 16.0
+			
+	for i in range(4):
+		var p_inst = SCENE_PROJECTILE.instantiate()
+		var spawn_pos = global_position + Vector3(randf_range(-1.2, 1.2), 1.6, randf_range(-1.2, 1.2))
+		get_tree().root.add_child(p_inst)
+		var spread_target = volley_target + Vector3(randf_range(-2.0, 2.0), 0.0, randf_range(-2.0, 2.0))
+		p_inst.launch_to_position(spawn_pos, spread_target, attack_damage * 1.25, "arrow", team_id)
+	return true
+
+func _process_trample_impacts() -> void:
+	trample_hit_cooldown = 0.4
+	var units = get_tree().get_nodes_in_group("Units")
+	for u in units:
+		if is_instance_valid(u) and u != self and u.get("team_id") != team_id:
+			var d = global_position.distance_to(u.global_position)
+			if d <= 3.5:
+				u.take_damage(45.0, global_position)
+				var push_dir = (u.global_position - global_position).normalized()
+				u.global_position += push_dir * 1.5
 
 func _die() -> void:
 	if team_id == 1:

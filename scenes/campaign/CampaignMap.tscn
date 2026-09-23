@@ -1,0 +1,219 @@
+[gd_scene load_steps=6 format=3 uid="uid://c7m9x1pv4overworld"]
+
+[ext_resource type="Script" path="res://scenes/campaign/CampaignMap.gd" id="1_c_map"]
+[ext_resource type="FontFile" uid="uid://df2msh532q3k" path="res://assets/fonts/constanb.ttf" id="2_font_bold"]
+[ext_resource type="FontFile" uid="uid://cuab4sw7r66ip" path="res://assets/fonts/constan.ttf" id="3_font_reg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.08, 0.07, 0.06, 0.94)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.72, 0.58, 0.28, 0.85)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.14, 0.12, 0.10, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.70, 0.35, 0.9)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0, 0, 0, 0.8)
+shadow_size = 6
+
+[node name="CampaignMap" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c_map")
+
+[node name="ParchmentBG" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="HeaderBanner" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_top = 36.0
+offset_right = 320.0
+offset_bottom = 100.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="Margin" type="MarginContainer" parent="HeaderBanner"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="HeaderBanner/Margin"]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="HeaderBanner/Margin/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font_bold")
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(1, 0.9, 0.65, 1)
+text = "STRATEGIC PROVINCIAL OVERWORLD MAP"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="HeaderBanner/Margin/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_font_reg")
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.85, 0.82, 0.75, 1)
+text = "Macro Economy, Trade Caravans & Province Administration  —  Press [TAB] to Return"
+horizontal_alignment = 1
+
+[node name="Provinces" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProvinceInspector" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -420.0
+offset_top = -240.0
+offset_right = -40.0
+offset_bottom = 260.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="Margin" type="MarginContainer" parent="ProvinceInspector"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="ProvinceInspector/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="ProvinceInspector/Margin/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font_bold")
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(1, 0.88, 0.4, 1)
+text = "CITADEL OF UR-KISH"
+
+[node name="Owner" type="Label" parent="ProvinceInspector/Margin/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_font_reg")
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.4, 0.9, 1, 1)
+text = "FACTION: PLAYER"
+
+[node name="Pop" type="Label" parent="ProvinceInspector/Margin/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_font_reg")
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+text = "POPULATION: 8,500 Citizens"
+
+[node name="Order" type="Label" parent="ProvinceInspector/Margin/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_font_reg")
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.4, 0.95, 0.4, 1)
+text = "PUBLIC ORDER: 92% (Normal Tax)"
+
+[node name="Yields" type="Label" parent="ProvinceInspector/Margin/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_font_reg")
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.95, 0.82, 0.35, 1)
+text = "PROVINCIAL YIELD: +45 Grain/m, +80 Gold/m"
+
+[node name="Sep1" type="HSeparator" parent="ProvinceInspector/Margin/VBox"]
+layout_mode = 2
+
+[node name="TaxLabel" type="Label" parent="ProvinceInspector/Margin/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font_bold")
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 1)
+text = "TAXATION LEVEL:"
+
+[node name="HBoxTax" type="HBoxContainer" parent="ProvinceInspector/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BtnLow" type="Button" parent="ProvinceInspector/Margin/VBox/HBoxTax"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Low (0.7x)"
+
+[node name="BtnNorm" type="Button" parent="ProvinceInspector/Margin/VBox/HBoxTax"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Norm (1.0x)"
+
+[node name="BtnHigh" type="Button" parent="ProvinceInspector/Margin/VBox/HBoxTax"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "High (1.4x)"
+
+[node name="Sep2" type="HSeparator" parent="ProvinceInspector/Margin/VBox"]
+layout_mode = 2
+
+[node name="InfraLabel" type="Label" parent="ProvinceInspector/Margin/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font_bold")
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 1)
+text = "INFRASTRUCTURE INVESTMENTS:"
+
+[node name="HBoxInfra" type="VBoxContainer" parent="ProvinceInspector/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BtnRoad" type="Button" parent="ProvinceInspector/Margin/VBox/HBoxInfra"]
+layout_mode = 2
+text = "Build Highway (200s)"
+
+[node name="BtnCanal" type="Button" parent="ProvinceInspector/Margin/VBox/HBoxInfra"]
+layout_mode = 2
+text = "Dig Canal (150w)"
+
+[node name="Sep3" type="HSeparator" parent="ProvinceInspector/Margin/VBox"]
+layout_mode = 2
+
+[node name="BtnClose" type="Button" parent="ProvinceInspector/Margin/VBox"]
+layout_mode = 2
+text = "Return to 3D Battlefield [TAB]"

@@ -21,6 +21,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			SaveManager.save_game()
 		elif event.keycode == KEY_F9:
 			SaveManager.load_game()
+		elif event.keycode == KEY_TAB:
+			CampaignMapManager.toggle_view_mode()
 
 func _auto_capture_screenshot() -> void:
 	for i in range(35):

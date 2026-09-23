@@ -1,0 +1,118 @@
+[gd_scene load_steps=5 format=3 uid="uid://d7m9k2dynastymodal"]
+
+[ext_resource type="FontFile" uid="uid://df2msh532q3k" path="res://assets/fonts/constanb.ttf" id="1_font_bold"]
+[ext_resource type="FontFile" uid="uid://cuab4sw7r66ip" path="res://assets/fonts/constan.ttf" id="2_font_reg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal"]
+bg_color = Color(0.12, 0.08, 0.08, 0.97)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1.0, 0.78, 0.3, 0.95)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.9)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_fill"]
+bg_color = Color(0.95, 0.45, 0.2, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="DynastyModal" type="PanelContainer"]
+custom_minimum_size = Vector2(580, 420)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -290.0
+offset_top = -210.0
+offset_right = 290.0
+offset_bottom = 210.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Title" type="Label" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font_bold")
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(1, 0.85, 0.35, 1)
+text = "👑 DYNASTIC SUCCESSION CRISIS 👑"
+horizontal_alignment = 1
+
+[node name="Desc" type="Label" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font_reg")
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.95, 0.9, 0.85, 1)
+text = "The King has fallen! Sargon I ascends the throne, but rival pretenders and disloyal generals question his divine right."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="LegitimacyBar" type="ProgressBar" parent="Margin/VBox"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_bar_fill")
+value = 30.0
+show_percentage = true
+
+[node name="Status" type="Label" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font_bold")
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
+text = "LEGITIMACY: 30% (CRITICAL) — Reach 70% to Secure the Throne"
+horizontal_alignment = 1
+
+[node name="TimerWarning" type="Label" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font_reg")
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(1, 0.8, 0.3, 1)
+text = "Council Convenes in 45s — Consolidate authority or face open MUTINY!"
+horizontal_alignment = 1
+
+[node name="Sep" type="HSeparator" parent="Margin/VBox"]
+layout_mode = 2
+
+[node name="EdictsTitle" type="Label" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font_bold")
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.9, 0.85, 0.7, 1)
+text = "ENACT POWER CONSOLIDATION EDICTS:"
+
+[node name="VBoxEdicts" type="VBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BtnPurge" type="Button" parent="Margin/VBox/VBoxEdicts"]
+layout_mode = 2
+text = "⚔️ Purge Rivals (+25% Legitimacy, -20 Nobility Loyalty)"
+
+[node name="BtnTreasury" type="Button" parent="Margin/VBox/VBoxEdicts"]
+layout_mode = 2
+text = "🪙 Royal Dole (+30% Legitimacy, Costs 300 Gold)"
+
+[node name="BtnTemple" type="Button" parent="Margin/VBox/VBoxEdicts"]
+layout_mode = 2
+text = "🕊️ Divine Coronation (+25% Legitimacy, Costs 400 Grain)"

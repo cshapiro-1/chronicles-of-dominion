@@ -8,6 +8,7 @@ const StructurePlacementHandler = preload("res://scripts/handlers/StructurePlace
 const ActionAttackingWhileInRange = preload("res://scripts/actions/AttackingWhileInRange.gd")
 const ActionMoving = preload("res://scripts/actions/Moving.gd")
 const Building = preload("res://scenes/buildings/Building.gd")
+const TacticalAbilities = preload("res://scripts/actions/TacticalAbilities.gd")
 
 # Modular Resource Badges
 @onready var top_header: PanelContainer = $TopMasterHeader
@@ -56,6 +57,16 @@ const Building = preload("res://scenes/buildings/Building.gd")
 @onready var btn_consecrate: Button = $ConquestModal/Margin/VBox/HBoxDecrees/BtnConsecrate
 @onready var btn_vassalize: Button = $ConquestModal/Margin/VBox/HBoxDecrees/BtnVassalize
 
+# Dynasty Modal
+@onready var dynasty_modal: PanelContainer = get_node_or_null("DynastyModal")
+@onready var lbl_dynasty_desc: Label = get_node_or_null("DynastyModal/Margin/VBox/Desc")
+@onready var bar_legitimacy: ProgressBar = get_node_or_null("DynastyModal/Margin/VBox/LegitimacyBar")
+@onready var lbl_dynasty_status: Label = get_node_or_null("DynastyModal/Margin/VBox/Status")
+@onready var lbl_dynasty_timer: Label = get_node_or_null("DynastyModal/Margin/VBox/TimerWarning")
+@onready var btn_dynasty_purge: Button = get_node_or_null("DynastyModal/Margin/VBox/VBoxEdicts/BtnPurge")
+@onready var btn_dynasty_treasury: Button = get_node_or_null("DynastyModal/Margin/VBox/VBoxEdicts/BtnTreasury")
+@onready var btn_dynasty_temple: Button = get_node_or_null("DynastyModal/Margin/VBox/VBoxEdicts/BtnTemple")
+
 # Notification banner
 @onready var notif_panel: PanelContainer = $NotificationBanner
 @onready var notif_label: Label = $NotificationBanner/Margin/NotifText
@@ -100,6 +111,12 @@ func _ready() -> void:
 	EventBus.notification_posted.connect(_on_notification_posted)
 	EventBus.conquest_victory_triggered.connect(_on_conquest_victory_triggered)
 	
+	if dynasty_modal: dynasty_modal.visible = false
+	var dyn_mgr = get_node_or_null("/root/DynastyManager")
+	if dyn_mgr:
+		dyn_mgr.succession_triggered.connect(_on_succession_triggered)
+		dyn_mgr.legitimacy_updated.connect(_on_legitimacy_updated)
+	
 	_on_economy_updated(EconomyManager.resources, EconomyManager.deltas)
 	_on_population_updated(PopulationManager.total_population, PopulationManager.hope, PopulationManager.discontent)
 	_on_estates_updated(PoliticsManager.priesthood_loyalty, PoliticsManager.nobility_loyalty, PoliticsManager.commoners_loyalty)
@@ -107,8 +124,18 @@ func _ready() -> void:
 	_wire_tablets()
 	_wire_conquest_buttons()
 	_wire_crisis_buttons()
+	_wire_dynasty_buttons()
 	
-	EventBus.post_notification("DOMINION ACTIVE", "Campaign Initialized. Marquee drag selects units, RMB orders moves/attacks.", Color(0.95, 0.82, 0.35))
+	EventBus.post_notification("DOMINION ACTIVE", "Campaign Initialized. Marquee drag selects units, RMB orders moves/attacks. [TAB] Overworld Map.", Color(0.95, 0.82, 0.35))
+
+func _process(_delta: float) -> void:
+	var dyn_mgr = get_node_or_null("/root/DynastyManager")
+	if dyn_mgr and dyn_mgr.in_succession_crisis and dynasty_modal and dynasty_modal.visible:
+		var remaining = max(0.0, dyn_mgr.consolidation_deadline - dyn_mgr.consolidation_timer)
+		if lbl_dynasty_timer:
+			lbl_dynasty_timer.text = "Council Convenes in %ds — Consolidate authority or face open MUTINY!" % int(remaining)
+		if dyn_mgr.legitimacy >= 70.0:
+			dynasty_modal.visible = false
 
 func _wire_tablets() -> void:
 	if tablet_spear: tablet_spear.pressed.connect(func(): _spawn_unit("spearman"))
@@ -141,6 +168,44 @@ func _wire_crisis_buttons() -> void:
 			get_tree().paused = false
 			CrisisManager.resolve_crisis(1)
 		)
+
+func _wire_dynasty_buttons() -> void:
+	var dyn_mgr = get_node_or_null("/root/DynastyManager")
+	if not dyn_mgr: return
+	if btn_dynasty_purge:
+		btn_dynasty_purge.pressed.connect(func(): dyn_mgr.enact_consolidation_edict("purge_rivals"))
+	if btn_dynasty_treasury:
+		btn_dynasty_treasury.pressed.connect(func(): dyn_mgr.enact_consolidation_edict("treasury_dole"))
+	if btn_dynasty_temple:
+		btn_dynasty_temple.pressed.connect(func(): dyn_mgr.enact_consolidation_edict("temple_coronation"))
+
+func _on_succession_triggered(data: Dictionary) -> void:
+	if not dynasty_modal: return
+	dynasty_modal.visible = true
+	if lbl_dynasty_desc:
+		lbl_dynasty_desc.text = "%s has died! %s ascends the throne, but rival pretenders and disloyal generals question his legitimacy." % [
+			data.get("old_ruler", "The Sovereign"), data.get("new_ruler", "The Heir")
+		]
+	_on_legitimacy_updated(data.get("legitimacy", 30.0))
+
+func _on_legitimacy_updated(leg: float) -> void:
+	if bar_legitimacy: bar_legitimacy.value = leg
+	if lbl_dynasty_status:
+		if leg >= 70.0:
+			lbl_dynasty_status.text = "LEGITIMACY: %d%% (SECURED) — Dynastic throne consolidated!" % int(leg)
+			lbl_dynasty_status.modulate = Color(0.4, 0.95, 0.4)
+			if dynasty_modal:
+				get_tree().create_timer(1.2).timeout.connect(func():
+					if is_instance_valid(dynasty_modal):
+						dynasty_modal.visible = false
+				)
+		elif leg >= 50.0:
+			lbl_dynasty_status.text = "LEGITIMACY: %d%% (CONTESTED) — Reach 70%% to Secure Throne" % int(leg)
+			lbl_dynasty_status.modulate = Color(1.0, 0.8, 0.3)
+		else:
+			lbl_dynasty_status.text = "LEGITIMACY: %d%% (CRITICAL) — Danger of Immediate Mutiny!" % int(leg)
+			lbl_dynasty_status.modulate = Color(1.0, 0.25, 0.25)
+
 
 var rmb_press_pos: Vector2 = Vector2.ZERO
 var rmb_is_dragging: bool = false
@@ -252,6 +317,21 @@ func _unhandled_input(event: InputEvent) -> void:
 				placement_handler.cancel_placement()
 		elif event.keycode == KEY_G:
 			_spawn_hostile_raider()
+		# Strategic View Mode Toggle
+		elif event.keycode == KEY_TAB:
+			var cmm = get_node_or_null("/root/CampaignMapManager")
+			if cmm: cmm.toggle_view_mode()
+		# Tactical Command Abilities
+		elif event.keycode == KEY_R:
+			TacticalAbilities.rally_line(selected_units)
+		elif event.keycode == KEY_T:
+			TacticalAbilities.shield_brace(selected_units)
+		elif event.keycode == KEY_Y:
+			TacticalAbilities.chariot_trample(selected_units)
+		elif event.keycode == KEY_U:
+			var m_pos = get_viewport().get_mouse_position()
+			var ground_pos = _screen_to_ground(m_pos)
+			TacticalAbilities.arrow_volley(selected_units, ground_pos)
 
 func start_structure_placement(type_key: String) -> void:
 	if placement_handler:
