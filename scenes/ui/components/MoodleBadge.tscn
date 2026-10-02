@@ -1,0 +1,171 @@
+[gd_scene load_steps=7 format=3 uid="uid://moodle_badge_01"]
+
+[ext_resource type="Script" path="res://scenes/ui/components/MoodleBadge.gd" id="1_mbadge"]
+[ext_resource type="FontFile" uid="uid://df2msh532q3k" path="res://assets/fonts/constanb.ttf" id="2_font_bold"]
+[ext_resource type="FontFile" uid="uid://cuab4sw7r66ip" path="res://assets/fonts/constan.ttf" id="3_font_reg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_badge"]
+bg_color = Color(0.10, 0.08, 0.07, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9, 0.75, 0.3, 0.9)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.75)
+shadow_size = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_progress_fill"]
+bg_color = Color(0.95, 0.5, 0.2, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tooltip"]
+bg_color = Color(0.08, 0.07, 0.06, 0.97)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.70, 0.35, 0.95)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0, 0, 0, 0.85)
+shadow_size = 8
+
+[node name="MoodleBadge" type="Control"]
+custom_minimum_size = Vector2(160, 44)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 160.0
+offset_bottom = 44.0
+pivot_offset = Vector2(80, 22)
+mouse_filter = 0
+script = ExtResource("1_mbadge")
+
+[node name="PanelBG" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_badge")
+
+[node name="Margin" type="MarginContainer" parent="PanelBG"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 4
+
+[node name="HBox" type="HBoxContainer" parent="PanelBG/Margin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 0
+
+[node name="Icon" type="Label" parent="PanelBG/Margin/HBox"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/font_size = 20
+text = "🌾"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBox" type="VBoxContainer" parent="PanelBG/Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="Name" type="Label" parent="PanelBG/Margin/HBox/VBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("2_font_bold")
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.96, 0.94, 0.90, 1)
+text = "GRAIN SHORTAGE"
+clip_text = true
+
+[node name="ProgressBar" type="ProgressBar" parent="PanelBG/Margin/HBox/VBox"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_progress_fill")
+value = 50.0
+show_percentage = false
+
+[node name="TooltipPanel" type="PanelContainer" parent="."]
+visible = false
+z_index = 50
+custom_minimum_size = Vector2(280, 140)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -290.0
+offset_top = -10.0
+offset_right = -10.0
+offset_bottom = 140.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tooltip")
+
+[node name="Margin" type="MarginContainer" parent="TooltipPanel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="TooltipPanel/Margin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="Title" type="Label" parent="TooltipPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font_bold")
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(1, 0.88, 0.45, 1)
+text = "🌾 FAMINE"
+
+[node name="Tier" type="Label" parent="TooltipPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font_bold")
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(1, 0.6, 0.2, 1)
+text = "SEVERITY: TIER 2 (FOOD SCARCITY)"
+
+[node name="Desc" type="Label" parent="TooltipPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_font_reg")
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.9, 0.88, 0.82, 1)
+text = "Food is scarce. Commoners grow anxious and worker stamina falters (-15% Output)."
+autowrap_mode = 3
+
+[node name="HSep" type="HSeparator" parent="TooltipPanel/Margin/VBox"]
+layout_mode = 2
+
+[node name="Remedy" type="Label" parent="TooltipPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_font_reg")
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.45, 0.95, 0.55, 1)
+text = "HOW TO RESOLVE: Construct Granaries or trade at the Bazaar."
+autowrap_mode = 3

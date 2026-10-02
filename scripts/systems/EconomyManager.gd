@@ -31,8 +31,13 @@ func _process(delta: float) -> void:
 		_process_economy_tick()
 
 func _process_economy_tick() -> void:
+	var moodle_mult = 1.0
+	var mm = get_node_or_null("/root/MoodleManager")
+	if mm:
+		moodle_mult = mm.get_economy_multiplier()
+		
 	for res in ["Grain", "Timber", "Stone", "Bronze", "Gold"]:
-		resources[res] += (deltas[res] / 60.0)
+		resources[res] += (deltas[res] * moodle_mult / 60.0)
 	EventBus.economy_updated.emit(resources, deltas)
 
 func can_afford(cost: Dictionary) -> bool:

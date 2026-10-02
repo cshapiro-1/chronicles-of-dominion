@@ -7,6 +7,7 @@
 [ext_resource type="FontFile" uid="uid://cuab4sw7r66ip" path="res://assets/fonts/constan.ttf" id="6_font_era"]
 [ext_resource type="FontFile" uid="uid://df2msh532q3k" path="res://assets/fonts/constanb.ttf" id="7_font_bold"]
 [ext_resource type="PackedScene" path="res://scenes/ui/components/DynastyModal.tscn" id="8_dynasty_modal"]
+[ext_resource type="PackedScene" path="res://scenes/ui/components/MoodleContainer.tscn" id="9_moodle_cont"]
 
 [sub_resource type="StyleBoxFlat" id="SB_Panel"]
 bg_color = Color(0.10, 0.12, 0.16, 0.92)
@@ -451,4 +452,7 @@ horizontal_alignment = 1
 
 [node name="DynastyModal" parent="." instance=ExtResource("8_dynasty_modal")]
 visible = false
+
+[node name="MoodleContainer" parent="." instance=ExtResource("9_moodle_cont")]
+
 

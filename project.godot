@@ -34,6 +34,7 @@ TechManager="*res://scripts/systems/TechManager.gd"
 AudioManager="*res://scripts/systems/AudioManager.gd"
 DynastyManager="*res://scripts/systems/DynastyManager.gd"
 CampaignMapManager="*res://scripts/systems/CampaignMapManager.gd"
+MoodleManager="*res://scripts/systems/MoodleManager.gd"
 
 [display]
 
