@@ -12,17 +12,22 @@ func _ready() -> void:
 	ai_commander.name = "RivalCommanderAI"
 	add_child(ai_commander)
 	
-	EventBus.notification_posted.emit("CHRONICLES OF DOMINION", "Bronze Age Campaign Initialized. Ziggurat of Ur-Kish active.", Color(1, 0.85, 0.3))
+	var eb = get_node_or_null("/root/EventBus")
+	if eb:
+		eb.post_notification("CHRONICLES OF DOMINION", "Bronze Age Campaign Initialized. Ziggurat of Ur-Kish active. [TAB] Overworld Map.", Color(1, 0.85, 0.3))
 	call_deferred("_auto_capture_screenshot")
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_F5:
-			SaveManager.save_game()
+			var sm = get_node_or_null("/root/SaveManager")
+			if sm: sm.save_game()
 		elif event.keycode == KEY_F9:
-			SaveManager.load_game()
+			var sm = get_node_or_null("/root/SaveManager")
+			if sm: sm.load_game()
 		elif event.keycode == KEY_TAB:
-			CampaignMapManager.toggle_view_mode()
+			var cmm = get_node_or_null("/root/CampaignMapManager")
+			if cmm: cmm.toggle_view_mode()
 
 func _auto_capture_screenshot() -> void:
 	for i in range(35):

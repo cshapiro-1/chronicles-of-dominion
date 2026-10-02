@@ -52,7 +52,7 @@ func _run_suite() -> void:
 	# -------------------------------------------------------------
 	# 1. TEST MOODLE EMERGENCE ON UNMET REALM CONDITIONS
 	# -------------------------------------------------------------
-	print("\n[1/6] Testing Moodle Activation on Condition Deficit...")
+	print("\n[1/7] Testing Moodle Activation on Condition Deficit...")
 	eco.resources["Grain"] = 10.0 # Extreme food shortage
 	eco.deltas["Grain"] = -25.0
 	mm._evaluate_world_conditions()
@@ -64,7 +64,7 @@ func _run_suite() -> void:
 	# -------------------------------------------------------------
 	# 2. TEST REAL-TIME FESTERING ESCALATION
 	# -------------------------------------------------------------
-	print("\n[2/6] Testing Festering Escalation (Tiers 1 -> 2 -> 3 -> 4)...")
+	print("\n[2/7] Testing Festering Escalation (Tiers 1 -> 2 -> 3 -> 4)...")
 	var famine_data = mm.active_moodles["famine"]
 	assert(famine_data.is_festering, "Moodle must be in festering state")
 	
@@ -85,7 +85,7 @@ func _run_suite() -> void:
 	# -------------------------------------------------------------
 	# 3. TEST SYSTEMIC PASSIVE DEBUFFS
 	# -------------------------------------------------------------
-	print("\n[3/6] Testing Passive Economic & Military Modifiers...")
+	print("\n[3/7] Testing Passive Economic & Military Modifiers...")
 	var econ_mult = mm.get_economy_multiplier()
 	assert(econ_mult < 1.0, "Severe Famine must apply negative economy multiplier")
 	
@@ -100,7 +100,7 @@ func _run_suite() -> void:
 	# -------------------------------------------------------------
 	# 4. TEST IN-WORLD PLAYER ALLEVIATION & RECOVERY
 	# -------------------------------------------------------------
-	print("\n[4/6] Testing Player In-World Alleviation & Recovery Drain...")
+	print("\n[4/7] Testing Player In-World Alleviation & Recovery Drain...")
 	eco.resources["Grain"] = 3500.0 # Replenish stores
 	eco.deltas["Grain"] = 80.0
 	mm._evaluate_world_conditions()
@@ -115,9 +115,38 @@ func _run_suite() -> void:
 	print("       Player grain replenishment drained and resolved Famine affliction.")
 
 	# -------------------------------------------------------------
-	# 5. TEST ACUTE DISASTER CONSEQUENCES ON FESTERING FAILURE
+	# 5. TEST CROSS-AFFLICTION CONTAGION & MULTIPLIERS
 	# -------------------------------------------------------------
-	print("\n[5/6] Testing Acute Catastrophic Disaster Eruption at Tier 4...")
+	print("\n[5/7] Testing Cross-Affliction Contagion & Spillover...")
+	# Activate Pestilence at Tier 3
+	mm._set_moodle_festering("pestilence", true)
+	mm.active_moodles["pestilence"].severity = 3
+	
+	var initial_priest_loyalty = pol.priesthood_loyalty
+	var initial_discontent = pop.discontent
+	
+	# Process contagion tick
+	mm._process_cross_affliction_contagion(2.0)
+	assert(pop.discontent > initial_discontent, "Pestilence must spike citizen discontent")
+	assert(pol.priesthood_loyalty < initial_priest_loyalty, "Pestilence panic must erode priesthood loyalty")
+	
+	# Check contagion multiplier acceleration
+	var schism_mult = mm.get_contagion_multiplier("schism")
+	var unrest_mult = mm.get_contagion_multiplier("unrest")
+	assert(schism_mult > 1.0, "Pestilence must accelerate Religious Schism fester multiplier")
+	assert(unrest_mult > 1.0, "Pestilence must accelerate Popular Unrest fester multiplier")
+	
+	# Noble Coup accelerates Mutiny
+	mm._set_moodle_festering("coup", true)
+	mm.active_moodles["coup"].severity = 3
+	var mutiny_mult = mm.get_contagion_multiplier("mutiny")
+	assert(mutiny_mult > 1.5, "Noble conspiracy must accelerate Military Mutiny fester rate")
+	print("       Contagion engine verified: Pestilence -> Unrest & Schism (%.1fx), Coup -> Mutiny (%.1fx)." % [schism_mult, mutiny_mult])
+
+	# -------------------------------------------------------------
+	# 6. TEST ACUTE DISASTER CONSEQUENCES ON FESTERING FAILURE
+	# -------------------------------------------------------------
+	print("\n[6/7] Testing Acute Catastrophic Disaster Eruption & Ripple...")
 	var disaster_tracker = {"fired": false, "name": ""}
 	mm.disaster_triggered.connect(func(m_id, d_name):
 		disaster_tracker.fired = true
@@ -133,22 +162,23 @@ func _run_suite() -> void:
 	mm._process_moodle_timers(1.0)
 	assert(disaster_tracker.fired, "Acute disaster must trigger when Tier 4 moodle festers")
 	assert(disaster_tracker.name == "PeasantStrike", "Peasant Strike & Riot must erupt")
-	print("       Acute disaster successfully erupted: %s" % disaster_tracker.name)
+	print("       Acute disaster successfully erupted with secondary cascade shock.")
 
 	# -------------------------------------------------------------
-	# 6. TEST MOODLE CONTAINER UI DOCK & TOOLTIP INTEGRITY
+	# 7. TEST MOODLE CONTAINER UI DOCK & TOOLTIP INTEGRITY
 	# -------------------------------------------------------------
-	print("\n[6/6] Testing Right-Screen Moodle Container UI...")
-	# Verify badge instances in UI
+	print("\n[7/7] Testing Right-Screen Moodle Container UI...")
 	assert(moodle_cont.badge_instances.size() >= 1, "MoodleContainer must have active badge child")
 	var unrest_badge = moodle_cont.badge_instances.get("unrest", null)
 	assert(unrest_badge != null, "Unrest badge must exist in container")
 	assert(unrest_badge.lbl_name.text.length() > 0, "Badge title text must be rendered")
 	assert(unrest_badge.tt_desc.text.length() > 0, "Tooltip description must be rendered")
+	assert(unrest_badge.tt_contagion != null, "Tooltip cascade risk label must exist")
+	assert(unrest_badge.tt_contagion.text.length() > 0, "Tooltip cascade risk text must be rendered")
 	assert(unrest_badge.tt_remedy.text.length() > 0, "Tooltip remedy must be rendered")
-	print("       Moodle UI dock rendered badges with live tooltips and progress bars.")
+	print("       Moodle UI dock rendered badges with live tooltips, progress bars, and cascade warnings.")
 
 	print("\n==================================================================")
-	print(">>> ALL 6/6 MOODLE INTEGRATION TESTS PASSED 100%! <<<")
+	print(">>> ALL 7/7 MOODLE INTEGRATION TESTS PASSED 100%! <<<")
 	print("==================================================================")
 	quit(0)

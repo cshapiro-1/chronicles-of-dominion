@@ -13,6 +13,7 @@ class_name MoodleBadge
 @onready var tt_title: Label = $TooltipPanel/Margin/VBox/Title
 @onready var tt_tier: Label = $TooltipPanel/Margin/VBox/Tier
 @onready var tt_desc: Label = $TooltipPanel/Margin/VBox/Desc
+@onready var tt_contagion: Label = get_node_or_null("TooltipPanel/Margin/VBox/Contagion")
 @onready var tt_remedy: Label = $TooltipPanel/Margin/VBox/Remedy
 
 func _ready() -> void:
@@ -53,6 +54,8 @@ func update_display(tier: int, progress: float) -> void:
 		tt_tier.text = "SEVERITY: TIER %d (%s)" % [clamped_tier, t_name.to_upper()]
 		tt_tier.modulate = color
 	if tt_desc: tt_desc.text = def.descriptions[clamped_tier - 1]
+	if tt_contagion:
+		tt_contagion.text = "⚠️ CASCADE RISK: %s" % def.get("contagion_risk", "Festers into further unrest.")
 	if tt_remedy: tt_remedy.text = "HOW TO RESOLVE: %s" % def.remedy
 
 func play_escalation_pulse() -> void:

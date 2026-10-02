@@ -20,8 +20,9 @@ const MOODLE_DEFS = {
 			"Desperate mobs storm the streets! Bread riots and granary sackings imminent!"
 		],
 		"remedy": "Construct Granaries, trade for Grain at the Bazaar, or sacrifice to the Harvest Gods.",
-		"fester_rate": 0.08, # Progress per second when condition active
-		"recovery_rate": 0.15 # Recovery per second when condition resolved
+		"contagion_risk": "Spills over into Popular Unrest (Food Riots) and Military Mutiny (Starving Rations).",
+		"fester_rate": 0.08,
+		"recovery_rate": 0.15
 	},
 	"unrest": {
 		"title": "Popular Unrest",
@@ -35,6 +36,7 @@ const MOODLE_DEFS = {
 			"The populace has taken up arms! A general strike and city riots are erupting!"
 		],
 		"remedy": "Lower provincial tax rates, disburse Royal Dole (Gold), or build Tenements/Bazaars.",
+		"contagion_risk": "Spills over into Religious Schism (Zealot Preaching) and Noble Conspiracy (Exploiting Chaos).",
 		"fester_rate": 0.07,
 		"recovery_rate": 0.14
 	},
@@ -50,6 +52,7 @@ const MOODLE_DEFS = {
 			"Disloyal regiments have broken their oaths! Armed military mutiny in progress!"
 		],
 		"remedy": "Consolidate dynastic power, secure baggage train supply lines, or purge conspirators.",
+		"contagion_risk": "Spills over into Noble Conspiracy (Disloyal Officer Pacts) and Citadel Sabotage.",
 		"fester_rate": 0.09,
 		"recovery_rate": 0.16
 	},
@@ -65,6 +68,7 @@ const MOODLE_DEFS = {
 			"The nobility moves to seize the throne! Treasury plunder and assassination underway!"
 		],
 		"remedy": "Execute Purge Rivals edict, grant noble tax concessions, or offer Treasury Dole.",
+		"contagion_risk": "Spills over into Military Mutiny (Officer Bribes) and Provincial Secession.",
 		"fester_rate": 0.075,
 		"recovery_rate": 0.14
 	},
@@ -80,6 +84,7 @@ const MOODLE_DEFS = {
 			"Holy warriors take to the field to cleanse the realm of apostasy!"
 		],
 		"remedy": "Perform Divine Sacrifices at the Temple, restore temple tithes, or enact Coronation.",
+		"contagion_risk": "Spills over into Popular Unrest (Zealot Agitation) and Hope Collapse.",
 		"fester_rate": 0.08,
 		"recovery_rate": 0.15
 	},
@@ -95,6 +100,7 @@ const MOODLE_DEFS = {
 			"Deadly plague ravages the realm! Mass casualties and collapsing civil order!"
 		],
 		"remedy": "Construct Tenements to reduce density, build Granary reserves, or enact quarantine.",
+		"contagion_risk": "Spills over into Popular Unrest (Plague Panic) and Religious Schism (Divine Wrath Accusations).",
 		"fester_rate": 0.065,
 		"recovery_rate": 0.12
 	}
@@ -112,6 +118,7 @@ func _process(delta: float) -> void:
 		eval_timer = 0.0
 		_evaluate_world_conditions()
 		
+	_process_cross_affliction_contagion(delta)
 	_process_moodle_timers(delta)
 
 func _evaluate_world_conditions() -> void:
@@ -119,7 +126,6 @@ func _evaluate_world_conditions() -> void:
 	var pol = get_node_or_null("/root/PoliticsManager")
 	var pop = get_node_or_null("/root/PopulationManager")
 	var dyn = get_node_or_null("/root/DynastyManager")
-	var sup = get_node_or_null("/root/SupplyManager")
 	
 	# 1. Famine Condition (Grain depleted or running severe negative)
 	var grain_amt = eco.resources.get("Grain", 1000) if eco else 1000
@@ -171,6 +177,66 @@ func _set_moodle_festering(moodle_id: String, should_fester: bool) -> void:
 		if active_moodles.has(moodle_id):
 			active_moodles[moodle_id].is_festering = false
 
+# --- CROSS-AFFLICTION CONTAGION & SPILLOVER ENGINE ---
+
+func _process_cross_affliction_contagion(delta: float) -> void:
+	var pol = get_node_or_null("/root/PoliticsManager")
+	var pop = get_node_or_null("/root/PopulationManager")
+	if not pol or not pop: return
+	
+	# 1. Pestilence -> Unrest & Schism contagion
+	if active_moodles.has("pestilence"):
+		var p_sev = active_moodles["pestilence"].severity
+		if p_sev >= 2:
+			pop.modify_discontent(0.012 * p_sev * delta) # Spikes commoner unrest
+			pol.adjust_loyalty("priesthood", -0.45 * p_sev * delta) # Priests accuse crown of divine wrath
+			pol.adjust_loyalty("commoners", -0.55 * p_sev * delta)
+			
+	# 2. Famine -> Unrest & Mutiny contagion
+	if active_moodles.has("famine"):
+		var f_sev = active_moodles["famine"].severity
+		if f_sev >= 2:
+			pop.modify_discontent(0.015 * f_sev * delta)
+			pol.adjust_loyalty("commoners", -0.75 * f_sev * delta) # Starving commoners riot
+			
+	# 3. Open Unrest -> Schism & Coup contagion
+	if active_moodles.has("unrest"):
+		var u_sev = active_moodles["unrest"].severity
+		if u_sev >= 2:
+			pol.adjust_loyalty("priesthood", -0.35 * u_sev * delta) # Fanatics exploit riots
+			pol.adjust_loyalty("nobility", -0.40 * u_sev * delta) # Nobles fear for estates
+
+func get_contagion_multiplier(moodle_id: String) -> float:
+	var mult = 1.0
+	
+	match moodle_id:
+		"unrest":
+			# Famine and Pestilence accelerate Unrest
+			if active_moodles.has("famine"):
+				mult += active_moodles["famine"].severity * 0.25
+			if active_moodles.has("pestilence"):
+				mult += active_moodles["pestilence"].severity * 0.20
+		"mutiny":
+			# Famine (starving rations) and Noble Coups accelerate Mutiny
+			if active_moodles.has("famine"):
+				mult += active_moodles["famine"].severity * 0.35
+			if active_moodles.has("coup"):
+				mult += active_moodles["coup"].severity * 0.30
+		"schism":
+			# Pestilence (divine wrath) and Unrest accelerate Schism
+			if active_moodles.has("pestilence"):
+				mult += active_moodles["pestilence"].severity * 0.30
+			if active_moodles.has("unrest"):
+				mult += active_moodles["unrest"].severity * 0.25
+		"coup":
+			# Unrest and Mutiny accelerate Noble Coup
+			if active_moodles.has("unrest"):
+				mult += active_moodles["unrest"].severity * 0.25
+			if active_moodles.has("mutiny"):
+				mult += active_moodles["mutiny"].severity * 0.35
+				
+	return mult
+
 func _process_moodle_timers(delta: float) -> void:
 	var to_remove: Array[String] = []
 	
@@ -182,8 +248,9 @@ func _process_moodle_timers(delta: float) -> void:
 			data.disaster_cooldown -= delta
 			
 		if data.is_festering:
-			# Festering: Progress increases
-			var rate = def.fester_rate
+			# Festering: Progress increases with dynamic contagion multiplier
+			var contagion_mult = get_contagion_multiplier(m_id)
+			var rate = def.fester_rate * contagion_mult
 			data.progress += delta * rate
 			
 			if data.progress >= 1.0:
@@ -232,49 +299,71 @@ func _post_moodle_toast(moodle_id: String, tier: int, is_escalation: bool) -> vo
 	var prefix = "AFFLICTION ESCALATED: " if is_escalation else "NEW AFFLICTION: "
 	eb.post_notification(prefix + def.title.to_upper(), "%s (Tier %d) — %s" % [t_name, tier, def.descriptions[tier - 1]], color)
 
-# --- ACUTE DISASTER CONSEQUENCES ---
+# --- ACUTE DISASTER CONSEQUENCES & CASCADE SHOCKS ---
 
 func _trigger_acute_disaster(moodle_id: String) -> void:
 	var def = MOODLE_DEFS[moodle_id]
 	var eb = get_node_or_null("/root/EventBus")
 	var am = get_node_or_null("/root/AudioManager")
+	var pol = get_node_or_null("/root/PoliticsManager")
+	var pop = get_node_or_null("/root/PopulationManager")
 	if am: am.play_sfx("attack")
 	
 	match moodle_id:
 		"famine":
-			if eb: eb.post_notification("🔥 GRANARY BREAD RIOTS!", "Starving mobs storm granaries and set fire to tenements!", Color(1.0, 0.15, 0.15))
+			if eb: eb.post_notification("🔥 GRANARY BREAD RIOTS!", "Starving mobs storm granaries and set fire to tenements! Unrest and pestilence surge!", Color(1.0, 0.15, 0.15))
 			disaster_triggered.emit(moodle_id, "GranaryBreadRiots")
 			_spawn_rebel_mob("raider", 3)
 			_plunder_resource("Grain", 300)
+			# Secondary Cascade: bread riot damage triggers Unrest & Pestilence
+			if pop: pop.modify_discontent(0.25)
+			if pol: pol.adjust_loyalty("commoners", -15)
 			
 		"unrest":
 			if eb: eb.post_notification("🔥 PEASANT STRIKE & CITY RIOT!", "General strike paralyses collection! Armed rioters clash with the guard!", Color(1.0, 0.15, 0.15))
 			disaster_triggered.emit(moodle_id, "PeasantStrike")
 			_spawn_rebel_mob("spearman", 4)
 			_halt_production_temporarily(12.0)
+			# Secondary Cascade: riot damages noble estates & temple authority
+			if pol:
+				pol.adjust_loyalty("nobility", -12)
+				pol.adjust_loyalty("priesthood", -10)
 			
 		"mutiny":
 			if eb: eb.post_notification("🔥 MILITARY REGIMENTAL MUTINY!", "Disloyal officers turn their cohorts against the citadel!", Color(1.0, 0.1, 0.1))
 			disaster_triggered.emit(moodle_id, "RegimentalMutiny")
 			_spawn_rebel_mob("spearman", 4)
 			_spawn_rebel_mob("chariot", 1)
+			# Secondary Cascade: mutiny plunders gold and shatters legitimacy
+			_plunder_resource("Gold", 250)
+			var dyn = get_node_or_null("/root/DynastyManager")
+			if dyn: dyn.legitimacy = max(0.0, dyn.legitimacy - 20.0)
 			
 		"coup":
 			if eb: eb.post_notification("🔥 ARISTOCRATIC PALACE COUP!", "Noble retainers sack the treasury and attempt an assassination!", Color(1.0, 0.2, 0.2))
 			disaster_triggered.emit(moodle_id, "PalaceCoup")
 			_plunder_resource("Gold", 400)
 			_spawn_rebel_mob("raider", 3)
+			# Secondary Cascade: palace coup damages dynastic legitimacy
+			var dyn = get_node_or_null("/root/DynastyManager")
+			if dyn: dyn.legitimacy = max(0.0, dyn.legitimacy - 25.0)
 			
 		"schism":
 			if eb: eb.post_notification("🔥 ZEALOT HOLY INSURRECTION!", "Temple fanatics desecrate civic monuments and attack barracks!", Color(1.0, 0.3, 0.1))
 			disaster_triggered.emit(moodle_id, "HolyInsurrection")
 			_spawn_rebel_mob("raider", 4)
+			_plunder_resource("Grain", 200) # Sacred grain store desecrated
+			if pop: pop.modify_hope(-0.30)
 			
 		"pestilence":
-			if eb: eb.post_notification("☣️ BLACK PLAGUE EPIDEMIC!", "The epidemic reaches catastrophic levels! High mortality strikes the realm!", Color(0.7, 0.2, 0.8))
+			if eb: eb.post_notification("☣️ BLACK PLAGUE EPIDEMIC!", "The epidemic reaches catastrophic levels! Mass casualties and panic erupt!", Color(0.7, 0.2, 0.8))
 			disaster_triggered.emit(moodle_id, "PlagueEpidemic")
-			var pop = get_node_or_null("/root/PopulationManager")
-			if pop: pop.modify_population(-25)
+			if pop:
+				pop.modify_population(-25)
+				pop.modify_discontent(0.30)
+			if pol:
+				pol.adjust_loyalty("commoners", -20)
+				pol.adjust_loyalty("priesthood", -15)
 
 func _spawn_rebel_mob(unit_type: String, count: int) -> void:
 	var world = get_tree().root.get_node_or_null("Main/World")
